@@ -1,0 +1,43 @@
+{
+	"mailgun": {
+		"api_key": "",
+		"domain": "infoxicate.com"
+	},
+	"app": {
+		"name": "monky_dev",
+		"email": "daily@snapgluedev.com",
+		"domain": "localhost:3000",
+		"unsubscribe_secret": "",
+		"cookie_secret": "abc",
+		"cdn_url": "",
+		"webhook_domain": "facetogether.ngrok.io",
+		"view": {
+			"list_limit": 1
+		},
+		"async_limits":{
+			"repos": 5,
+			"branches": 5
+		}
+	},
+	"mongo": {
+		"uri": "mongodb://localhost:27017/monkey"
+	},
+	"github": {
+		"client_id": "9a729a0f65c529a68655",
+		"client_secret": "",
+		"redirect_domain": "localhost:3000",
+		"hook_secret": "",
+		"webhook_domain": "facetogether.ngrok.io"
+	},
+	"google": {
+		"client_id": "334544652883-toj0a580l6pc60dqh4nfoll84mbdf9v9.apps.googleusercontent.com",
+		"client_secret": "",
+		"redirect_domain": "localhost:3000"
+	},
+	"auth": {
+		"username": "admin",
+		"password": ""
+	}
+
+
+}

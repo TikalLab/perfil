@@ -1,0 +1,22 @@
+{
+	"mailgun": {
+		"api_key": "MAILGUN_API_KEY"
+	},
+	"mongo": {
+		"uri": "MONGODB_URI"
+	},
+	"app": {
+		"unsubscribe_secret": "UNSUBSCRIBE_SECRET",
+		"cookie_secret": "COOKIE_SECRET"
+	},
+	"github": {
+		"client_secret": "GITHUB_CLIENT_SECRET",
+		"hook_secret": "GITHUB_HOOK_SECRET"
+	},
+	"google": {
+		"client_secret": "GOOGLE_CLIENT_SECRET"
+	},
+	"auth": {
+		"password": "AUTH_PASSWORD"
+	}
+}
