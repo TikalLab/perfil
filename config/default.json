@@ -23,7 +23,7 @@
 		"uri": "mongodb://localhost:27017/perfil"
 	},
 	"github": {
-		"client_id": "9a729a0f65c529a68655",
+		"client_id": "65fc98967c17be1caa8e",
 		"client_secret": "",
 		"redirect_domain": "localhost:3000",
 		"hook_secret": "",
