@@ -6,6 +6,7 @@ var url = require('url');
 var async = require('async');
 var request = require('request');
 var _ = require('underscore');
+var qs = require('qs');
 // var github = require('../app_modules/github');
 var errorHandler = require('../app_modules/error');
 
@@ -43,7 +44,9 @@ router.get('/authorized',function(req,res,next){
  				}else if(response.statusCode > 300){
  					callback(response.statusCode + ' : ' + body);
  				}else{
- 					var data = JSON.parse(body);
+					console.log('stackoverflow reposne: %s',body)
+					var data = qs.parse(body)
+ 				// 	var data = JSON.parse(body);
 console.log('stackoverflow reposne: %s',util.inspect(data))
  					var accessToken = data.access_token;
  					callback(null,accessToken);

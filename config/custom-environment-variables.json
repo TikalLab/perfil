@@ -22,7 +22,7 @@
 	"linkedin": {
 		"client_secret": "LINKEDIN_CLIENT_SECRET"
 	},
-	"stackoverlow": {
+	"stackoverflow": {
 		"client_secret": "STACKOVERFLOW_CLIENT_SECRET"
 	}
 

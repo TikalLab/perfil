@@ -43,7 +43,7 @@
 		"client_secret": "",
 		"redirect_domain": "localhost:3000"
 	},
-	"stackoverlow": {
+	"stackoverflow": {
 		"client_id": "8375",
 		"client_secret": "QIaMEyd24yrffNwnsh3*6w((",
 		"redirect_domain": "localhost:3000"
