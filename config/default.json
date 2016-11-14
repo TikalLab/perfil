@@ -4,7 +4,7 @@
 		"domain": "infoxicate.com"
 	},
 	"app": {
-		"name": "monky_dev",
+		"name": "perfil_dev",
 		"email": "daily@snapgluedev.com",
 		"domain": "localhost:3000",
 		"unsubscribe_secret": "",
@@ -20,7 +20,7 @@
 		}
 	},
 	"mongo": {
-		"uri": "mongodb://localhost:27017/monkey"
+		"uri": "mongodb://localhost:27017/perfil"
 	},
 	"github": {
 		"client_id": "9a729a0f65c529a68655",
@@ -30,7 +30,7 @@
 		"webhook_domain": "facetogether.ngrok.io"
 	},
 	"google": {
-		"client_id": "334544652883-toj0a580l6pc60dqh4nfoll84mbdf9v9.apps.googleusercontent.com",
+		"client_id": "370247874269-e18oqmuushnu0v6edubu7aa1hsv7ajv9.apps.googleusercontent.com",
 		"client_secret": "",
 		"redirect_domain": "localhost:3000"
 	},
