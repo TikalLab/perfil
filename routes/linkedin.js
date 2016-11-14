@@ -18,7 +18,7 @@ router.get('/authorize',function(req,res,next){
 		pathname: '/oauth/v2/authorization',
 		query: {
 			response_type: 'code',
-			client_id: config.get('github.client_id'),
+			client_id: config.get('linkedin.client_id'),
 			redirect_uri: 'http://' + config.get('linkedin.redirect_domain') + '/linkedin/authorized',
 			state: 'linkedinapisucks'
 			// scope: 'repo'
@@ -34,20 +34,20 @@ router.get('/authorized',function(req,res,next){
  	    // switch the code for access token
  		function(callback){
  			var form = {
- 				client_id: config.get('github.client_id'),
- 				client_secret: config.get('github.client_secret'),
+ 				client_id: config.get('linkedin.client_id'),
+ 				client_secret: config.get('linkedin.client_secret'),
  				code: req.query.code,
 				redirect_uri: 'http://' + config.get('linkedin.redirect_domain') + '/linkedin/authorized',
 				grant_type: 'authorization_code'
  			}
- 			request.post('https://github.com/login/oauth/access_token',{form: form},function(error,response,body){
+ 			request.post('https://www.linkedin.com/oauth/v2/accessToken',{form: form},function(error,response,body){
  				if(error){
  					callback(error);
  				}else if(response.statusCode > 300){
  					callback(response.statusCode + ' : ' + body);
  				}else{
  					var data = JSON.parse(body);
-console.log('linkedin reposne: %s',util.inspect(data))					
+console.log('linkedin reposne: %s',util.inspect(data))
  					var accessToken = data.access_token;
  					callback(null,accessToken);
  				}

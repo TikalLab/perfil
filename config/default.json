@@ -41,7 +41,7 @@
 	"linkedin": {
 		"client_id": "86cefgygs4hlm5",
 		"client_secret": "",
-		"redirect_domain": "localhost:3000",
+		"redirect_domain": "localhost:3000"
 	}
 
 

@@ -21,6 +21,7 @@ var db = monk(config.get('mongo.uri'));
 // var users = require('./routes/users');
 // var queries = require('./routes/queries');
 // var queriesNew = require('./routes/queries-new');
+var linkedin = require('./routes/linkedin');
 var github = require('./routes/github');
 // var agent = require('./routes/agent');
 var google = require('./routes/google');
@@ -120,6 +121,7 @@ app.use(function(req,res,next){
 // app.use('/queries-new', queriesNew);
 // app.use('/emails', emails);
 app.use('/github', github);
+app.use('/linkedin', linkedin);
 // app.use('/agent', agent);
 app.use('/google', google);
 // app.use('/admin', admin);
