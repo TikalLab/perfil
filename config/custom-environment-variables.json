@@ -18,5 +18,9 @@
 	},
 	"auth": {
 		"password": "AUTH_PASSWORD"
-	}
+	},
+	"linkedin": {
+		"client_secret": "LINKEDIN_CLIENT_SECRET",
+	},
+
 }
