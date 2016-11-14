@@ -23,7 +23,7 @@ var db = monk(config.get('mongo.uri'));
 // var queriesNew = require('./routes/queries-new');
 var linkedin = require('./routes/linkedin');
 var github = require('./routes/github');
-// var agent = require('./routes/agent');
+var stackoverflow = require('./routes/stackoverflow');
 var google = require('./routes/google');
 // var admin = require('./routes/admin');
 // var bitbucket = require('./routes/bitbucket');
@@ -122,6 +122,7 @@ app.use(function(req,res,next){
 // app.use('/emails', emails);
 app.use('/github', github);
 app.use('/linkedin', linkedin);
+app.use('/stackoverflow', stackoverflow);
 // app.use('/agent', agent);
 app.use('/google', google);
 // app.use('/admin', admin);

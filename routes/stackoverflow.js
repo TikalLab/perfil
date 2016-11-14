@@ -32,10 +32,10 @@ router.get('/authorized',function(req,res,next){
  	    // switch the code for access token
  		function(callback){
  			var form = {
- 				client_id: config.get('stackoverlow.client_id'),
- 				client_secret: config.get('stackoverlow.client_secret'),
+ 				client_id: config.get('stackoverflow.client_id'),
+ 				client_secret: config.get('stackoverflow.client_secret'),
  				code: req.query.code,
-				redirect_uri: 'http://' + config.get('stackoverlow.redirect_domain') + '/stackoverlow/authorized',
+				redirect_uri: 'http://' + config.get('stackoverflow.redirect_domain') + '/stackoverflow/authorized',
  			}
  			request.post('https://stackexchange.com/oauth/access_token',{form: form},function(error,response,body){
  				if(error){
@@ -44,7 +44,7 @@ router.get('/authorized',function(req,res,next){
  					callback(response.statusCode + ' : ' + body);
  				}else{
  					var data = JSON.parse(body);
-console.log('stackoverlow reposne: %s',util.inspect(data))
+console.log('stackoverflow reposne: %s',util.inspect(data))
  					var accessToken = data.access_token;
  					callback(null,accessToken);
  				}

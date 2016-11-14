@@ -45,9 +45,9 @@
 	},
 	"stackoverlow": {
 		"client_id": "8375",
-		"client_secret": "",
+		"client_secret": "QIaMEyd24yrffNwnsh3*6w((",
 		"redirect_domain": "localhost:3000"
-	},
+	}
 
 
 
