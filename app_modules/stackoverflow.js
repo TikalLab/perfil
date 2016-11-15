@@ -21,13 +21,14 @@ module.exports = {
 			access_token: accessToken
 		}
 		// console.log('headers are %s',util.inspect(headers))
-		request('https://api.stackexchange.com/me',{qs: qs},function(error,response,body){
+		request('https://api.stackexchange.com/me',{qs: qs, gzip: true},function(error,response,body){
 			if(error){
 				callback(error);
 			}else if(response.statusCode > 300){
 				// console.log('error in getUser')
 				callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
 			}else{
+console.log('so ret is: %s',body)
 				var data = JSON.parse(body);
 				callback(null,data)
 			}

@@ -20,6 +20,7 @@ router.get('/authorize',function(req,res,next){
 			client_id: config.get('github.client_id'),
 			redirect_uri: 'http://' + config.get('github.redirect_domain') + '/github/authorized',
 			// scope: 'repo'
+			// scope: 'repo'
 //			scope: 'repo:status'
 
 		}

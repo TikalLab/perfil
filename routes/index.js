@@ -6,6 +6,7 @@ var url = require('url');
 var async = require('async');
 var request = require('request');
 var _ = require('underscore');
+var moment = require('moment')
 // var github = require('../app_modules/github');
 var errorHandler = require('../app_modules/error');
 var github = require('../app_modules/github');
@@ -14,7 +15,8 @@ var linkedin = require('../app_modules/linkedin');
 
 var users = require('../models/users');
 
-router.get('/user/:user_id',function(req,res,next){
+router.get('/user',function(req,res,next){
+	console.log('user is: %s',util.inspect(req.session.user))
 	async.parallel([
 		function(callback){
 			github.getUser(req.session.user.github.access_token,function(err,githubUser){
@@ -38,7 +40,7 @@ router.get('/user/:user_id',function(req,res,next){
 			console.log('results are: %s',util.inspect(results))
 			render(req,res,'index/user',{
 				github: results[0],
-				stackoverlow: results[1],
+				stackoverflow: results[1],
 				linkedin: results[2]
 			})
 		}
@@ -54,7 +56,7 @@ function render(req,res,template,params){
 
 	params.app = req.app;
 	params._ = _;
-	params.us = us;
+	// params.us = us;
 	params.moment = moment;
 	params.config = config;
 	params.util = util;

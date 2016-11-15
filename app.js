@@ -16,7 +16,7 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.get('mongo.uri'));
 
-// var index = require('./routes/index');
+var index = require('./routes/index');
 // var emails = require('./routes/emails');
 // var users = require('./routes/users');
 // var queries = require('./routes/queries');
@@ -115,7 +115,7 @@ app.use(function(req,res,next){
 });
 
 
-// app.use('/', index);
+app.use('/', index);
 // app.use('/', users);
 // app.use('/queries', queries);
 // app.use('/queries-new', queriesNew);

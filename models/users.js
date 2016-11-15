@@ -37,7 +37,7 @@ module.exports = {
       _id: userID
     },{
       $set: {
-        stackoverlow: {
+        stackoverflow: {
           access_token: accessToken
         }
       }
