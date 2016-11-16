@@ -33,6 +33,11 @@ router.get('/user',function(req,res,next){
 				callback(err,linkedinUser)
 			})
 		},
+		function(callback){
+			stackoverflow.getUserAnswers(req.session.user.stackoverflow.access_token,function(err,stackoverflowAnswers){
+				callback(err,stackoverflowAnswers)
+			})
+		},
 	],function(err,results){
 		if(err){
 			errorHandler.error(req,res,next,err);
@@ -41,7 +46,8 @@ router.get('/user',function(req,res,next){
 			render(req,res,'index/user',{
 				github: results[0],
 				stackoverflow: results[1],
-				linkedin: results[2]
+				linkedin: results[2],
+				stackoverflow_answers: results[3]
 			})
 		}
 	})
