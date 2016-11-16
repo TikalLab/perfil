@@ -37,7 +37,7 @@ router.get('/user',function(req,res,next){
 		if(err){
 			errorHandler.error(req,res,next,err);
 		}else{
-			console.log('results are: %s',util.inspect(results))
+			console.log('results are: %s',util.inspect(results,{depth:8}))
 			render(req,res,'index/user',{
 				github: results[0],
 				stackoverflow: results[1],

@@ -20,9 +20,9 @@ router.get('/authorize',function(req,res,next){
 			response_type: 'code',
 			client_id: config.get('linkedin.client_id'),
 			redirect_uri: 'http://' + config.get('linkedin.redirect_domain') + '/linkedin/authorized',
-			state: 'linkedinapisucks'
-			// scope: 'repo'
-//			scope: 'repo:status'
+			state: 'linkedinapisucks',
+			// scope: 'r_basicprofile'
+			scope: 'r_fullprofile'
 
 		}
 	}
