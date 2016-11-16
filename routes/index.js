@@ -43,6 +43,11 @@ router.get('/user',function(req,res,next){
 				callback(err,stackoverflowQuestions)
 			})
 		},
+		function(callback){
+			github.getReposCounts(req.session.user.github.access_token,function(err,githubReposCounts){
+				callback(err,githubReposCounts)
+			})
+		},
 	],function(err,results){
 		if(err){
 			errorHandler.error(req,res,next,err);
@@ -53,7 +58,8 @@ router.get('/user',function(req,res,next){
 				stackoverflow: results[1],
 				linkedin: results[2],
 				stackoverflow_answers: results[3],
-				stackoverflow_questions: results[4]
+				stackoverflow_questions: results[4],
+				github_repos_counts: results[5]
 			})
 		}
 	})
