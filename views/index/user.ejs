@@ -24,3 +24,13 @@
     <td>stackoverflow bronze badges</td><td><%=stackoverflow.items[0].badge_counts.bronze%></td>
   </tr>
 </table>
+
+<table>
+  <% stackoverflow_answers.forEach(function(answer){ %>
+    <tr>
+      <td><%=answer.question.title%></td>
+      <td><%=answer.answer.answer_id%></td>
+
+    </tr>
+  <% }) %>
+</table>
