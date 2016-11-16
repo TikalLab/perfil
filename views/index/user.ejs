@@ -29,10 +29,34 @@
 <h3>Stackoverflow answered questions</h3>
 
 <table>
+  <thead>
+    <th>question</th>
+    <th>is answer?</th>
+    <th>answer</th>
+  </thead>
+
   <% stackoverflow_answers.forEach(function(answer){ %>
     <tr>
       <td><%=answer.question.title%></td>
-      <td><%=answer.answer.answer_id%></td>
+      <td><%=(answer.answer.is_accepted ? 'Yes' : 'No')%></td>
+      <td><%-answer.answer.body%></td>
+
+    </tr>
+  <% }) %>
+</table>
+
+<h3>Stackoverflow questions</h3>
+
+<table>
+  <thead>
+    <th>title</th>
+    <th>body</th>
+  </thead>
+
+  <% stackoverflow_questions.forEach(function(question){ %>
+    <tr>
+      <td><%=question.title%></td>
+      <td><%-question.body%></td>
 
     </tr>
   <% }) %>
