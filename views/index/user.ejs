@@ -1,3 +1,4 @@
+<h3>General stats</h3>
 <table>
   <tr>
     <td>github followers</td><td><%=github.followers%></td>
@@ -24,6 +25,8 @@
     <td>stackoverflow bronze badges</td><td><%=stackoverflow.items[0].badge_counts.bronze%></td>
   </tr>
 </table>
+
+<h3>Stackoverflow answered questions</h3>
 
 <table>
   <% stackoverflow_answers.forEach(function(answer){ %>
