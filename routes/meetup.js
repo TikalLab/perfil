@@ -45,7 +45,7 @@ router.get('/authorized',function(req,res,next){
  					var data = JSON.parse(body);
 console.log('meetup reposne: %s',util.inspect(data))
  					var accessToken = data.access_token;
-					var refreshToken = data.refreshToken;
+					var refreshToken = data.refresh_token;
  					callback(null,refreshToken);
  				}
  			});
