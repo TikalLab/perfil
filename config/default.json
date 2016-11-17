@@ -48,6 +48,11 @@
 		"client_secret": "QIaMEyd24yrffNwnsh3*6w((",
 		"redirect_domain": "localhost:3000",
 		"key": "ZkO6YDU9IS4gqXR5U2enuw(("
+	},
+	"meetup": {
+		"client_id": "1ll23095l0iiiee4o1eucegmuo",
+		"client_secret": "",
+		"redirect_domain": "localhost:3000"
 	}
 
 

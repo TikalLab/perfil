@@ -24,6 +24,8 @@
 	},
 	"stackoverflow": {
 		"client_secret": "STACKOVERFLOW_CLIENT_SECRET"
+	},
+	"meetup": {
+		"client_secret": "MEETUP_CLIENT_SECRET"
 	}
-
 }
