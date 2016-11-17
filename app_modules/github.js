@@ -90,6 +90,54 @@ module.exports = {
 				callback(null,counts)
 			}
 		})
+	},
+	getRepoLanguages: function(accessToken,repo,callback){
+		var headers = this.getAPIHeaders(accessToken);
+		request('https://api.github.com/repos/' + repo.full_name + '/languages',{headers: headers},function(error,response,body){
+			if(error){
+				callback(error);
+			}else if(response.statusCode > 300){
+				callback('error in get repo languages ' + response.statusCode + ':' + body);
+			}else{
+				callback(null,_.keys(JSON.parse(body)));
+			}
+		})
+	},
+	getLanguagesTagCloud: function(accessToken,callback){
+		var thisObject = this;
+		async.waterfall([
+			// get repos
+			function(callback){
+				thisObject.getUserRepos(accessToken,function(err,repos){
+					callback(err,repos)
+				})
+			},
+			// for each repo, get languages
+			function(repos,callback){
+				var languages = [];
+				async.each(repos,function(repo,callback){
+					thisObject.getRepoLanguages(accessToken,repo,function(err,repoLanguages){
+						if(err){
+							callback(err)
+						}else{
+							languages = languages.concat(repoLanguages)
+							callback()
+						}
+					})
+				},function(err){
+					callback(err,languages)
+				})
+			},
+			function(languages,callback){
+				tagCloud = _.countBy(languages,function(language){
+			    return language;
+			  })
+				callback(null,tagCloud)
+			}
+		],function(err,tagCloud){
+			callback(err,tagCloud)
+		})
 	}
+
 
 }

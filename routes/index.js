@@ -48,6 +48,11 @@ router.get('/user',function(req,res,next){
 				callback(err,githubReposCounts)
 			})
 		},
+		function(callback){
+			github.getLanguagesTagCloud(req.session.user.github.access_token,function(err,githubLanguagesTagCloud){
+				callback(err,githubLanguagesTagCloud)
+			})
+		},
 	],function(err,results){
 		if(err){
 			errorHandler.error(req,res,next,err);
@@ -59,7 +64,8 @@ router.get('/user',function(req,res,next){
 				linkedin: results[2],
 				stackoverflow_answers: results[3],
 				stackoverflow_questions: results[4],
-				github_repos_counts: results[5]
+				github_repos_counts: results[5],
+				github_languages_tag_cloud: results[6],
 			})
 		}
 	})
