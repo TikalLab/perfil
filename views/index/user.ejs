@@ -32,6 +32,62 @@
   </tr>
 </table>
 
+<h3>Stackoverflow answered topics</h3>
+<%
+  var tags = [];
+  _.each(stackoverflow_answers,function(stackoverflowAnswer){
+    tags = tags.concat(stackoverflowAnswer.question.tags)
+  })
+
+  tagCloud = _.countBy(tags,function(tag){
+    return tag;
+  })
+%>
+
+<table>
+  <thead>
+    <th>tag</th>
+    <th>frequency</th>
+  </thead>
+
+  <% _.each(tagCloud,function(count,tag){ %>
+    <tr>
+      <td><%=tag%></td>
+      <td><%=count%></td>
+
+    </tr>
+  <% }) %>
+</table>
+
+<h3>Stackoverflow asked topics</h3>
+<%
+  var tags = [];
+  _.each(stackoverflow_questions,function(stackoverflowQuestion){
+    tags = tags.concat(stackoverflowQuestion.tags)
+  })
+
+  tagCloud = _.countBy(tags,function(tag){
+    return tag;
+  })
+%>
+
+<table>
+  <thead>
+    <th>tag</th>
+    <th>frequency</th>
+  </thead>
+
+  <% _.each(tagCloud,function(count,tag){ %>
+    <tr>
+      <td><%=tag%></td>
+      <td><%=count%></td>
+
+    </tr>
+  <% }) %>
+</table>
+
+
+
 <h3>Stackoverflow answered questions</h3>
 
 <table>
