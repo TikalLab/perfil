@@ -12,6 +12,7 @@ var errorHandler = require('../app_modules/error');
 var github = require('../app_modules/github');
 var stackoverflow = require('../app_modules/stackoverflow');
 var linkedin = require('../app_modules/linkedin');
+var meetup = require('../app_modules/meetup');
 
 var users = require('../models/users');
 
@@ -53,6 +54,11 @@ router.get('/user',function(req,res,next){
 				callback(err,githubLanguagesTagCloud)
 			})
 		},
+		function(callback){
+			meetup.getUserGroups(req.session.user.meetup.refresh_token,function(err,meetupGroups){
+				callback(err,meetupGroups)
+			})
+		},
 	],function(err,results){
 		if(err){
 			errorHandler.error(req,res,next,err);
@@ -66,6 +72,7 @@ router.get('/user',function(req,res,next){
 				stackoverflow_questions: results[4],
 				github_repos_counts: results[5],
 				github_languages_tag_cloud: results[6],
+				meetup_groups: results[7]
 			})
 		}
 	})

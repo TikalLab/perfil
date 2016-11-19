@@ -23,7 +23,7 @@ module.exports = {
 			grant_type: 'refresh_token',
 			refresh_token: refreshToken,
 		}
-		request('https://secure.meetup.com/oauth2/access',{form: form},function(error,response,body){
+		request.post('https://secure.meetup.com/oauth2/access',{form: form},function(error,response,body){
 			if(error){
 				callback(error);
 			}else if(response.statusCode > 300){
@@ -35,6 +35,57 @@ module.exports = {
 			}
 		})
 	},
+	getUserGroups: function(refreshToken,callback){
+		var thisObject = this;
+		async.waterfall([
+			function(callback){
+				thisObject.refreshToken(refreshToken,function(err,accessToken){
+					callback(err,accessToken)
+				})
+			},
+			function(accessToken,callback){
+				var groups = [];
+				var offset = 0;
+				var linkHeader;
+
+				var headers = {
+					Authorization: util.format('Bearer %s',accessToken)
+				}
+
+				async.whilst(
+					function(){
+						return offset !== false;
+					},
+					function(callback){
+						var qs = {
+							page: 20,
+							offset: offset
+						}
+						request('https://api.meetup.com/self/groups',{headers: headers, qs: qs},function(error,response,body){
+							if(error){
+								callback(error);
+							}else if(response.statusCode > 300){
+								callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+							}else{
+								var data = JSON.parse(body)
+console.log('meetup res: %s',util.inspect(data))
+								groups = groups.concat(data);
+								linkHeader = parseLinkHeader(response.headers.link);
+								offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
+								callback(null,groups);
+							}
+						});
+					},
+					function(err,groups){
+						callback(err,groups)
+					}
+				);
+
+			}
+		],function(err,groups){
+			callback(err,groups)
+		})
+	}
 
 
 }
