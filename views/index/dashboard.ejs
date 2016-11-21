@@ -38,13 +38,13 @@
     <div class="col-md-3">
       <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
       <div>
-        <input type="checkbox" data-toggle="toggle"> Basic stats
+        <input id="toggle-stackoverflow-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
       </div>
       <div>
-        <input type="checkbox" data-toggle="toggle"> Questions Tag Cloud
+        <input id="toggle-stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle"> Questions Tag Cloud
       </div>
       <div>
-        <input type="checkbox" data-toggle="toggle"> Answers Tag Cloud
+        <input id="toggle-stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle"> Answers Tag Cloud
       </div>
     </div>
   <% } %>
@@ -59,34 +59,28 @@
 
 <script>
 $(function(){
-  $('#toggle-github-basic-stats').change(function(){
-    if($('#toggle-github-basic-stats').is(':checked')){
-      showGithubBasicStats()
-    }else{
-      hideGithubBasicStats()
-    }
-  })
-
-  $('#toggle-github-repos-tag-cloud').change(function(){
-    if($('#toggle-github-repos-tag-cloud').is(':checked')){
-      showGithubReposTagCloud()
-    }else{
-      hideGithubReposTagCloud()
-    }
-  })
-
+    $(':checkbox').change(function(){
+      toggleWidget(this.id,$(this).is(':checked'))
+    })
 })
 
-function showGithubBasicStats(){
-  $('#widget-github-basic-stats').load('/widgets/github/basic-stats')
+function toggleWidget(toggleID,checked){
+  // process toggle ID
+  var parts = toggleID.split('-');
+  parts[0] = 'widget';
+  var widgetID = parts.join('-');
+  parts.shift();
+  var path = '/widgets/' + parts[0];
+  parts.shift();
+  var path = path + '/' + parts.join('-');
+
+  if(checked){
+    $('#' + widgetID).load(path);
+  }else{
+    $('#' + widgetID).empty();
+  }
 }
 
-function hideGithubBasicStats(){
-  $('#widget-github-basic-stats').remove()
-}
 
-function showGithubReposTagCloud(){
-  $('#widget-github-repos-tag-cloud').load('/widgets/github/repos-tag-cloud')
-}
 
 </script>
