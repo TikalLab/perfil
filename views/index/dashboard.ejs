@@ -48,6 +48,19 @@
       </div>
     </div>
   <% } %>
+
+  <% if(user.meetup){ %>
+    <div class="col-md-3">
+      <h3><span class="fa fa-meetup">Meetup Widgets</span></h3>
+      <div>
+        <input id="toggle-meetup-memberships" type="checkbox" data-toggle="toggle"> Meetups Membership
+      </div>
+      <div>
+        <input id="toggle-meetup-categories-tag-cloud" type="checkbox" data-toggle="toggle"> Categories Tag Cloud
+      </div>
+    </div>
+  <% } %>
+
 </div>
 
 <div id="the-perfil" class="row">
@@ -60,6 +73,8 @@
   <div id="widget-stackoverflow-questions-tag-cloud" class="col-md-3">
   </div>
   <div id="widget-stackoverflow-answers-tag-cloud" class="col-md-3">
+  </div>
+  <div id="widget-meetup-memberships" class="col-md-3">
   </div>
 </div>
 

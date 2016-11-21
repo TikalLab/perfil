@@ -137,6 +137,23 @@ router.get('/stackoverflow/answers-tag-cloud',function(req,res,next){
 	})
 })
 
+router.get('/meetup/memberships',function(req,res,next){
+	async.parallel([
+		function(callback){
+			meetup.getUserGroups(req.session.user.meetup.refresh_token,function(err,meetupGroups){
+				callback(err,meetupGroups)
+			})
+		},
+	],function(err,results){
+		if(err){
+			errorHandler.error(req,res,next,err);
+		}else{
+			render(req,res,'widgets/meetup/memberships',{
+				meetup_groups: results[0],
+			})
+		}
+	})
+})
 
 router.get('/user',function(req,res,next){
 	console.log('user is: %s',util.inspect(req.session.user))

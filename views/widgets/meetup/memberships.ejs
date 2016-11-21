@@ -1,0 +1,18 @@
+<h3>Meetup Groups</h3>
+
+<table>
+  <thead>
+    <th>name</th>
+    <th>category</th>
+    <th>members</th>
+  </thead>
+
+  <% meetup_groups.forEach(function(group){ %>
+    <tr>
+      <td><%=group.name%></td>
+      <td><%-group.category.name%></td>
+      <td><%=group.members%></td>
+
+    </tr>
+  <% }) %>
+</table>
