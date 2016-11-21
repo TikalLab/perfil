@@ -1,22 +1,51 @@
 <div class="row">
   <div class="col-md-3">
-    <a href="<%=user.github ? '#' : '/github/authorize'%>" class="btn btn-block btn-lg btn-social btn-github">
+    <a href="<%=user.github ? '#' : '/github/authorize'%>" class="btn btn-block btn-lg btn-social btn-github <%=user.github ? 'disabled' : ''%>">
       <span class="fa fa-github"></span> <%=user.github ? 'GitHub Connected ' : 'Connect GitHub'%>
     </a>
   </div>
   <div class="col-md-3">
-    <a href="<%=user.linkedin ? '#' : '/linkedin/authorize'%>" class="btn btn-block btn-lg btn-social btn-linkedin">
+    <a href="<%=user.linkedin ? '#' : '/linkedin/authorize'%>" class="btn btn-block btn-lg btn-social btn-linkedin <%=user.linkedin ? 'disabled' : ''%>">
       <span class="fa fa-linkedin"></span> <%=user.linkedin ? 'LinkedIn Connected ' : 'Connect LinkedIn'%>
     </a>
   </div>
   <div class="col-md-3">
-    <a href="<%=user.stackoverflow ? '#' : '/stackoverflow/authorize'%>" class="btn btn-block btn-lg btn-social btn-google">
+    <a href="<%=user.stackoverflow ? '#' : '/stackoverflow/authorize'%>" class="btn btn-block btn-lg btn-social btn-google <%=user.stackoverflow ? 'disabled' : ''%>">
       <span class="fa fa-stack-overflow"></span> <%=user.stackoverflow ? 'StackOverflow Connected ' : 'Connect StackOverflow'%>
     </a>
   </div>
   <div class="col-md-3">
-    <a href="<%=user.meetup ? '#' : '/meetup/authorize'%>" class="btn btn-block btn-lg btn-social btn-pinterest">
+    <a href="<%=user.meetup ? '#' : '/meetup/authorize'%>" class="btn btn-block btn-lg btn-social btn-pinterest <%=user.meetup ? 'disabled' : ''%>">
       <span class="fa fa-meetup"></span> <%=user.meetup ? 'Meetup Connected ' : 'Connect Meetup'%>
     </a>
   </div>
+</div>
+
+<div class="row">
+  <% if(user.github){ %>
+    <div class="col-md-3">
+      <h3><span class="fa fa-github">GitHub Widgets</span></h3>
+      <div>
+        <input type="checkbox" data-toggle="toggle"> Basic stats
+      </div>
+      <div>
+        <input type="checkbox" data-toggle="toggle"> Repos Tag Cloud
+      </div>
+    </div>
+  <% } %>
+
+  <% if(user.stackoverflow){ %>
+    <div class="col-md-3">
+      <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
+      <div>
+        <input type="checkbox" data-toggle="toggle"> Basic stats
+      </div>
+      <div>
+        <input type="checkbox" data-toggle="toggle"> Questions Tag Cloud
+      </div>
+      <div>
+        <input type="checkbox" data-toggle="toggle"> Answers Tag Cloud
+      </div>
+    </div>
+  <% } %>
 </div>
