@@ -79,6 +79,65 @@ router.get('/stackoverflow/basic-stats',function(req,res,next){
 	})
 })
 
+router.get('/stackoverflow/questions-tag-cloud',function(req,res,next){
+	async.parallel([
+		function(callback){
+			stackoverflow.getUserQuestions(req.session.user.stackoverflow.access_token,function(err,stackoverflowQuestions){
+				callback(err,stackoverflowQuestions)
+			})
+		},
+	],function(err,results){
+		if(err){
+			errorHandler.error(req,res,next,err);
+		}else{
+			console.log('results are: %s',util.inspect(results,{depth:8}))
+
+			var tags = [];
+			_.each(results[0],function(stackoverflowQuestion){
+				tags = tags.concat(stackoverflowQuestion.tags)
+			})
+
+			tagCloud = _.countBy(tags,function(tag){
+				return tag;
+			})
+
+			render(req,res,'widgets/stackoverflow/questions-tag-cloud',{
+				tag_cloud: tagCloud,
+			})
+		}
+	})
+})
+
+router.get('/stackoverflow/answers-tag-cloud',function(req,res,next){
+	async.parallel([
+		function(callback){
+			stackoverflow.getUserAnswers(req.session.user.stackoverflow.access_token,function(err,stackoverflowAnswers){
+				callback(err,stackoverflowAnswers)
+			})
+		},
+	],function(err,results){
+		if(err){
+			errorHandler.error(req,res,next,err);
+		}else{
+			console.log('results are: %s',util.inspect(results,{depth:8}))
+
+			var tags = [];
+			_.each(results[0],function(stackoverflowAnswer){
+				tags = tags.concat(stackoverflowAnswer.question.tags)
+			})
+
+			tagCloud = _.countBy(tags,function(tag){
+				return tag;
+			})
+
+			render(req,res,'widgets/stackoverflow/answers-tag-cloud',{
+				tag_cloud: tagCloud,
+			})
+		}
+	})
+})
+
+
 router.get('/user',function(req,res,next){
 	console.log('user is: %s',util.inspect(req.session.user))
 	async.parallel([

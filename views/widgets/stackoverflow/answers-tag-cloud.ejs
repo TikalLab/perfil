@@ -1,0 +1,14 @@
+<table>
+  <thead>
+    <th>tag</th>
+    <th>frequency</th>
+  </thead>
+
+  <% _.each(tag_cloud,function(count,tag){ %>
+    <tr>
+      <td><%=tag%></td>
+      <td><%=count%></td>
+
+    </tr>
+  <% }) %>
+</table>
