@@ -16,6 +16,24 @@ var meetup = require('../app_modules/meetup');
 
 var users = require('../models/users');
 
+
+router.get('/',function(req,res,next){
+	if(!req.session.user){
+		render(req,res,'index/homepage',{})
+	}else{
+		res.redirect('/dashboard')
+	}
+})
+
+router.get('/dashboard',function(req,res,next){
+	render(req,res,'index/dashboard',{})
+})
+
+router.get('/logout',function(req,res,next){
+	delete req.session.user;
+	res.redirect('/')
+})
+
 router.get('/user',function(req,res,next){
 	console.log('user is: %s',util.inspect(req.session.user))
 	async.parallel([

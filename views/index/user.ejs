@@ -158,3 +158,30 @@
     </tr>
   <% }) %>
 </table>
+
+<h3>Meetup tag cloud</h3>
+<%
+  var tags = [];
+  _.each(meetup_groups,function(meetupGroup){
+    tags.push(meetupGroup.category.name)
+  })
+
+  tagCloud = _.countBy(tags,function(tag){
+    return tag;
+  })
+%>
+
+<table>
+  <thead>
+    <th>tag</th>
+    <th>frequency</th>
+  </thead>
+
+  <% _.each(tagCloud,function(count,tag){ %>
+    <tr>
+      <td><%=tag%></td>
+      <td><%=count%></td>
+
+    </tr>
+  <% }) %>
+</table>
