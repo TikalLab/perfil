@@ -26,10 +26,10 @@
     <div class="col-md-3">
       <h3><span class="fa fa-github">GitHub Widgets</span></h3>
       <div>
-        <input type="checkbox" data-toggle="toggle"> Basic stats
+        <input id="toggle-github-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
       </div>
       <div>
-        <input type="checkbox" data-toggle="toggle"> Repos Tag Cloud
+        <input id="toggle-github-repos-tag-cloud" type="checkbox" data-toggle="toggle"> Repos Tag Cloud
       </div>
     </div>
   <% } %>
@@ -49,3 +49,44 @@
     </div>
   <% } %>
 </div>
+
+<div id="the-perfil" class="row">
+  <div id="widget-github-basic-stats" class="col-md-3">
+  </div>
+  <div id="widget-github-repos-tag-cloud" class="col-md-3">
+  </div>
+</div>
+
+<script>
+$(function(){
+  $('#toggle-github-basic-stats').change(function(){
+    if($('#toggle-github-basic-stats').is(':checked')){
+      showGithubBasicStats()
+    }else{
+      hideGithubBasicStats()
+    }
+  })
+
+  $('#toggle-github-repos-tag-cloud').change(function(){
+    if($('#toggle-github-repos-tag-cloud').is(':checked')){
+      showGithubReposTagCloud()
+    }else{
+      hideGithubReposTagCloud()
+    }
+  })
+
+})
+
+function showGithubBasicStats(){
+  $('#widget-github-basic-stats').load('/widgets/github/basic-stats')
+}
+
+function hideGithubBasicStats(){
+  $('#widget-github-basic-stats').remove()
+}
+
+function showGithubReposTagCloud(){
+  $('#widget-github-repos-tag-cloud').load('/widgets/github/repos-tag-cloud')
+}
+
+</script>

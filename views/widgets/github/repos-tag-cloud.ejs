@@ -1,0 +1,15 @@
+<h3>Github repos languages</h3>
+<table>
+  <thead>
+    <th>tag</th>
+    <th>frequency</th>
+  </thead>
+
+  <% _.each(repos_tag_cloud,function(count,tag){ %>
+    <tr>
+      <td><%=tag%></td>
+      <td><%=count%></td>
+
+    </tr>
+  <% }) %>
+</table>
