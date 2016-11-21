@@ -60,6 +60,25 @@ router.get('/github/repos-tag-cloud',function(req,res,next){
 	})
 })
 
+router.get('/stackoverflow/basic-stats',function(req,res,next){
+	async.parallel([
+		function(callback){
+			stackoverflow.getUser(req.session.user.stackoverflow.access_token,function(err,stackoverflowUser){
+				callback(err,stackoverflowUser)
+			})
+		},
+	],function(err,results){
+		if(err){
+			errorHandler.error(req,res,next,err);
+		}else{
+			console.log('results are: %s',util.inspect(results,{depth:8}))
+			render(req,res,'widgets/stackoverflow/basic-stats',{
+				stackoverflow_user: results[0].items[0],
+			})
+		}
+	})
+})
+
 router.get('/user',function(req,res,next){
 	console.log('user is: %s',util.inspect(req.session.user))
 	async.parallel([
