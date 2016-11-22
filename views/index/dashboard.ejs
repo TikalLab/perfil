@@ -29,10 +29,10 @@
       <div class="col-md-3">
         <h3><span class="fa fa-github">GitHub Widgets</span></h3>
         <div>
-          <input id="toggle-github-basic-stats" name="github-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
+          <input id="toggle-github-basic-stats" name="github-basic-stats" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-basic-stats') ? 'checked' : ''%>> Basic stats
         </div>
         <div>
-          <input id="toggle-github-repos-tag-cloud" name="github-repos-tag-cloud" type="checkbox" data-toggle="toggle"> Repos Tag Cloud
+          <input id="toggle-github-repos-tag-cloud" name="github-repos-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-repos-tag-cloud') ? 'checked' : ''%>> Repos Tag Cloud
         </div>
       </div>
     <% } %>
@@ -41,13 +41,13 @@
       <div class="col-md-3">
         <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
         <div>
-          <input id="toggle-stackoverflow-basic-stats" name="stackoverflow-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
+          <input id="toggle-stackoverflow-basic-stats" name="stackoverflow-basic-stats" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-basic-stats') ? 'checked' : ''%>> Basic stats
         </div>
         <div>
-          <input id="toggle-stackoverflow-questions-tag-cloud" name="stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle"> Questions Tag Cloud
+          <input id="toggle-stackoverflow-questions-tag-cloud" name="stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-questions-tag-cloud') ? 'checked' : ''%>> Questions Tag Cloud
         </div>
         <div>
-          <input id="toggle-stackoverflow-answers-tag-cloud" name="stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle"> Answers Tag Cloud
+          <input id="toggle-stackoverflow-answers-tag-cloud" name="stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-answers-tag-cloud') ? 'checked' : ''%>> Answers Tag Cloud
         </div>
       </div>
     <% } %>
@@ -56,10 +56,10 @@
       <div class="col-md-3">
         <h3><span class="fa fa-meetup">Meetup Widgets</span></h3>
         <div>
-          <input id="toggle-meetup-memberships" name="meetup-memberships" type="checkbox" data-toggle="toggle"> Meetups Membership
+          <input id="toggle-meetup-memberships" name="meetup-memberships" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-memberships') ? 'checked' : ''%>> Meetups Membership
         </div>
         <div>
-          <input id="toggle-meetup-categories-tag-cloud" name="meetup-categories-tag-cloud" type="checkbox" data-toggle="toggle"> Categories Tag Cloud
+          <input id="toggle-meetup-categories-tag-cloud" name="meetup-categories-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
         </div>
       </div>
     <% } %>
@@ -87,6 +87,10 @@ $(function(){
     $(':checkbox').change(function(){
       toggleWidget(this.id,$(this).is(':checked'))
     })
+
+    <% _.each(user.widgets,function(widget){ %>
+      toggleWidget('widget-<%=widget%>',true);
+    <% }) %>
 })
 
 function toggleWidget(toggleID,checked){
@@ -115,7 +119,6 @@ function save(){
     url: '/save',
     data: $('#toggles').serialize(),
     success: function(data){
-      alert('save ok');
     },
     error: function(){
       alert('something went wrong...');

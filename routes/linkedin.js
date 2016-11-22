@@ -63,9 +63,9 @@ console.log('linkedin reposne: %s',util.inspect(data))
  			errorHandler.error(req,res,next,err);
  		}else{
  			req.session.user = user;
- 			var next = req.session.afterGithubRedirectTo;
- 			delete req.session.afterGithubRedirectTo;
- 			res.redirect(next);
+ 		// 	var next = req.session.afterGithubRedirectTo;
+ 		// 	delete req.session.afterGithubRedirectTo;
+ 			res.redirect('/');
  		}
  	});
 })
