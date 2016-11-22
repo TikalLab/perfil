@@ -1,13 +1,11 @@
 module.exports = {
-  addGitHub: function(db,userID,accessToken,callback){
+  addGitHub: function(db,userID,github,callback){
     var users = db.get('users');
     users.findOneAndUpdate({
       _id: userID
     },{
       $set: {
-        github: {
-          access_token: accessToken
-        }
+        github: github
       }
     },{
       new: true

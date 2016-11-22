@@ -8,6 +8,7 @@ var request = require('request');
 var _ = require('underscore');
 // var github = require('../app_modules/github');
 var errorHandler = require('../app_modules/error');
+var github = require('../app_modules/github');
 
 var users = require('../models/users');
 
@@ -53,7 +54,16 @@ router.get('/authorized',function(req,res,next){
  			});
  		},
 		function(accessToken,callback){
-			users.addGitHub(req.db,req.session.user._id.toString(),accessToken,function(err,user){
+			github.getUser(accessToken,function(err,githubUser){
+				callback(err,accessToken,githubUser)
+			})
+		},
+		function(accessToken,githubUser,callback){
+			var github = {
+				access_token: accessToken,
+				username: githubUser.login
+			}
+			users.addGitHub(req.db,req.session.user._id.toString(),github,function(err,user){
 				callback(err,user)
 			})
 		}
