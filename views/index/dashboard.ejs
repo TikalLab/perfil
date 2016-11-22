@@ -22,45 +22,49 @@
 </div>
 
 <div class="row">
-  <% if(user.github){ %>
-    <div class="col-md-3">
-      <h3><span class="fa fa-github">GitHub Widgets</span></h3>
-      <div>
-        <input id="toggle-github-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
-      </div>
-      <div>
-        <input id="toggle-github-repos-tag-cloud" type="checkbox" data-toggle="toggle"> Repos Tag Cloud
-      </div>
-    </div>
-  <% } %>
 
-  <% if(user.stackoverflow){ %>
-    <div class="col-md-3">
-      <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
-      <div>
-        <input id="toggle-stackoverflow-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
-      </div>
-      <div>
-        <input id="toggle-stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle"> Questions Tag Cloud
-      </div>
-      <div>
-        <input id="toggle-stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle"> Answers Tag Cloud
-      </div>
-    </div>
-  <% } %>
+  <form id="toggles">
 
-  <% if(user.meetup){ %>
-    <div class="col-md-3">
-      <h3><span class="fa fa-meetup">Meetup Widgets</span></h3>
-      <div>
-        <input id="toggle-meetup-memberships" type="checkbox" data-toggle="toggle"> Meetups Membership
+    <% if(user.github){ %>
+      <div class="col-md-3">
+        <h3><span class="fa fa-github">GitHub Widgets</span></h3>
+        <div>
+          <input id="toggle-github-basic-stats" name="github-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
+        </div>
+        <div>
+          <input id="toggle-github-repos-tag-cloud" name="github-repos-tag-cloud" type="checkbox" data-toggle="toggle"> Repos Tag Cloud
+        </div>
       </div>
-      <div>
-        <input id="toggle-meetup-categories-tag-cloud" type="checkbox" data-toggle="toggle"> Categories Tag Cloud
-      </div>
-    </div>
-  <% } %>
+    <% } %>
 
+    <% if(user.stackoverflow){ %>
+      <div class="col-md-3">
+        <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
+        <div>
+          <input id="toggle-stackoverflow-basic-stats" name="stackoverflow-basic-stats" type="checkbox" data-toggle="toggle"> Basic stats
+        </div>
+        <div>
+          <input id="toggle-stackoverflow-questions-tag-cloud" name="stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle"> Questions Tag Cloud
+        </div>
+        <div>
+          <input id="toggle-stackoverflow-answers-tag-cloud" name="stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle"> Answers Tag Cloud
+        </div>
+      </div>
+    <% } %>
+
+    <% if(user.meetup){ %>
+      <div class="col-md-3">
+        <h3><span class="fa fa-meetup">Meetup Widgets</span></h3>
+        <div>
+          <input id="toggle-meetup-memberships" name="meetup-memberships" type="checkbox" data-toggle="toggle"> Meetups Membership
+        </div>
+        <div>
+          <input id="toggle-meetup-categories-tag-cloud" name="meetup-categories-tag-cloud" type="checkbox" data-toggle="toggle"> Categories Tag Cloud
+        </div>
+      </div>
+    <% } %>
+
+  </form>
 </div>
 
 <div id="the-perfil" class="row">
@@ -96,12 +100,27 @@ function toggleWidget(toggleID,checked){
   var path = path + '/' + parts.join('-');
 
   if(checked){
-    $('#' + widgetID).load(path);
+    $('#' + widgetID).load(path,function(){
+      save();
+    });
   }else{
     $('#' + widgetID).empty();
+    save();
   }
 }
 
-
+function save(){
+  $.ajax({
+    type: 'POST',
+    url: '/save',
+    data: $('#toggles').serialize(),
+    success: function(data){
+      alert('save ok');
+    },
+    error: function(){
+      alert('something went wrong...');
+    }
+  });
+}
 
 </script>

@@ -62,7 +62,22 @@ module.exports = {
     },function(err,user){
       callback(err,user)
     })
+  },
+  saveWidgets: function(db,userID,widgets,callback){
+    var users = db.get('users');
+    users.findOneAndUpdate({
+      _id: userID
+    },{
+      $set: {
+        widgets: widgets
+      }
+    },{
+      new: true
+    },function(err,user){
+      callback(err,user)
+    })
   }
+
 
 
 }

@@ -34,6 +34,21 @@ router.get('/logout',function(req,res,next){
 	res.redirect('/')
 })
 
+router.post('/save',function(req,res,next){
+	console.log(util.inspect(req.body))
+
+	var widgets = _.keys(req.body)
+
+	users.saveWidgets(req.db,req.session.user._id.toString(),widgets,function(err,user){
+		if(err){
+			res.send(500);
+		}else{
+			req.session.user = user;
+			res.send(200);
+		}
+	})
+})
+
 router.get('/user',function(req,res,next){
 	console.log('user is: %s',util.inspect(req.session.user))
 	async.parallel([
