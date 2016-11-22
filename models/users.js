@@ -1,3 +1,5 @@
+var util = require('util')
+
 module.exports = {
   addGitHub: function(db,userID,github,callback){
     var users = db.get('users');
@@ -74,6 +76,17 @@ module.exports = {
     },function(err,user){
       callback(err,user)
     })
+  },
+  getByPlatformAndID: function(db,platform,id,callback){
+    var users = db.get('users');
+    var search = {};
+    search[platform + '.username'] = id;
+    console.log('search is %s',util.inspect(search))
+
+    users.findOne(search,function(err,user){
+      callback(err,user)
+    })
+
   }
 
 

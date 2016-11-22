@@ -18,7 +18,7 @@ var db = monk(config.get('mongo.uri'));
 
 var index = require('./routes/index');
 // var emails = require('./routes/emails');
-// var users = require('./routes/users');
+var api = require('./routes/api');
 var widgets = require('./routes/widgets');
 var meetup = require('./routes/meetup');
 var linkedin = require('./routes/linkedin');
@@ -118,7 +118,7 @@ app.use(function(req,res,next){
 app.use('/', index);
 // app.use('/', users);
 // app.use('/queries', queries);
-// app.use('/queries-new', queriesNew);
+app.use('/api', api);
 app.use('/widgets', widgets);
 app.use('/github', github);
 app.use('/linkedin', linkedin);

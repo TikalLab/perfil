@@ -12,6 +12,7 @@ var meetup = require('../app_modules/meetup');
 
 module.exports = {
   githubBasicStats: function(accessToken,callback){
+console.log('HERE')    
   	async.parallel([
   		function(callback){
   			github.getUser(accessToken,function(err,githubUser){
