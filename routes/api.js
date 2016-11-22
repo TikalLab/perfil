@@ -20,13 +20,24 @@ var users = require('../models/users');
 
 
 router.get('/user/:platform/:user_id',function(req,res,next){
-	users.getByPlatformAndID(db,paltform,userID,function(err,user){
-		if(err){
-			res.send(200)
-		}else{
-			
+	async.waterfall([
+		// get user
+		function(callback){
+			users.getByPlatformAndID(db,req.params.paltform,req.params.user_id,function(err,user){
+				callback(err,user)
+			})
+		},
+		function(user,callback){
+			async.each(user.widgets,function(widget,callback){
+
+			},function(err){
+
+			})
 		}
+	],function(err){
+
 	})
+
 })
 
 router.get('/logout',function(req,res,next){

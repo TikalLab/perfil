@@ -13,94 +13,51 @@ var github = require('../app_modules/github');
 var stackoverflow = require('../app_modules/stackoverflow');
 var linkedin = require('../app_modules/linkedin');
 var meetup = require('../app_modules/meetup');
+var widgets = require('../app_modules/widgets');
 
 var users = require('../models/users');
 
 router.get('/github/basic-stats',function(req,res,next){
-	async.parallel([
-		function(callback){
-			github.getUser(req.session.user.github.access_token,function(err,githubUser){
-				callback(err,githubUser)
-			})
-		},
-		function(callback){
-			github.getReposCounts(req.session.user.github.access_token,function(err,githubReposCounts){
-				callback(err,githubReposCounts)
-			})
-		},
-	],function(err,results){
+	widgets.githubBasicStats(req.session.user.github.access_token,function(err,data){
 		if(err){
-			errorHandler.error(req,res,next,err);
+			res.send(500)
 		}else{
-			console.log('results are: %s',util.inspect(results,{depth:8}))
 			render(req,res,'widgets/github/basic-stats',{
-				github_user: results[0],
-				repos_counts: results[1],
+				github_basic_stats: data
 			})
 		}
 	})
 })
 
 router.get('/github/repos-tag-cloud',function(req,res,next){
-	async.parallel([
-		function(callback){
-			github.getLanguagesTagCloud(req.session.user.github.access_token,function(err,githubLanguagesTagCloud){
-				callback(err,githubLanguagesTagCloud)
-			})
-		},
-	],function(err,results){
+	widgets.githubReposTagCloud(req.session.user.github.access_token,function(err,githubLanguagesTagCloud){
 		if(err){
-			errorHandler.error(req,res,next,err);
+			res.sendStatus(500);
 		}else{
-			console.log('results are: %s',util.inspect(results,{depth:8}))
 			render(req,res,'widgets/github/repos-tag-cloud',{
-				repos_tag_cloud: results[0],
+				repos_tag_cloud: githubLanguagesTagCloud
 			})
 		}
 	})
 })
 
 router.get('/stackoverflow/basic-stats',function(req,res,next){
-	async.parallel([
-		function(callback){
-			stackoverflow.getUser(req.session.user.stackoverflow.access_token,function(err,stackoverflowUser){
-				callback(err,stackoverflowUser)
-			})
-		},
-	],function(err,results){
+	widgets.stackoverflowBasicStats(req.session.user.stackoverflow.access_token,function(err,data){
 		if(err){
-			errorHandler.error(req,res,next,err);
+			res.sendStatus(500)
 		}else{
-			console.log('results are: %s',util.inspect(results,{depth:8}))
 			render(req,res,'widgets/stackoverflow/basic-stats',{
-				stackoverflow_user: results[0].items[0],
+				stackoverflow_basic_stats: data,
 			})
 		}
 	})
 })
 
 router.get('/stackoverflow/questions-tag-cloud',function(req,res,next){
-	async.parallel([
-		function(callback){
-			stackoverflow.getUserQuestions(req.session.user.stackoverflow.access_token,function(err,stackoverflowQuestions){
-				callback(err,stackoverflowQuestions)
-			})
-		},
-	],function(err,results){
+	widgets.stackoverflowQuestionsTagCloud(req.session.user.stackoverflow.access_token,function(err,tagCloud){
 		if(err){
-			errorHandler.error(req,res,next,err);
+			res.sendStatus(500)
 		}else{
-			console.log('results are: %s',util.inspect(results,{depth:8}))
-
-			var tags = [];
-			_.each(results[0],function(stackoverflowQuestion){
-				tags = tags.concat(stackoverflowQuestion.tags)
-			})
-
-			tagCloud = _.countBy(tags,function(tag){
-				return tag;
-			})
-
 			render(req,res,'widgets/stackoverflow/questions-tag-cloud',{
 				tag_cloud: tagCloud,
 			})
@@ -109,27 +66,10 @@ router.get('/stackoverflow/questions-tag-cloud',function(req,res,next){
 })
 
 router.get('/stackoverflow/answers-tag-cloud',function(req,res,next){
-	async.parallel([
-		function(callback){
-			stackoverflow.getUserAnswers(req.session.user.stackoverflow.access_token,function(err,stackoverflowAnswers){
-				callback(err,stackoverflowAnswers)
-			})
-		},
-	],function(err,results){
+	widgets.stackoverflowAnswersTagCloud(req.session.user.stackoverflow.access_token,function(err,tagCloud){
 		if(err){
-			errorHandler.error(req,res,next,err);
+			res.sendStatus(500)
 		}else{
-			console.log('results are: %s',util.inspect(results,{depth:8}))
-
-			var tags = [];
-			_.each(results[0],function(stackoverflowAnswer){
-				tags = tags.concat(stackoverflowAnswer.question.tags)
-			})
-
-			tagCloud = _.countBy(tags,function(tag){
-				return tag;
-			})
-
 			render(req,res,'widgets/stackoverflow/answers-tag-cloud',{
 				tag_cloud: tagCloud,
 			})
@@ -138,84 +78,17 @@ router.get('/stackoverflow/answers-tag-cloud',function(req,res,next){
 })
 
 router.get('/meetup/memberships',function(req,res,next){
-	async.parallel([
-		function(callback){
-			meetup.getUserGroups(req.session.user.meetup.refresh_token,function(err,meetupGroups){
-				callback(err,meetupGroups)
-			})
-		},
-	],function(err,results){
+	widgets.meetupMemberships(req.session.user.meetup.refresh_token,function(err,data){
 		if(err){
-			errorHandler.error(req,res,next,err);
+			res.sendStatus(500)
 		}else{
 			render(req,res,'widgets/meetup/memberships',{
-				meetup_groups: results[0],
+				memberships: data,
 			})
 		}
 	})
 })
 
-router.get('/user',function(req,res,next){
-	console.log('user is: %s',util.inspect(req.session.user))
-	async.parallel([
-		function(callback){
-			github.getUser(req.session.user.github.access_token,function(err,githubUser){
-				callback(err,githubUser)
-			})
-		},
-		function(callback){
-			stackoverflow.getUser(req.session.user.stackoverflow.access_token,function(err,stackoverflowUser){
-				callback(err,stackoverflowUser)
-			})
-		},
-		function(callback){
-			linkedin.getUser(req.session.user.linkedin.access_token,function(err,linkedinUser){
-				callback(err,linkedinUser)
-			})
-		},
-		function(callback){
-			stackoverflow.getUserAnswers(req.session.user.stackoverflow.access_token,function(err,stackoverflowAnswers){
-				callback(err,stackoverflowAnswers)
-			})
-		},
-		function(callback){
-			stackoverflow.getUserQuestions(req.session.user.stackoverflow.access_token,function(err,stackoverflowQuestions){
-				callback(err,stackoverflowQuestions)
-			})
-		},
-		function(callback){
-			github.getReposCounts(req.session.user.github.access_token,function(err,githubReposCounts){
-				callback(err,githubReposCounts)
-			})
-		},
-		function(callback){
-			github.getLanguagesTagCloud(req.session.user.github.access_token,function(err,githubLanguagesTagCloud){
-				callback(err,githubLanguagesTagCloud)
-			})
-		},
-		function(callback){
-			meetup.getUserGroups(req.session.user.meetup.refresh_token,function(err,meetupGroups){
-				callback(err,meetupGroups)
-			})
-		},
-	],function(err,results){
-		if(err){
-			errorHandler.error(req,res,next,err);
-		}else{
-			console.log('results are: %s',util.inspect(results,{depth:8}))
-			render(req,res,'index/user',{
-				github: results[0],
-				stackoverflow: results[1],
-				linkedin: results[2],
-				stackoverflow_answers: results[3],
-				stackoverflow_questions: results[4],
-				github_repos_counts: results[5],
-				github_languages_tag_cloud: results[6],
-				meetup_groups: results[7]
-			})
-		}
-	})
-})
 
 
 function render(req,res,template,params){
