@@ -77,13 +77,13 @@ router.get('/stackoverflow/answers-tag-cloud',function(req,res,next){
 	})
 })
 
-router.get('/meetup/memberships',function(req,res,next){
-	widgets.meetupMemberships(req.session.user.meetup.refresh_token,function(err,data){
+router.get('/meetup/groups',function(req,res,next){
+	widgets.meetupGroups(req.session.user.meetup.refresh_token,function(err,data){
 		if(err){
 			res.sendStatus(500)
 		}else{
-			render(req,res,'widgets/meetup/memberships',{
-				memberships: data,
+			render(req,res,'widgets/meetup/groups',{
+				groups: data,
 			})
 		}
 	})

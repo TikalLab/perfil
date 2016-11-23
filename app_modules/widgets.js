@@ -12,7 +12,6 @@ var meetup = require('../app_modules/meetup');
 
 module.exports = {
   githubBasicStats: function(accessToken,callback){
-console.log('HERE')    
   	async.parallel([
   		function(callback){
   			github.getUser(accessToken,function(err,githubUser){
@@ -61,7 +60,14 @@ console.log('HERE')
   		if(err){
   			callback(err)
   		}else{
-        callback(null,results[0].items[0])
+        callback(null,{
+          reputation: results[0].items[0].reputation,
+          badges:{
+            gold: results[0].items[0].badge_counts.gold,
+            silver: results[0].items[0].badge_counts.silver,
+            bronze: results[0].items[0].badge_counts.bronze
+          }
+        })
   		}
   	})
   },
@@ -114,7 +120,7 @@ console.log('HERE')
   		}
   	})
   },
-  meetupMemberships: function(accessToken,callback){
+  meetupGroups: function(accessToken,callback){
     async.parallel([
   		function(callback){
   			meetup.getUserGroups(accessToken,function(err,meetupGroups){
