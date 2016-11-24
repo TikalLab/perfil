@@ -154,5 +154,16 @@ module.exports = {
   			callback(null,tagCloud)
       }
     })
+  },
+  linkedinSummary: function(accessToken,callback){
+    async.parallel([
+  		function(callback){
+  			linkedin.getUser(accessToken,function(err,linkedinUser){
+  				callback(err,linkedinUser)
+  			})
+  		},
+  	],function(err,results){
+  		callback(err,results[0])
+  	})
   }
 }

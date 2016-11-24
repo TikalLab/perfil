@@ -64,6 +64,14 @@
       </div>
     <% } %>
 
+    <% if(user.linkedin){ %>
+      <div class="col-md-3">
+        <h3><span class="fa fa-linkedin">LinkedIn Widgets</span></h3>
+        <div>
+          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Meetups Membership
+        </div>
+      </div>
+    <% } %>
   </form>
 </div>
 
@@ -81,6 +89,8 @@
   <div id="widget-meetup-groups" class="col-md-3">
   </div>
   <div id="widget-meetup-group-categories-tag-cloud" class="col-md-3">
+  </div>
+  <div id="widget-linkedin-summary" class="col-md-3">
   </div>
 </div>
 

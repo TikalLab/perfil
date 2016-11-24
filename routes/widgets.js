@@ -101,6 +101,19 @@ router.get('/meetup/group-categories-tag-cloud',function(req,res,next){
 	})
 })
 
+router.get('/linkedin/summary',function(req,res,next){
+	widgets.linkedinSummary(req.session.user.linkedin.access_token,function(err,linkedinSummary){
+		if(err){
+			res.sendStatus(500)
+		}else{
+console.log('linkedin summary: %s',util.inspect(linkedinSummary))			
+			render(req,res,'widgets/linkedin/summary',{
+				linkedin_summary: linkedinSummary,
+			})
+		}
+	})
+})
+
 
 
 function render(req,res,template,params){
