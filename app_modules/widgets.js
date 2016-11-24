@@ -130,5 +130,29 @@ module.exports = {
   	],function(err,results){
   		callback(err,results[0])
   	})
+  },
+  meetupGroupCategoriesTagCloud: function(accessToken,callback){
+    async.parallel([
+      function(callback){
+        meetup.getUserGroups(accessToken,function(err,meetupGroups){
+          callback(err,meetupGroups)
+        })
+      },
+    ],function(err,results){
+      if(err){
+        callback(err)
+      }else{
+        var tags = [];
+        _.each(results[0],function(meetupGroup){
+          tags.push(meetupGroup.category.name)
+        })
+
+        var tagCloud = _.countBy(tags,function(tag){
+          return tag;
+        })
+
+  			callback(null,tagCloud)
+      }
+    })
   }
 }

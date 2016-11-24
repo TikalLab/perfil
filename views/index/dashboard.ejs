@@ -59,7 +59,7 @@
           <input id="toggle-meetup-groups" name="meetup-groups" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-groups') ? 'checked' : ''%>> Meetups Membership
         </div>
         <div>
-          <input id="toggle-meetup-categories-tag-cloud" name="meetup-categories-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
+          <input id="toggle-meetup-group-categories-tag-cloud" name="meetup-group-categories-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-group-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
         </div>
       </div>
     <% } %>
@@ -79,6 +79,8 @@
   <div id="widget-stackoverflow-answers-tag-cloud" class="col-md-3">
   </div>
   <div id="widget-meetup-groups" class="col-md-3">
+  </div>
+  <div id="widget-meetup-group-categories-tag-cloud" class="col-md-3">
   </div>
 </div>
 

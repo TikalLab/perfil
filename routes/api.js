@@ -75,6 +75,9 @@ function invoke(widget,user,callback){
 		case 'meetup-groups':
 			widgets.meetupGroups(user.meetup.refresh_token,callback);
 			break;
+		case 'meetup-group-categories-tag-cloud':
+			widgets.meetupGroupCategoriesTagCloud(user.meetup.refresh_token,callback);
+			break;
 		default:
 			callback(null,null)
 		  break;

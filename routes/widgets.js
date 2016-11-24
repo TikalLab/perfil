@@ -89,6 +89,18 @@ router.get('/meetup/groups',function(req,res,next){
 	})
 })
 
+router.get('/meetup/group-categories-tag-cloud',function(req,res,next){
+	widgets.meetupGroupCategoriesTagCloud(req.session.user.meetup.refresh_token,function(err,tagCloud){
+		if(err){
+			res.sendStatus(500)
+		}else{
+			render(req,res,'widgets/meetup/group-categories-tag-cloud',{
+				tag_cloud: tagCloud,
+			})
+		}
+	})
+})
+
 
 
 function render(req,res,template,params){
