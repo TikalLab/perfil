@@ -35,7 +35,7 @@ router.get('/user/:platform/:id',function(req,res,next){
 					if(err){
 						callback(err)
 					}else{
-						ret[widget.replace('-','_')] = data;
+						ret[widget.replace(/-/g,'_')] = data;
 						callback()
 					}
 				})

@@ -23,7 +23,7 @@
     <script type="text/javascript" src="/zwin/js/jquery-ui-map.js"></script>
     <script type="text/javascript" src="/zwin/js/jquery.carouFredSel.js"></script>
     <script type="text/javascript" src="/zwin/js/plugins.js"></script>
-    <script type="text/javascript" src="/zwin/js/custom.js"></script>
+    <script type="text/javascript" src‘="/zwin/js’/custom.js"></script>
 
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -158,34 +158,59 @@
                     </div>
                     <div class="skills-section">
                         <!-- Skills -->
-                        <h3 class="main-heading">Graphics and media skills</h3>
-                        <ul class="skills">
-                            <li>
-                                <h4>Photoshop</h4>
-                                <div class="rating" data-rat="4"></div>
+                        <% if(github_basic_stats){ %>
+                          <h3 class="main-heading">GitHub Basic Stats</h3>
+                          <ul class="skills">
+                              <li>
+                                  <h4>Followers</h4>
+                                  <div class="rating"><%=github_basic_stats.followers%></div>
 
-                            </li>
-                            <li>
-                                <h4>Indesign</h4>
-                                <div class="rating" data-rat="6"></div>
-                            </li>
-                            <li>
-                                <h4>Illustrator</h4>
-                                <div class="rating" data-rat="5"></div>
-                            </li>
-                            <li>
-                                <h4>Flash</h4>
-                                <div class="rating" data-rat="3"></div>
-                            </li>
-                            <li>
-                                <h4>Corel Draw</h4>
-                                <div class="rating" data-rat="5"></div>
-                            </li>
-                            <li>
-                                <h4>Cinema4D</h4>
-                                <div class="rating" data-rat="4"></div>
-                            </li>
-                        </ul>
+                              </li>
+                              <li>
+                                  <h4>Following</h4>
+                                  <div class="rating"><%=github_basic_stats.followers%></div>
+                              </li>
+                              <li>
+                                <h4>Public Repositories</h4>
+                                <div class="rating"><%=github_basic_stats.public_repos%></div>
+                              </li>
+                              <li>
+                                <h4>Public Gists</h4>
+                                <div class="rating"><%=github_basic_stats.public_gists%></div>
+                              </li>
+                              <li>
+                                <h4>Total Stars</h4>
+                                <div class="rating"><%=github_basic_stats.total_stars%></div>
+                              </li>
+                              <li>
+                                <h4>Total Watchers</h4>
+                                <div class="rating"><%=github_basic_stats.total_watchers%></div>
+                              </li>
+                          </ul>
+                        <% } %>
+
+                        <% if(stackoverflow_basic_stats){ %>
+                          <h3 class="main-heading">StackOverflow Basic Stats</h3>
+                          <ul class="skills">
+                              <li>
+                                  <h4>Reputation</h4>
+                                  <div class="rating"><%=stackoverflow_basic_stats.reputation%></div>
+
+                              </li>
+                              <li>
+                                  <h4>Gold Badges</h4>
+                                  <div class="rating"><%=stackoverflow_basic_stats.badges.gold%></div>
+                              </li>
+                              <li>
+                                <h4>Silver Badges</h4>
+                                <div class="rating"><%=stackoverflow_basic_stats.badges.silver%></div>
+                              </li>
+                              <li>
+                                <h4>Bronze Badges</h4>
+                                <div class="rating"><%=stackoverflow_basic_stats.badges.bronze%></div>
+                              </li>
+                          </ul>
+                        <% } %>
 
                         <h3 class="main-heading">Programming Skills</h3>
                         <ul class="skills">
