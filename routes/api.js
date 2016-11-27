@@ -35,7 +35,7 @@ router.get('/user/:platform/:id',function(req,res,next){
 					if(err){
 						callback(err)
 					}else{
-						ret[widget] = data;
+						ret[widget.replace('-','_')] = data;
 						callback()
 					}
 				})
@@ -77,6 +77,9 @@ function invoke(widget,user,callback){
 			break;
 		case 'meetup-group-categories-tag-cloud':
 			widgets.meetupGroupCategoriesTagCloud(user.meetup.refresh_token,callback);
+			break;
+		case 'linkedin-summary':
+			widgets.linkedinSummary(user.linkedin.access_token,callback);
 			break;
 		default:
 			callback(null,null)

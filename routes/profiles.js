@@ -26,7 +26,9 @@ router.get('/:platform/:id',function(req,res,next){
 		}else if(response.statusCode >= 300){
 			errorHandler.error(req,res,next,body);
 		}else{
-			render(req,res,'profiles/profile',JSON.parse(body))
+			var json = JSON.parse(body);
+			console.log('json to render: %s',util.inspect(json))
+			render(req,res,'profiles/zwin',json)
 		}
 	})
 
