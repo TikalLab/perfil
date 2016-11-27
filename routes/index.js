@@ -49,6 +49,8 @@ router.post('/save',function(req,res,next){
 	})
 })
 
+
+
 router.get('/user',function(req,res,next){
 	console.log('user is: %s',util.inspect(req.session.user))
 	async.parallel([

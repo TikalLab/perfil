@@ -17,7 +17,7 @@ var monk = require('monk');
 var db = monk(config.get('mongo.uri'));
 
 var index = require('./routes/index');
-// var emails = require('./routes/emails');
+var profiles = require('./routes/profiles');
 var api = require('./routes/api');
 var widgets = require('./routes/widgets');
 var meetup = require('./routes/meetup');
@@ -117,7 +117,7 @@ app.use(function(req,res,next){
 
 app.use('/', index);
 // app.use('/', users);
-// app.use('/queries', queries);
+app.use('/profiles', profiles);
 app.use('/api', api);
 app.use('/widgets', widgets);
 app.use('/github', github);
