@@ -1,1 +1,12 @@
-hello
+<h3>LinkedIn Summary</h3>
+<table>
+  <tr>
+    <td>Name</td><td><%=linkedin_summary.firstName%> <%=linkedin_summary.lastName%></td>
+  </tr>
+  <tr>
+    <td>Headline</td><td><%=linkedin_summary.headline%></td>
+  </tr>
+  <tr>
+    <td># Connections</td><td><%=linkedin_summary.numConnections%><%=(linkedin_summary.numConnectionsCapped ? '+' : '')%></td>
+  </tr>
+</table>

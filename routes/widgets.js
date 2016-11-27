@@ -106,7 +106,7 @@ router.get('/linkedin/summary',function(req,res,next){
 		if(err){
 			res.sendStatus(500)
 		}else{
-console.log('linkedin summary: %s',util.inspect(linkedinSummary))			
+console.log('linkedin summary: %s',util.inspect(linkedinSummary,{depth:8}))			
 			render(req,res,'widgets/linkedin/summary',{
 				linkedin_summary: linkedinSummary,
 			})
