@@ -122,6 +122,8 @@ module.exports = {
   				tags = tags.concat(stackoverflowAnswer.question.tags)
   			})
 
+        tags = tags.sort();
+
   			tagCloud = _.countBy(tags,function(tag){
   				return tag;
   			})
@@ -164,6 +166,8 @@ module.exports = {
         _.each(results[0],function(meetupGroup){
           tags.push(meetupGroup.category.name)
         })
+
+        tags = tags.sort();
 
         var tagCloud = _.countBy(tags,function(tag){
           return tag;

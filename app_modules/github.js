@@ -129,6 +129,9 @@ module.exports = {
 				})
 			},
 			function(languages,callback){
+
+				languages = languages.sort()
+
 				tagCloud = _.countBy(languages,function(language){
 			    return language;
 			  })
