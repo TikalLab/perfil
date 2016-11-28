@@ -66,6 +66,9 @@ function invoke(widget,user,callback){
 		case 'github-repos-tag-cloud':
 			widgets.githubReposTagCloud(user.github.access_token,callback);
 			break;
+		case 'stackoverflow-profile-link':
+			widgets.stackoverflowProfileLink(user.stackoverflow.access_token,callback);
+			break;
 		case 'stackoverflow-basic-stats':
 			widgets.stackoverflowBasicStats(user.stackoverflow.access_token,callback);
 			break;
@@ -75,11 +78,17 @@ function invoke(widget,user,callback){
 		case 'stackoverflow-answers-tag-cloud':
 			widgets.stackoverflowAnswersTagCloud(user.stackoverflow.access_token,callback);
 			break;
+		case 'meetup-profile-link':
+			widgets.meetupProfileLink(user.meetup.refresh_token,callback);
+			break;
 		case 'meetup-groups':
 			widgets.meetupGroups(user.meetup.refresh_token,callback);
 			break;
 		case 'meetup-group-categories-tag-cloud':
 			widgets.meetupGroupCategoriesTagCloud(user.meetup.refresh_token,callback);
+			break;
+		case 'linkedin-profile-link':
+			widgets.linkedinProfileLink(user.linkedin.access_token,callback);
 			break;
 		case 'linkedin-summary':
 			widgets.linkedinSummary(user.linkedin.access_token,callback);

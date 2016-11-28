@@ -48,12 +48,18 @@
                 <!-- Social Icons -->
                 <ul class="socialicons">
                     <li class="socials-text">Professional Profiles</li>
-                    <li><a href="#" class="transition"><span class="fa fa-linkedin"></span></a></li>
+                    <% if(typeof linkedin_profile_link != 'undefined'){ %>
+                      <li><a href="<%=linkedin_profile_link%>" class="transition"><span class="fa fa-linkedin"></span></a></li>
+                    <% } %>
                     <% if(typeof github_profile_link != 'undefined'){ %>
                       <li><a href="<%=github_profile_link%>" class="transition"><span class="fa fa-github"></span></a></li>
                     <% } %>
-                    <li><a href="#" class="transition"><span class="fa fa-stack-overflow"></span></a></li>
-                    <li><a href="#" class="transition"><span class="fa fa-meetup"></span></a></li>
+                    <% if(typeof stackoverflow_profile_link != 'undefined'){ %>
+                      <li><a href="<%=stackoverflow_profile_link%>" class="transition"><span class="fa fa-stack-overflow"></span></a></li>
+                    <% } %>
+                    <% if(typeof meetup_profile_link != 'undefined'){ %>
+                      <li><a href="<%=meetup_profile_link%>" class="transition"><span class="fa fa-meetup"></span></a></li>
+                    <% } %>
                 </ul>
                 <!-- /Social Icons -->
             </header>

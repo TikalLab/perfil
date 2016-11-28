@@ -35,6 +35,33 @@ module.exports = {
 			}
 		})
 	},
+	getUser: function(refreshToken,callback){
+		var thisObject = this;
+		async.waterfall([
+			function(callback){
+				thisObject.refreshToken(refreshToken,function(err,accessToken){
+					callback(err,accessToken)
+				})
+			},
+			function(accessToken,callback){
+				var headers = {
+					Authorization: util.format('Bearer %s',accessToken)
+				}
+				request('https://api.meetup.com/2/member/self',{headers: headers},function(error,response,body){
+					if(error){
+						callback(error);
+					}else if(response.statusCode > 300){
+						callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+					}else{
+						var data = JSON.parse(body)
+						callback(null,data);
+					}
+				});
+			},
+		],function(err,user){
+			callback(err,user)
+		})
+	},
 	getUserGroups: function(refreshToken,callback){
 		var thisObject = this;
 		async.waterfall([

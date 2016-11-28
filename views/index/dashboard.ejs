@@ -44,6 +44,9 @@
       <div class="col-md-3">
         <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
         <div>
+          <input id="toggle-stackoverflow-profile-link" name="stackoverflow-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-profile-link') ? 'checked' : ''%>> Profile Link
+        </div>
+        <div>
           <input id="toggle-stackoverflow-basic-stats" name="stackoverflow-basic-stats" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-basic-stats') ? 'checked' : ''%>> Basic stats
         </div>
         <div>
@@ -59,7 +62,10 @@
       <div class="col-md-3">
         <h3><span class="fa fa-meetup">Meetup Widgets</span></h3>
         <div>
-          <input id="toggle-meetup-groups" name="meetup-groups" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-groups') ? 'checked' : ''%>> Meetups Membership
+          <input id="toggle-meetup-profile-link" name="meetup-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-profile-link') ? 'checked' : ''%>> Profile Link
+        </div>
+        <div>
+          <input id="toggle-meetup-groups" name="meetup-groups" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-groups') ? 'checked' : ''%>> Meetup Groups
         </div>
         <div>
           <input id="toggle-meetup-group-categories-tag-cloud" name="meetup-group-categories-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-group-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
@@ -71,7 +77,10 @@
       <div class="col-md-3">
         <h3><span class="fa fa-linkedin">LinkedIn Widgets</span></h3>
         <div>
-          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Meetups Membership
+          <input id="toggle-linkedin-profile-link" name="linkedin-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-profile-link') ? 'checked' : ''%>> Profile Link
+        </div>
+        <div>
+          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Linkedin Summary
         </div>
       </div>
     <% } %>
@@ -85,15 +94,21 @@
   </div>
   <div id="widget-github-repos-tag-cloud" class="col-md-3">
   </div>
+  <div id="widget-stackoverflow-profile-link" class="col-md-3">
+  </div>
   <div id="widget-stackoverflow-basic-stats" class="col-md-3">
   </div>
   <div id="widget-stackoverflow-questions-tag-cloud" class="col-md-3">
   </div>
   <div id="widget-stackoverflow-answers-tag-cloud" class="col-md-3">
   </div>
+  <div id="widget-meetup-profile-link" class="col-md-3">
+  </div>
   <div id="widget-meetup-groups" class="col-md-3">
   </div>
   <div id="widget-meetup-group-categories-tag-cloud" class="col-md-3">
+  </div>
+  <div id="widget-linkedin-profile-link" class="col-md-3">
   </div>
   <div id="widget-linkedin-summary" class="col-md-3">
   </div>

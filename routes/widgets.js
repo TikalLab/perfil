@@ -126,6 +126,42 @@ router.get('/github/profile-link',function(req,res,next){
 	})
 })
 
+router.get('/linkedin/profile-link',function(req,res,next){
+	widgets.linkedinProfileLink(req.session.user.linkedin.access_token,function(err,linkedinProfileLink){
+		if(err){
+			res.sendStatus(500)
+		}else{
+			render(req,res,'widgets/linkedin/profile-link',{
+				profile_link: linkedinProfileLink,
+			})
+		}
+	})
+})
+
+router.get('/meetup/profile-link',function(req,res,next){
+	widgets.meetupProfileLink(req.session.user.meetup.refresh_token,function(err,meetupProfileLink){
+		if(err){
+			res.sendStatus(500)
+		}else{
+			render(req,res,'widgets/meetup/profile-link',{
+				profile_link: meetupProfileLink,
+			})
+		}
+	})
+})
+
+router.get('/stackoverflow/profile-link',function(req,res,next){
+	widgets.stackoverflowProfileLink(req.session.user.stackoverflow.access_token,function(err,stackoverflowProfileLink){
+		if(err){
+			res.sendStatus(500)
+		}else{
+			render(req,res,'widgets/stackoverflow/profile-link',{
+				profile_link: stackoverflowProfileLink,
+			})
+		}
+	})
+})
+
 function render(req,res,template,params){
 
 //	params.user = req.session.user;

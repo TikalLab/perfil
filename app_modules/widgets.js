@@ -203,4 +203,37 @@ module.exports = {
   		callback(err,results[0])
   	})
   },
+  linkedinProfileLink: function(accessToken,callback){
+    async.parallel([
+  		function(callback){
+  			linkedin.getUser(accessToken,function(err,linkedinUser){
+  				callback(err,linkedinUser.publicProfileUrl)
+  			})
+  		},
+  	],function(err,results){
+  		callback(err,results[0])
+  	})
+  },
+  stackoverflowProfileLink: function(accessToken,callback){
+    async.parallel([
+  		function(callback){
+  			stackoverflow.getUser(accessToken,function(err,stackoverflowUser){
+  				callback(err,stackoverflowUser)
+  			})
+  		},
+  	],function(err,results){
+  		callback(err,results[0].items[0].link)
+  	})
+  },
+  meetupProfileLink: function(refreshToken,callback){
+    async.parallel([
+  		function(callback){
+  			meetup.getUser(refreshToken,function(err,meetupUser){
+  				callback(err,meetupUser)
+  			})
+  		},
+  	],function(err,results){
+  		callback(err,results[0].link)
+  	})
+  },
 }
