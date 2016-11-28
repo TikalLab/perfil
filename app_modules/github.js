@@ -132,7 +132,16 @@ module.exports = {
 				tagCloud = _.countBy(languages,function(language){
 			    return language;
 			  })
-				callback(null,tagCloud)
+
+				var values = _.values(tagCloud);
+        var min = _.min(values);
+        var max = _.max(values);
+
+  			callback(null,{
+          cloud: tagCloud,
+          min: min,
+          max: max
+        })
 			}
 		],function(err,tagCloud){
 			callback(err,tagCloud)

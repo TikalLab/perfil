@@ -41,6 +41,7 @@
     "grep1": "*",
     "fs-extra": "*",
     "slug": "*",
+    "mathjs": "*",
     "git-patch-additions": "*"
   }
 }

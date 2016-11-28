@@ -7,6 +7,7 @@ var async = require('async');
 var request = require('request');
 var _ = require('underscore');
 var moment = require('moment')
+var math = require('mathjs')
 // var github = require('../app_modules/github');
 var errorHandler = require('../app_modules/error');
 var github = require('../app_modules/github');
@@ -47,6 +48,7 @@ function render(req,res,template,params){
 	params.moment = moment;
 	params.config = config;
 	params.util = util;
+	params.math = math;
 
 	// params.alertIcons = alertIcons;
 	// params.alert = req.session.alert;

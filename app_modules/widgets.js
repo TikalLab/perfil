@@ -88,11 +88,21 @@ module.exports = {
   				tags = tags.concat(stackoverflowQuestion.tags)
   			})
 
+        tags = tags.sort();
+
   			tagCloud = _.countBy(tags,function(tag){
   				return tag;
   			})
 
-  			callback(null,tagCloud)
+        var values = _.values(tagCloud);
+        var min = _.min(values);
+        var max = _.max(values);
+
+  			callback(null,{
+          cloud: tagCloud,
+          min: min,
+          max: max
+        })
   		}
   	})
   },
@@ -116,7 +126,15 @@ module.exports = {
   				return tag;
   			})
 
-  			callback(null,tagCloud)
+        var values = _.values(tagCloud);
+        var min = _.min(values);
+        var max = _.max(values);
+
+  			callback(null,{
+          cloud: tagCloud,
+          min: min,
+          max: max
+        })
   		}
   	})
   },
@@ -151,7 +169,15 @@ module.exports = {
           return tag;
         })
 
-  			callback(null,tagCloud)
+        var values = _.values(tagCloud);
+        var min = _.min(values);
+        var max = _.max(values);
+
+  			callback(null,{
+          cloud: tagCloud,
+          min: min,
+          max: max
+        })
       }
     })
   },

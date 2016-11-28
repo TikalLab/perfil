@@ -1,0 +1,20 @@
+.tag-cloud {
+    display: inline;
+    list-style-type: none;
+    width: 400px;
+    margin-bottom: 25px;
+}
+.tag-cloud li {
+    list-style: none;
+    display: inline;
+    padding-right: 4px;
+}
+
+.skills-section, .timeline-section{
+  position: relative;
+  top: -25px;
+}
+
+h3.main-heading {
+  margin-top: 35px;
+}
