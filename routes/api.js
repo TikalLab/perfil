@@ -57,6 +57,9 @@ router.get('/user/:platform/:id',function(req,res,next){
 function invoke(widget,user,callback){
 	console.log('invoking %s',widget)
 	switch(widget){
+		case 'github-profile-link':
+			widgets.githubProfileLink(user.github.access_token,callback);
+			break;
 		case 'github-basic-stats':
 			widgets.githubBasicStats(user.github.access_token,callback);
 			break;

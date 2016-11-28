@@ -29,6 +29,9 @@
       <div class="col-md-3">
         <h3><span class="fa fa-github">GitHub Widgets</span></h3>
         <div>
+          <input id="toggle-github-profile-link" name="github-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-profile-link') ? 'checked' : ''%>> Profile Link
+        </div>
+        <div>
           <input id="toggle-github-basic-stats" name="github-basic-stats" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-basic-stats') ? 'checked' : ''%>> Basic stats
         </div>
         <div>
@@ -76,6 +79,8 @@
 </div>
 
 <div id="the-perfil" class="row">
+  <div id="widget-github-profile-link" class="col-md-3">
+  </div>
   <div id="widget-github-basic-stats" class="col-md-3">
   </div>
   <div id="widget-github-repos-tag-cloud" class="col-md-3">

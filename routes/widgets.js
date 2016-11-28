@@ -106,7 +106,7 @@ router.get('/linkedin/summary',function(req,res,next){
 		if(err){
 			res.sendStatus(500)
 		}else{
-console.log('linkedin summary: %s',util.inspect(linkedinSummary,{depth:8}))			
+console.log('linkedin summary: %s',util.inspect(linkedinSummary,{depth:8}))
 			render(req,res,'widgets/linkedin/summary',{
 				linkedin_summary: linkedinSummary,
 			})
@@ -114,7 +114,17 @@ console.log('linkedin summary: %s',util.inspect(linkedinSummary,{depth:8}))
 	})
 })
 
-
+router.get('/github/profile-link',function(req,res,next){
+	widgets.githubProfileLink(req.session.user.github.access_token,function(err,githubProfileLink){
+		if(err){
+			res.sendStatus(500)
+		}else{
+			render(req,res,'widgets/github/profile-link',{
+				profile_link: githubProfileLink,
+			})
+		}
+	})
+})
 
 function render(req,res,template,params){
 

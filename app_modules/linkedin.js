@@ -22,7 +22,7 @@ module.exports = {
 			format: 'json',
 		}
 		// console.log('headers are %s',util.inspect(headers))
-		request('https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,summary,num-connections,num-connections-capped,public-profile-url,positions)',{headers: headers, qs: qs},function(error,response,body){
+		request('https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,summary,num-connections,num-connections-capped,public-profile-url,positions,location,industry,specialties)',{headers: headers, qs: qs},function(error,response,body){
 			if(error){
 				callback(error);
 			}else if(response.statusCode > 300){

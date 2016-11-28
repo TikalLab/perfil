@@ -191,5 +191,16 @@ module.exports = {
   	],function(err,results){
   		callback(err,results[0])
   	})
-  }
+  },
+  githubProfileLink: function(accessToken,callback){
+    async.parallel([
+  		function(callback){
+  			github.getUser(accessToken,function(err,githubUser){
+  				callback(err,githubUser.html_url)
+  			})
+  		},
+  	],function(err,results){
+  		callback(err,results[0])
+  	})
+  },
 }
