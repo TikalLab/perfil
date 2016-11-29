@@ -23,7 +23,8 @@
 		"client_secret": "LINKEDIN_CLIENT_SECRET"
 	},
 	"stackoverflow": {
-		"client_secret": "STACKOVERFLOW_CLIENT_SECRET"
+		"client_secret": "STACKOVERFLOW_CLIENT_SECRET",
+		"key": "STACKOVERFLOW_KEY"
 	},
 	"meetup": {
 		"client_secret": "MEETUP_CLIENT_SECRET"
