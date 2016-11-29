@@ -23,7 +23,7 @@ router.get('/:platform/:id',function(req,res,next){
 	var url = util.format('http://%s/api/user/%s/%s',config.get('app.domain'),req.params.platform,req.params.id)
 	request(url,function(error,response,body){
 		if(error){
-			errorHandler.error(req,res,next,err);
+			errorHandler.error(req,res,next,error);
 		}else if(response.statusCode >= 300){
 			errorHandler.error(req,res,next,body);
 		}else{
