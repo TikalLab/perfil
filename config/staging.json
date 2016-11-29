@@ -6,7 +6,7 @@
 	"app": {
 		"name": "perfil_dev",
 		"email": "daily@snapgluedev.com",
-		"domain": "localhost:3000",
+		"domain": "perfil-staging.herokuapp.com",
 		"unsubscribe_secret": "",
 		"cookie_secret": "abc",
 		"cdn_url": "",
