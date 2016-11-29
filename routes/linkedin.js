@@ -22,7 +22,7 @@ router.get('/authorize',function(req,res,next){
 			redirect_uri: 'http://' + config.get('linkedin.redirect_domain') + '/linkedin/authorized',
 			state: 'linkedinapisucks',
 			// scope: 'r_basicprofile'
-			scope: 'r_fullprofile'
+			// scope: 'r_fullprofile'
 
 		}
 	}
