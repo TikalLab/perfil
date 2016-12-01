@@ -112,6 +112,26 @@ console.log('meetup res: %s',util.inspect(data))
 		],function(err,groups){
 			callback(err,groups)
 		})
+	},
+	getUserRsvps: function(refreshToken,callback){
+		var thisObject = this;
+		async.waterfall([
+			function(callback){
+				thisObject.getUserGroups(refreshToken,function(err,groups){
+					callback(err,groups)
+				})
+			}
+			function(groups,callback){
+				thisObject.refreshToken(refreshToken,function(err,accessToken){
+					callback(err,groups,accessToken)
+				})
+			},
+			function(groups,accessToken,callback){
+
+			}
+		],function(err){
+
+		});
 	}
 
 
