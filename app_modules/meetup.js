@@ -113,6 +113,46 @@ console.log('meetup res: %s',util.inspect(data))
 			callback(err,groups)
 		})
 	},
+	getGroupEvents: function(accessToken,group,callback){
+		var events = [];
+		var offset = 0;
+		var linkHeader;
+
+		var headers = {
+			Authorization: util.format('Bearer %s',accessToken)
+		}
+
+		async.whilst(
+			function(){
+				return offset !== false;
+			},
+			function(callback){
+				var qs = {
+					page: 20,
+					offset: offset
+				}
+				var url = util.format('https://api.meetup.com/%s/events',group.urlname)
+				request(url,{headers: headers, qs: qs},function(error,response,body){
+					if(error){
+						callback(error);
+					}else if(response.statusCode > 300){
+						callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+					}else{
+						var data = JSON.parse(body)
+console.log('meetup res: %s',util.inspect(data))
+						events = events.concat(data);
+						linkHeader = parseLinkHeader(response.headers.link);
+						offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
+						callback(null,events);
+					}
+				});
+			},
+			function(err,events){
+				callback(err,events)
+			}
+		);
+
+	},
 	getUserRsvps: function(refreshToken,callback){
 		var thisObject = this;
 		async.waterfall([
@@ -120,14 +160,30 @@ console.log('meetup res: %s',util.inspect(data))
 				thisObject.getUserGroups(refreshToken,function(err,groups){
 					callback(err,groups)
 				})
-			}
+			},
 			function(groups,callback){
 				thisObject.refreshToken(refreshToken,function(err,accessToken){
 					callback(err,groups,accessToken)
 				})
 			},
 			function(groups,accessToken,callback){
-
+				var allEvents = [];
+				async.each(groups,function(group,callback){
+					thisObject.getGroupEvents(accessToken,group,function(err,events){
+						if(err){
+							callback(err)
+						}else{
+							allEvents = allEvents.concat(events)
+							callback()
+						}
+					})
+				},function(err){
+					callback(err,accessToken,allEvents)
+				})
+			},
+			// per event, get if the user was rsvp
+			function(accessToken,allEvents,callback){
+				
 			}
 		],function(err){
 
