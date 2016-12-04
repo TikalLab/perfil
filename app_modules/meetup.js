@@ -117,7 +117,7 @@ module.exports = {
 		var events = [];
 		var offset = 0;
 		var linkHeader;
-		// var url = util.format('https://api.meetup.com/%s/events',group.urlname)
+		// var url = util.format('https://api.meetup.com/%s/events?page=200&status=past',group.urlname)
 
 		var headers = {
 			Authorization: util.format('Bearer %s',accessToken)
@@ -125,8 +125,8 @@ module.exports = {
 
 		async.whilst(
 			function(){
-				return offset !== false;
-				// return url;
+				// return offset !== false;
+				return url;
 			},
 			function(callback){
 				var qs = {
@@ -148,14 +148,14 @@ module.exports = {
 // console.log('meetup res: %s',util.inspect(data))
 						events = events.concat(data);
 						linkHeader = parseLinkHeader(response.headers.link);
-						// if(group.urlname == 'full-stack-developer-il'){
-						// 	console.log('current batch count: %s',data.length)
-						// 	console.log('current data: %s',util.inspect(data))
-						// 	console.log('limkheader: %s',util.inspect(linkHeader))
-						// 	console.log('first event id %s',data[0].id)
-						// }
-						offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
-						// offset = (linkHeader? ('next' in linkHeader ? offset + 1 : false) : false);
+						if(group.urlname == 'ILTechTalks'){
+							console.log('current batch count: %s',data.length)
+							// console.log('current data: %s',util.inspect(data))
+							console.log('linkheader: %s',util.inspect(linkHeader))
+							console.log('first event id %s',data[0].id)
+						}
+						// offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
+						offset = (linkHeader? ('next' in linkHeader ? offset + 1 : false) : false);
 						// url = (linkHeader? ('next' in linkHeader ? linkHeader.next.url : false) : false);
 						callback(null,events);
 					}
@@ -229,7 +229,7 @@ console.log('got groups')
 				})
 			},
 			function(meetupUser,groups,accessToken,callback){
-console.log('refreshed token')
+console.log('refreshed token. access token is %s',accessToken)
 				var allEvents = [];
 console.log('will examine %s groups',groups.length)
 _.each(groups,function(group){

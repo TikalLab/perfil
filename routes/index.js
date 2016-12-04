@@ -26,7 +26,8 @@ router.get('/',function(req,res,next){
 })
 
 router.get('/dashboard',function(req,res,next){
-	render(req,res,'index/dashboard',{})
+	// render(req,res,'index/dashboard',{})
+	render(req,res,'index/dashboard2',{})
 })
 
 router.get('/logout',function(req,res,next){
@@ -41,10 +42,10 @@ router.post('/save',function(req,res,next){
 
 	users.saveWidgets(req.db,req.session.user._id.toString(),widgets,function(err,user){
 		if(err){
-			res.send(500);
+			res.sendStatus(500);
 		}else{
 			req.session.user = user;
-			res.send(200);
+			res.sendStatus(200);
 		}
 	})
 })
