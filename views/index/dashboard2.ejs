@@ -1,33 +1,13 @@
 <div class="row">
-  <div class="col-md-3">
-    <a href="<%=user.github ? '#' : '/github/authorize'%>" class="btn btn-block btn-lg btn-social btn-github <%=user.github ? 'disabled' : ''%>">
-      <span class="fa fa-github"></span> <%=user.github ? 'GitHub Connected ' : 'Connect GitHub'%>
-    </a>
-  </div>
-  <div class="col-md-3">
-    <a href="<%=user.linkedin ? '#' : '/linkedin/authorize'%>" class="btn btn-block btn-lg btn-social btn-linkedin <%=user.linkedin ? 'disabled' : ''%>">
-      <span class="fa fa-linkedin"></span> <%=user.linkedin ? 'LinkedIn Connected ' : 'Connect LinkedIn'%>
-    </a>
-  </div>
-  <div class="col-md-3">
-    <a href="<%=user.stackoverflow ? '#' : '/stackoverflow/authorize'%>" class="btn btn-block btn-lg btn-social btn-google <%=user.stackoverflow ? 'disabled' : ''%>">
-      <span class="fa fa-stack-overflow"></span> <%=user.stackoverflow ? 'StackOverflow Connected ' : 'Connect StackOverflow'%>
-    </a>
-  </div>
-  <div class="col-md-3">
-    <a href="<%=user.meetup ? '#' : '/meetup/authorize'%>" class="btn btn-block btn-lg btn-social btn-pinterest <%=user.meetup ? 'disabled' : ''%>">
-      <span class="fa fa-meetup"></span> <%=user.meetup ? 'Meetup Connected ' : 'Connect Meetup'%>
-    </a>
-  </div>
+  <div class="col-md-12">header</div>
 </div>
-
 <div class="row">
-
-  <form id="toggles">
-
-    <% if(user.github){ %>
-      <div class="col-md-3">
-        <h3><span class="fa fa-github">GitHub Widgets</span></h3>
+  <div class="col-md-3">
+    <form id="toggles">
+      <a href="<%=user.github ? '#' : '/github/authorize'%>" class="btn btn-block btn-sm btn-social btn-github <%=user.github ? 'disabled' : ''%>">
+        <span class="fa fa-github"></span> <%=user.github ? 'GitHub Connected ' : 'Connect GitHub'%>
+      </a>
+      <% if(user.github){ %>
         <div>
           <input id="toggle-github-profile-link" name="github-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
@@ -37,12 +17,23 @@
         <div>
           <input id="toggle-github-repos-tag-cloud" name="github-repos-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-repos-tag-cloud') ? 'checked' : ''%>> Repos Tag Cloud
         </div>
-      </div>
-    <% } %>
+      <% } %>
+      <a href="<%=user.linkedin ? '#' : '/linkedin/authorize'%>" class="btn btn-block btn-sm btn-social btn-linkedin <%=user.linkedin ? 'disabled' : ''%>">
+        <span class="fa fa-linkedin"></span> <%=user.linkedin ? 'LinkedIn Connected ' : 'Connect LinkedIn'%>
+      </a>
+      <% if(user.linkedin){ %>
+        <div>
+          <input id="toggle-linkedin-profile-link" name="linkedin-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-profile-link') ? 'checked' : ''%>> Profile Link
+        </div>
+        <div>
+          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Linkedin Summary
+        </div>
+      <% } %>
 
-    <% if(user.stackoverflow){ %>
-      <div class="col-md-3">
-        <h3><span class="fa fa-stack-overflow">Stackoverflow Widgets</span></h3>
+      <a href="<%=user.stackoverflow ? '#' : '/stackoverflow/authorize'%>" class="btn btn-block btn-sm btn-social btn-google <%=user.stackoverflow ? 'disabled' : ''%>">
+        <span class="fa fa-stack-overflow"></span> <%=user.stackoverflow ? 'StackOverflow Connected ' : 'Connect StackOverflow'%>
+      </a>
+      <% if(user.stackoverflow){ %>
         <div>
           <input id="toggle-stackoverflow-profile-link" name="stackoverflow-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
@@ -55,12 +46,12 @@
         <div>
           <input id="toggle-stackoverflow-answers-tag-cloud" name="stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-answers-tag-cloud') ? 'checked' : ''%>> Answers Tag Cloud
         </div>
-      </div>
-    <% } %>
+      <% } %>
 
-    <% if(user.meetup){ %>
-      <div class="col-md-3">
-        <h3><span class="fa fa-meetup">Meetup Widgets</span></h3>
+      <a href="<%=user.meetup ? '#' : '/meetup/authorize'%>" class="btn btn-block btn-sm btn-social btn-pinterest <%=user.meetup ? 'disabled' : ''%>">
+        <span class="fa fa-meetup"></span> <%=user.meetup ? 'Meetup Connected ' : 'Connect Meetup'%>
+      </a>
+      <% if(user.meetup){ %>
         <div>
           <input id="toggle-meetup-profile-link" name="meetup-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
@@ -73,25 +64,17 @@
         <div>
           <input id="toggle-meetup-rsvps" name="meetup-rsvps" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-rsvps') ? 'checked' : ''%>> RSVPs
         </div>
-      </div>
-    <% } %>
-
-    <% if(user.linkedin){ %>
-      <div class="col-md-3">
-        <h3><span class="fa fa-linkedin">LinkedIn Widgets</span></h3>
-        <div>
-          <input id="toggle-linkedin-profile-link" name="linkedin-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-profile-link') ? 'checked' : ''%>> Profile Link
-        </div>
-        <div>
-          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Linkedin Summary
-        </div>
-      </div>
-    <% } %>
-  </form>
+      <% } %>
+    </form>
+  </div>
+  <div class="col-md-9">
+    <iframe id="the-perfil" style="width:100%" src="http://<%=config.get('app.domain')%>/profiles/github/<%=user.github.username%>">
+    </iframe>
+  </div>
 </div>
 
-<iframe id="the-perfil" style="width:100%" src="http://<%=config.get('app.domain')%>/profiles/github/<%=user.github.username%>">
-</iframe>
+
+
 
 <script>
 $(function(){
@@ -123,7 +106,7 @@ function save(){
     url: '/save',
     data: $('#toggles').serialize(),
     success: function(data){
-      // $('#the-perfil').contentWindow.location.reload(true);
+      // $('#the-perfil').contentWindow.lo‘cation.reload(true);
       $('#the-perfil').attr('src', $('#the-perfil').attr('src'));
     },
     error: function(){
