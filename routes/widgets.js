@@ -20,7 +20,7 @@ var users = require('../models/users');
 router.get('/github/basic-stats',function(req,res,next){
 	widgets.githubBasicStats(req.session.user.github.access_token,function(err,data){
 		if(err){
-			res.send(500)
+			res.sendStatus(500)
 		}else{
 			render(req,res,'widgets/github/basic-stats',{
 				github_basic_stats: data
@@ -100,6 +100,21 @@ router.get('/meetup/group-categories-tag-cloud',function(req,res,next){
 		}
 	})
 })
+
+router.get('/meetup/rsvps',function(req,res,next){
+	widgets.meetupRsvps(req.session.user.meetup.refresh_token,function(err,rsvps){
+		if(err){
+console.log('err is %s',err)			
+			res.sendStatus(500)
+		}else{
+console.log('rsvps are %s',util.inspect(rsvps,{depth:8}))
+			render(req,res,'widgets/meetup/rsvps',{
+				rsvps: rsvps,
+			})
+		}
+	})
+})
+
 
 router.get('/linkedin/summary',function(req,res,next){
 	widgets.linkedinSummary(req.session.user.linkedin.access_token,function(err,linkedinSummary){

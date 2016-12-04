@@ -95,7 +95,7 @@ module.exports = {
 								callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
 							}else{
 								var data = JSON.parse(body)
-console.log('meetup res: %s',util.inspect(data))
+// console.log('meetup res: %s',util.inspect(data))
 								groups = groups.concat(data);
 								linkHeader = parseLinkHeader(response.headers.link);
 								offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
@@ -117,6 +117,7 @@ console.log('meetup res: %s',util.inspect(data))
 		var events = [];
 		var offset = 0;
 		var linkHeader;
+		// var url = util.format('https://api.meetup.com/%s/events',group.urlname)
 
 		var headers = {
 			Authorization: util.format('Bearer %s',accessToken)
@@ -125,11 +126,13 @@ console.log('meetup res: %s',util.inspect(data))
 		async.whilst(
 			function(){
 				return offset !== false;
+				// return url;
 			},
 			function(callback){
 				var qs = {
 					page: 20,
-					offset: offset
+					offset: offset,
+					status: 'past'
 				}
 				var url = util.format('https://api.meetup.com/%s/events',group.urlname)
 				request(url,{headers: headers, qs: qs},function(error,response,body){
@@ -139,10 +142,21 @@ console.log('meetup res: %s',util.inspect(data))
 						callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
 					}else{
 						var data = JSON.parse(body)
-console.log('meetup res: %s',util.inspect(data))
+// if(group.urlname == 'full-stack-developer-il'){
+// 	console.log('meetup res: %s',util.inspect(data))
+// }
+// console.log('meetup res: %s',util.inspect(data))
 						events = events.concat(data);
 						linkHeader = parseLinkHeader(response.headers.link);
+						// if(group.urlname == 'full-stack-developer-il'){
+						// 	console.log('current batch count: %s',data.length)
+						// 	console.log('current data: %s',util.inspect(data))
+						// 	console.log('limkheader: %s',util.inspect(linkHeader))
+						// 	console.log('first event id %s',data[0].id)
+						// }
 						offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
+						// offset = (linkHeader? ('next' in linkHeader ? offset + 1 : false) : false);
+						// url = (linkHeader? ('next' in linkHeader ? linkHeader.next.url : false) : false);
 						callback(null,events);
 					}
 				});
@@ -180,7 +194,7 @@ console.log('meetup res: %s',util.inspect(data))
 						callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
 					}else{
 						var data = JSON.parse(body)
-console.log('meetup res: %s',util.inspect(data))
+// console.log('meetup res: %s',util.inspect(data))
 						rsvps = rsvps.concat(data);
 						linkHeader = parseLinkHeader(response.headers.link);
 						offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
@@ -193,7 +207,7 @@ console.log('meetup res: %s',util.inspect(data))
 			}
 		);
 
-	}
+	},
 	getUserRsvps: function(refreshToken,callback){
 		var thisObject = this;
 		async.waterfall([
@@ -203,38 +217,51 @@ console.log('meetup res: %s',util.inspect(data))
 				})
 			},
 			function(meetupUser,callback){
+console.log('got user')
 				thisObject.getUserGroups(refreshToken,function(err,groups){
 					callback(err,meetupUser,groups)
 				})
 			},
 			function(meetupUser,groups,callback){
+console.log('got groups')
 				thisObject.refreshToken(refreshToken,function(err,accessToken){
 					callback(err,meetupUser,groups,accessToken)
 				})
 			},
-			function(meetupUser,groups,accessToken,meetupUser,callback){
+			function(meetupUser,groups,accessToken,callback){
+console.log('refreshed token')
 				var allEvents = [];
+console.log('will examine %s groups',groups.length)
+_.each(groups,function(group){
+	console.log('will examine %s',group.urlname)
+})
 				async.each(groups,function(group,callback){
 					thisObject.getGroupEvents(accessToken,group,function(err,events){
 						if(err){
 							callback(err)
 						}else{
+console.log('got group events for group %s: %s',group.urlname,events.length)
+
 							allEvents = allEvents.concat(events)
 							callback()
 						}
 					})
 				},function(err){
+console.log('err is %s',err)
 					callback(err,meetupUser,accessToken,allEvents)
 				})
 			},
 			// per event, get if the user was rsvp
 			function(meetupUser,accessToken,allEvents,callback){
+console.log('HERE')
 				var userRsvps = [];
 				async.each(allEvents,function(event,callback){
 					thisObject.getEventRsvps(accessToken,event,function(err,rsvps){
 						if(err){
 							callback(err)
 						}else{
+console.log('got event rsvps for event %s',event.id)
+
 							var isRsvped = _.find(rsvps,function(rsvp){
 								return rsvp.member.member_id == meetupUser.id;
 							})

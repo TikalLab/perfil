@@ -70,6 +70,9 @@
         <div>
           <input id="toggle-meetup-group-categories-tag-cloud" name="meetup-group-categories-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-group-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
         </div>
+        <div>
+          <input id="toggle-meetup-rsvps" name="meetup-rsvps" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-rsvps') ? 'checked' : ''%>> RSVPs
+        </div>
       </div>
     <% } %>
 
@@ -107,6 +110,8 @@
   <div id="widget-meetup-groups" class="col-md-3">
   </div>
   <div id="widget-meetup-group-categories-tag-cloud" class="col-md-3">
+  </div>
+  <div id="widget-meetup-rsvps" class="col-md-3">
   </div>
   <div id="widget-linkedin-profile-link" class="col-md-3">
   </div>

@@ -151,6 +151,17 @@ module.exports = {
   		callback(err,results[0])
   	})
   },
+  meetupRsvps: function(refreshToken,callback){
+    async.parallel([
+  		function(callback){
+  			meetup.getUserRsvps(refreshToken,function(err,rsvps){
+  				callback(err,rsvps)
+  			})
+  		},
+  	],function(err,results){
+  		callback(err,results[0])
+  	})
+  },
   meetupGroupCategoriesTagCloud: function(accessToken,callback){
     async.parallel([
       function(callback){
