@@ -41,7 +41,9 @@ module.exports = {
   githubReposTagCloud: function(acccessToken,callback){
     async.parallel([
       function(callback){
-        github.getLanguagesTagCloud(acccessToken,function(err,githubLanguagesTagCloud){
+
+        // github.getLanguagesTagCloud(acccessToken,function(err,githubLanguagesTagCloud){
+        github.getLanguagesTagCloudFromReposWithCommits(acccessToken,function(err,githubLanguagesTagCloud){
           callback(err,githubLanguagesTagCloud)
         })
       },

@@ -181,6 +181,44 @@
                     </div>
                     <div class="skills-section">
                         <!-- Skills -->
+
+                        <% if(typeof github_repos_tag_cloud != 'undefined'){ %>
+                          <h3 class="main-heading"><span class="fa fa-github"></span> GitHub Repositories Lanhuages</h3>
+                          <ul class="tag-cloud">
+                              <% _.each(github_repos_tag_cloud.cloud,function(count,tag){ %>
+                                <%
+                                var size = 2 * ((count - github_repos_tag_cloud.min) / (github_repos_tag_cloud.max - github_repos_tag_cloud.min)) + 1.2
+                                %>
+                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
+                              <% }) %>
+                          </ul>
+                        <% } %>
+
+                        <% if(typeof stackoverflow_questions_tag_cloud != 'undefined'){ %>
+                          <h3 class="main-heading"><span class="fa fa-stack-overflow"></span> StackOverflow Questions Topics</h3>
+                          <ul class="tag-cloud">
+                              <% _.each(stackoverflow_questions_tag_cloud.cloud,function(count,tag){ %>
+                                <%
+                                var size = 2 * ((count - stackoverflow_questions_tag_cloud.min) / (stackoverflow_questions_tag_cloud.max - stackoverflow_questions_tag_cloud.min)) + 1.2
+                                %>
+                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
+                              <% }) %>
+                          </ul>
+                        <% } %>
+
+                        <% if(typeof stackoverflow_answers_tag_cloud != 'undefined'){ %>
+                          <h3 class="main-heading"><span class="fa fa-stack-overflow"></span> StackOverflow Answers Topics</h3>
+                          <ul class="tag-cloud">
+                              <% _.each(stackoverflow_answers_tag_cloud.cloud,function(count,tag){ %>
+                                <%
+                                var size = 2 * ((count - stackoverflow_answers_tag_cloud.min) / (stackoverflow_answers_tag_cloud.max - stackoverflow_answers_tag_cloud.min)) + 1.2
+                                %>
+                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
+                              <% }) %>
+                          </ul>
+                        <% } %>
+
+
                         <% if(typeof github_basic_stats != 'undefined'){ %>
                           <h3 class="main-heading"><span class="fa fa-github"></span> GitHub Basic Stats</h3>
                           <ul class="skills">
@@ -235,41 +273,6 @@
                           </ul>
                         <% } %>
 
-                        <% if(typeof github_repos_tag_cloud != 'undefined'){ %>
-                          <h3 class="main-heading"><span class="fa fa-github"></span> GitHub Repositories Lanhuages</h3>
-                          <ul class="tag-cloud">
-                              <% _.each(github_repos_tag_cloud.cloud,function(count,tag){ %>
-                                <%
-                                var size = 2 * ((count - github_repos_tag_cloud.min) / (github_repos_tag_cloud.max - github_repos_tag_cloud.min)) + 1.2
-                                %>
-                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
-                              <% }) %>
-                          </ul>
-                        <% } %>
-
-                        <% if(typeof stackoverflow_questions_tag_cloud != 'undefined'){ %>
-                          <h3 class="main-heading"><span class="fa fa-stack-overflow"></span> StackOverflow Questions Topics</h3>
-                          <ul class="tag-cloud">
-                              <% _.each(stackoverflow_questions_tag_cloud.cloud,function(count,tag){ %>
-                                <%
-                                var size = 2 * ((count - stackoverflow_questions_tag_cloud.min) / (stackoverflow_questions_tag_cloud.max - stackoverflow_questions_tag_cloud.min)) + 1.2
-                                %>
-                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
-                              <% }) %>
-                          </ul>
-                        <% } %>
-
-                        <% if(typeof stackoverflow_answers_tag_cloud != 'undefined'){ %>
-                          <h3 class="main-heading"><span class="fa fa-stack-overflow"></span> StackOverflow Answers Topics</h3>
-                          <ul class="tag-cloud">
-                              <% _.each(stackoverflow_answers_tag_cloud.cloud,function(count,tag){ %>
-                                <%
-                                var size = 2 * ((count - stackoverflow_answers_tag_cloud.min) / (stackoverflow_answers_tag_cloud.max - stackoverflow_answers_tag_cloud.min)) + 1.2
-                                %>
-                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
-                              <% }) %>
-                          </ul>
-                        <% } %>
 
                         <% if(typeof meetup_group_categories_tag_cloud != 'undefined'){ %>
                           <h3 class="main-heading"><span class="fa fa-meetup"></span> Meetup Groups Categories</h3>

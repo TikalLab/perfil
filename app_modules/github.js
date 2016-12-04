@@ -71,6 +71,49 @@ module.exports = {
 		);
 
 	},
+	getUserReposWithCommits: function(accessToken,callback){
+		var thisObject = this;
+		var headers = this.getAPIHeaders(accessToken);
+
+		async.waterfall([
+			function(callback){
+				thisObject.getUser(accessToken,function(err,user){
+					callback(err,user)
+				})
+			},
+			function(user,callback){
+				thisObject.getUserRepos(accessToken,function(err,repos){
+					callback(err,user,repos)
+				})
+			},
+			function(user,repos,callback){
+				var reposWithCommits = [];
+				var qs = {
+					author: user.login
+				}
+				async.each(repos,function(repo,callback){
+					var url = util.format('https://api.github.com/repos/%s/commits',repo.full_name)
+					request('https://api.github.com/user/repos',{headers: headers, qs: qs},function(error,response,body){
+						if(error){
+							callback(error);
+						}else if(response.statusCode > 300){
+							callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+						}else{
+							var data = JSON.parse(body)
+							if(data.length > 0){
+								reposWithCommits.push(repo)
+							}
+							callback()
+						}
+					});
+				},function(err){
+					callback(err,reposWithCommits)
+				})
+			}
+		],function(err,reposWithCommits){
+			callback(err,reposWithCommits)
+		})
+	},
 	getReposCounts: function(accessToken,callback){
 		this.getUserRepos(accessToken,function(err,repos){
 			if(err){
@@ -149,7 +192,55 @@ module.exports = {
 		],function(err,tagCloud){
 			callback(err,tagCloud)
 		})
+	},
+	getLanguagesTagCloudFromReposWithCommits: function(accessToken,callback){
+		var thisObject = this;
+		async.waterfall([
+			// get repos
+			function(callback){
+				thisObject.getUserReposWithCommits(accessToken,function(err,repos){
+					callback(err,repos)
+				})
+			},
+			// for each repo, get languages
+			function(repos,callback){
+				var languages = [];
+				async.each(repos,function(repo,callback){
+					thisObject.getRepoLanguages(accessToken,repo,function(err,repoLanguages){
+						if(err){
+							callback(err)
+						}else{
+							languages = languages.concat(repoLanguages)
+							callback()
+						}
+					})
+				},function(err){
+					callback(err,languages)
+				})
+			},
+			function(languages,callback){
+
+				languages = languages.sort()
+
+				tagCloud = _.countBy(languages,function(language){
+					return language;
+				})
+
+				var values = _.values(tagCloud);
+				var min = _.min(values);
+				var max = _.max(values);
+
+				callback(null,{
+					cloud: tagCloud,
+					min: min,
+					max: max
+				})
+			}
+		],function(err,tagCloud){
+			callback(err,tagCloud)
+		})
 	}
+
 
 
 }
