@@ -2,73 +2,73 @@
   <div class="col-md-12">header</div>
 </div>
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-2">
     <form id="toggles">
-      <a href="<%=user.github ? '#' : '/github/authorize'%>" class="btn btn-block btn-sm btn-social btn-github <%=user.github ? 'disabled' : ''%>">
+      <a href="<%=user.github ? '#' : '/github/authorize'%>" class="btn btn-block btn-sm btn-social btn-github connect-button <%=user.github ? 'disabled' : ''%>">
         <span class="fa fa-github"></span> <%=user.github ? 'GitHub Connected ' : 'Connect GitHub'%>
       </a>
       <% if(user.github){ %>
-        <div>
-          <input id="toggle-github-profile-link" name="github-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-profile-link') ? 'checked' : ''%>> Profile Link
+        <div class="toggle-box">
+          <input id="toggle-github-profile-link" name="github-profile-link" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'github-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
-        <div>
-          <input id="toggle-github-basic-stats" name="github-basic-stats" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-basic-stats') ? 'checked' : ''%>> Basic stats
+        <div class="toggle-box">
+          <input id="toggle-github-basic-stats" name="github-basic-stats" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'github-basic-stats') ? 'checked' : ''%>> Basic stats
         </div>
-        <div>
-          <input id="toggle-github-repos-tag-cloud" name="github-repos-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'github-repos-tag-cloud') ? 'checked' : ''%>> Repos Tag Cloud
+        <div class="toggle-box">
+          <input id="toggle-github-repos-tag-cloud" name="github-repos-tag-cloud" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'github-repos-tag-cloud') ? 'checked' : ''%>> Repos Tag Cloud
         </div>
       <% } %>
-      <a href="<%=user.linkedin ? '#' : '/linkedin/authorize'%>" class="btn btn-block btn-sm btn-social btn-linkedin <%=user.linkedin ? 'disabled' : ''%>">
+      <a href="<%=user.linkedin ? '#' : '/linkedin/authorize'%>" class="btn btn-block btn-sm btn-social btn-linkedin connect-button <%=user.linkedin ? 'disabled' : ''%>">
         <span class="fa fa-linkedin"></span> <%=user.linkedin ? 'LinkedIn Connected ' : 'Connect LinkedIn'%>
       </a>
       <% if(user.linkedin){ %>
-        <div>
-          <input id="toggle-linkedin-profile-link" name="linkedin-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-profile-link') ? 'checked' : ''%>> Profile Link
+        <div class="toggle-box">
+          <input id="toggle-linkedin-profile-link" name="linkedin-profile-link" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'linkedin-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
-        <div>
-          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Linkedin Summary
+        <div class="toggle-box">
+          <input id="toggle-linkedin-summary" name="linkedin-summary" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'linkedin-summary') ? 'checked' : ''%>> Linkedin Summary
         </div>
       <% } %>
 
-      <a href="<%=user.stackoverflow ? '#' : '/stackoverflow/authorize'%>" class="btn btn-block btn-sm btn-social btn-google <%=user.stackoverflow ? 'disabled' : ''%>">
+      <a href="<%=user.stackoverflow ? '#' : '/stackoverflow/authorize'%>" class="btn btn-block btn-sm btn-social btn-google connect-button <%=user.stackoverflow ? 'disabled' : ''%>">
         <span class="fa fa-stack-overflow"></span> <%=user.stackoverflow ? 'StackOverflow Connected ' : 'Connect StackOverflow'%>
       </a>
       <% if(user.stackoverflow){ %>
-        <div>
-          <input id="toggle-stackoverflow-profile-link" name="stackoverflow-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-profile-link') ? 'checked' : ''%>> Profile Link
+        <div class="toggle-box">
+          <input id="toggle-stackoverflow-profile-link" name="stackoverflow-profile-link" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'stackoverflow-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
-        <div>
-          <input id="toggle-stackoverflow-basic-stats" name="stackoverflow-basic-stats" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-basic-stats') ? 'checked' : ''%>> Basic stats
+        <div class="toggle-box">
+          <input id="toggle-stackoverflow-basic-stats" name="stackoverflow-basic-stats" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'stackoverflow-basic-stats') ? 'checked' : ''%>> Basic stats
         </div>
-        <div>
-          <input id="toggle-stackoverflow-questions-tag-cloud" name="stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-questions-tag-cloud') ? 'checked' : ''%>> Questions Tag Cloud
+        <div class="toggle-box">
+          <input id="toggle-stackoverflow-questions-tag-cloud" name="stackoverflow-questions-tag-cloud" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'stackoverflow-questions-tag-cloud') ? 'checked' : ''%>> Questions Tag Cloud
         </div>
-        <div>
-          <input id="toggle-stackoverflow-answers-tag-cloud" name="stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'stackoverflow-answers-tag-cloud') ? 'checked' : ''%>> Answers Tag Cloud
+        <div class="toggle-box">
+          <input id="toggle-stackoverflow-answers-tag-cloud" name="stackoverflow-answers-tag-cloud" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'stackoverflow-answers-tag-cloud') ? 'checked' : ''%>> Answers Tag Cloud
         </div>
       <% } %>
 
-      <a href="<%=user.meetup ? '#' : '/meetup/authorize'%>" class="btn btn-block btn-sm btn-social btn-pinterest <%=user.meetup ? 'disabled' : ''%>">
+      <a href="<%=user.meetup ? '#' : '/meetup/authorize'%>" class="btn btn-block btn-sm btn-social btn-pinterest connect-button <%=user.meetup ? 'disabled' : ''%>">
         <span class="fa fa-meetup"></span> <%=user.meetup ? 'Meetup Connected ' : 'Connect Meetup'%>
       </a>
       <% if(user.meetup){ %>
-        <div>
-          <input id="toggle-meetup-profile-link" name="meetup-profile-link" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-profile-link') ? 'checked' : ''%>> Profile Link
+        <div class="toggle-box">
+          <input id="toggle-meetup-profile-link" name="meetup-profile-link" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'meetup-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
-        <div>
-          <input id="toggle-meetup-groups" name="meetup-groups" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-groups') ? 'checked' : ''%>> Meetup Groups
+        <div class="toggle-box">
+          <input id="toggle-meetup-groups" name="meetup-groups" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'meetup-groups') ? 'checked' : ''%>> Meetup Groups
         </div>
-        <div>
-          <input id="toggle-meetup-group-categories-tag-cloud" name="meetup-group-categories-tag-cloud" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-group-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
+        <div class="toggle-box">
+          <input id="toggle-meetup-group-categories-tag-cloud" name="meetup-group-categories-tag-cloud" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'meetup-group-categories-tag-cloud') ? 'checked' : ''%>> Categories Tag Cloud
         </div>
-        <div>
-          <input id="toggle-meetup-rsvps" name="meetup-rsvps" type="checkbox" data-toggle="toggle" <%=_.contains(user.widgets,'meetup-rsvps') ? 'checked' : ''%>> RSVPs
+        <div class="toggle-box">
+          <input id="toggle-meetup-rsvps" name="meetup-rsvps" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'meetup-rsvps') ? 'checked' : ''%>> RSVPs
         </div>
       <% } %>
     </form>
   </div>
-  <div class="col-md-9">
-    <iframe id="the-perfil" style="width:100%" src="http://<%=config.get('app.domain')%>/profiles/github/<%=user.github.username%>">
+  <div class="col-md-10">
+    <iframe id="the-perfil" style="border:none; width:100%" src="http://<%=config.get('app.domain')%>/profiles/github/<%=user.github.username%>">
     </iframe>
   </div>
 </div>
@@ -85,7 +85,16 @@ $(function(){
     <% _.each(user.widgets,function(widget){ %>
       toggleWidget('widget-<%=widget%>',true);
     <% }) %>
+
+    $('#the-perfil').iFrameResize({log:true})
+    // resizeIframe($('#the-perfil'))
+
+
 })
+
+function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+}
 
 function toggleWidget(toggleID,checked){
   // // process toggle ID
