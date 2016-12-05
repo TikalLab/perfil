@@ -150,7 +150,11 @@ module.exports = {
   			})
   		},
   	],function(err,results){
-  		callback(err,results[0])
+      if(err){
+        callback(err)
+      }else{
+        callback(err,results[0])
+      }
   	})
   },
   meetupRsvps: function(refreshToken,callback){
@@ -161,7 +165,11 @@ module.exports = {
   			})
   		},
   	],function(err,results){
-  		callback(err,results[0])
+      if(err){
+        callback(err)
+      }else{
+        callback(err,results[0])
+      }
   	})
   },
   meetupGroupCategoriesTagCloud: function(accessToken,callback){
@@ -250,7 +258,11 @@ module.exports = {
   			})
   		},
   	],function(err,results){
-  		callback(err,results[0].link)
+      if(err){
+        callback(err)
+      }else{
+        callback(err,results[0].link)
+      }
   	})
   },
 }
