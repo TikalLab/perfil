@@ -75,21 +75,21 @@
                 	<div class="about">
                     	<div class="photo-inner">
                             <ul>
-                                <li><img src="<%=linkedin_summary.pictureUrl%>" height="186" width="153" /></li>
+                                <li><img src="<%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.pictureUrl : '')%>" height="186" width="153" /></li>
                                 <!-- <li><img src="images/photo1.png" height="186" width="153" /></li> -->
                             </ul>
                         </div>
-                        <h1><%=linkedin_summary.firstName%> <%=linkedin_summary.lastName%></h1>
-                        <h3><%=linkedin_summary.headline%></h3>
-                        <p><%=linkedin_summary.summary%></p>
+                        <h1><%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.firstName + ' ' + linkedin_summary.lastName : '') %></h1>
+                        <h3><%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.headline: '')%></h3>
+                        <p><%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.summary: '')%></p>
                     </div>
                     <!-- /About section -->
 
                     <!-- Personal info section -->
                 	<ul class="personal-info">
-                      <li><label>Location</label><span><%=linkedin_summary.location.name%></span></li>
-                      <li><label>Industry</label><span><%=linkedin_summary.industry%></span></li>
-                      <li><label>Connections</label><span><%=linkedin_summary.numConnections%><%=(linkedin_summary.numConnectionsCapped ? '+' : '')%></span></li>
+                      <li><label>Location</label><span><%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.location.name: '')%></span></li>
+                      <li><label>Industry</label><span><%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.industry: '')%></span></li>
+                      <li><label>Connections</label><span><%=(typeof linkedin_summary != 'undefined' ? linkedin_summary.numConnections: '')%><%=(typeof linkedin_summary != 'undefined' ? (linkedin_summary.numConnectionsCapped ? '+' : ''): '')%></span></li>
                   </ul>
                     <!-- /Personal info section -->
                 </div>
@@ -111,75 +111,80 @@
 
                 <!-- Resume -->
                 <section id="resume">
-                	 <div class="timeline-section">
-                        <!-- Timeline for Employment  -->
-                        <h3 class="main-heading"><span class="fa fa-linkedin"></span> Current Employment</h3>
-                        <ul class="timeline">
+                  <% if(typeof linkedin_summary != 'undefined'){ %>
+                  	 <div class="timeline-section">
+                          <!-- Timeline for Employment  -->
+                          <h3 class="main-heading"><span class="fa fa-linkedin"></span> Current Employment</h3>
+                          <ul class="timeline">
 
-                            <% _.each(linkedin_summary.positions.values,function(position){ %>
+                              <% _.each(linkedin_summary.positions.values,function(position){ %>
+                                <li>
+                                    <div class="timelineUnit">
+                                        <h4><%=position.title%><span class="timelineDate"><%=position.startDate.year%> - Present</span></h4>
+                                        <h5><%=position.company.name%></h5>
+                                        <p><%=position.summary%></p>
+                                    </div>
+                                </li>
+                              <% }) %>
+                              <div class="clear"></div>
+                          </ul>
+
+                          <h3 class="main-heading"><span class="fa fa-linkedin"></span> Past Employment</h3>
+                          <ul class="timeline">
+
                               <li>
+
                                   <div class="timelineUnit">
-                                      <h4><%=position.title%><span class="timelineDate"><%=position.startDate.year%> - Present</span></h4>
-                                      <h5><%=position.company.name%></h5>
-                                      <p><%=position.summary%></p>
+                                      <h4>Manager<span class="timelineDate">2010 - Present</span></h4>
+                                      <h5>Ligula Non Lectus</h5>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscingVivamus sit amet ligula non lectus cursus egestas. Cras erat lorem, fringilla quis sagittis in, sagittis inNam leo tortor Nam leo tortor Vivamus.</p>
                                   </div>
                               </li>
-                            <% }) %>
-                            <div class="clear"></div>
-                        </ul>
+                              <li>
 
-                        <h3 class="main-heading"><span class="fa fa-linkedin"></span> Past Employment</h3>
-                        <ul class="timeline">
+                                  <div class="timelineUnit">
+                                      <h4>Web Developer<span class="timelineDate">2008 - 2010</span></h4>
+                                      <h5>Lorem ipsum</h5>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing Vivamus sit amet ligula non lectus. amet ligula non lectus Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                                  </div>
+                              </li>
+                              <li>
 
-                            <li>
+                                  <div class="timelineUnit">
+                                      <h4>Web Designer<span class="timelineDate">2007</span></h4>
+                                      <h5>Consectetur adipiscing </h5>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing Vivamus sit Vivamus sit. Vivamus sit.. consectetur adipiscing Vivamus sit. Vivamus sit </p>
+                                  </div>
+                              </li>
+                              <div class="clear"></div>
+                          </ul>
+                          <!-- /Timeline for Employment  -->
 
-                                <div class="timelineUnit">
-                                    <h4>Manager<span class="timelineDate">2010 - Present</span></h4>
-                                    <h5>Ligula Non Lectus</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscingVivamus sit amet ligula non lectus cursus egestas. Cras erat lorem, fringilla quis sagittis in, sagittis inNam leo tortor Nam leo tortor Vivamus.</p>
-                                </div>
-                            </li>
-                            <li>
+                          <!-- Timeline for Education  -->
+                          <h3 class="main-heading"><span class="fa fa-linkedin"></span> Education</h3>
+                           <ul class="timeline">
+                              <li>
+                                  <div class="timelineUnit">
+                                      <h4>Graphic Design<span class="timelineDate">2010 - 2012</span></h4>
+                                      <h5>School Of Design</h5>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing Vivamus sit amet ligula non lectus.consectetur adipiscingVivamus sit amet </p>
+                                  </div>
+                              </li>
+                              <li>
+                                  <div class="timelineUnit">
+                                      <h4>Graphic Design<span class="timelineDate">2009</span></h4>
+                                      <h5>School of the Arts</h5>
+                                      <p>Lorem ipsum dolor sit amet, adipiscing elit. egestas.Vivamus sit amet ligula non lectus cursus egestas amet ligula non lectus cursus egestas. </p>
+                                  </div>
+                              </li>
+                              <div class="clear"></div>
+                          </ul>
+                          <!-- /Timeline for Education  -->
+                      </div>
+                    <% } %>
 
-                                <div class="timelineUnit">
-                                    <h4>Web Developer<span class="timelineDate">2008 - 2010</span></h4>
-                                    <h5>Lorem ipsum</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing Vivamus sit amet ligula non lectus. amet ligula non lectus Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                </div>
-                            </li>
-                            <li>
 
-                                <div class="timelineUnit">
-                                    <h4>Web Designer<span class="timelineDate">2007</span></h4>
-                                    <h5>Consectetur adipiscing </h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing Vivamus sit Vivamus sit. Vivamus sit.. consectetur adipiscing Vivamus sit. Vivamus sit </p>
-                                </div>
-                            </li>
-                            <div class="clear"></div>
-                        </ul>
-                        <!-- /Timeline for Employment  -->
 
-                        <!-- Timeline for Education  -->
-                        <h3 class="main-heading"><span class="fa fa-linkedin"></span> Education</h3>
-                         <ul class="timeline">
-                            <li>
-                                <div class="timelineUnit">
-                                    <h4>Graphic Design<span class="timelineDate">2010 - 2012</span></h4>
-                                    <h5>School Of Design</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing Vivamus sit amet ligula non lectus.consectetur adipiscingVivamus sit amet </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="timelineUnit">
-                                    <h4>Graphic Design<span class="timelineDate">2009</span></h4>
-                                    <h5>School of the Arts</h5>
-                                    <p>Lorem ipsum dolor sit amet, adipiscing elit. egestas.Vivamus sit amet ligula non lectus cursus egestas amet ligula non lectus cursus egestas. </p>
-                                </div>
-                            </li>
-                            <div class="clear"></div>
-                        </ul>
-                        <!-- /Timeline for Education  -->
-                    </div>
                     <div class="skills-section">
                         <!-- Skills -->
 

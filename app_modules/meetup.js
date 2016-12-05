@@ -117,7 +117,7 @@ module.exports = {
 		var events = [];
 		var offset = 0;
 		var linkHeader;
-		// var url = util.format('https://api.meetup.com/%s/events?page=200&status=past',group.urlname)
+		var url = util.format('https://api.meetup.com/%s/events?page=200&status=past',group.urlname)
 
 		var headers = {
 			Authorization: util.format('Bearer %s',accessToken)
@@ -134,8 +134,8 @@ module.exports = {
 					offset: offset,
 					status: 'past'
 				}
-				var url = util.format('https://api.meetup.com/%s/events',group.urlname)
-				request(url,{headers: headers, qs: qs},function(error,response,body){
+				// var url = util.format('https://api.meetup.com/%s/events',group.urlname)
+				request(url,{headers: headers/*, qs: qs*/},function(error,response,body){
 					if(error){
 						callback(error);
 					}else if(response.statusCode > 300){
@@ -155,8 +155,8 @@ module.exports = {
 							console.log('first event id %s',data[0].id)
 						}
 						// offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
-						offset = (linkHeader? ('next' in linkHeader ? offset + 1 : false) : false);
-						// url = (linkHeader? ('next' in linkHeader ? linkHeader.next.url : false) : false);
+						// offset = (linkHeader? ('next' in linkHeader ? offset + 1 : false) : false);
+						url = (linkHeader? ('next' in linkHeader ? linkHeader.next.url : false) : false);
 						callback(null,events);
 					}
 				});
@@ -171,6 +171,9 @@ module.exports = {
 		var rsvps = [];
 		var offset = 0;
 		var linkHeader;
+		var url = util.format('https://api.meetup.com/2/rsvps?event_id=%s&rsvp=yes',event.id)
+
+console.log('will get rsvps using this: %s',url)
 
 		var headers = {
 			Authorization: util.format('Bearer %s',accessToken)
@@ -178,16 +181,17 @@ module.exports = {
 
 		async.whilst(
 			function(){
-				return offset !== false;
+				// return offset !== false;
+				return url;
 			},
 			function(callback){
 				var qs = {
 					page: 20,
 					offset: offset,
-					event_id: event,
+					event_id: event.id,
 					rsvp: 'yes'
 				}
-				request('https://api.meetup.com/2/rsvps',{headers: headers, qs: qs},function(error,response,body){
+				request('https://api.meetup.com/2/rsvps',{headers: headers/*, qs: qs*/},function(error,response,body){
 					if(error){
 						callback(error);
 					}else if(response.statusCode > 300){
@@ -195,9 +199,11 @@ module.exports = {
 					}else{
 						var data = JSON.parse(body)
 // console.log('meetup res: %s',util.inspect(data))
-						rsvps = rsvps.concat(data);
+						rsvps = rsvps.concat(data.results);
 						linkHeader = parseLinkHeader(response.headers.link);
-						offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
+						// offset = (linkHeader? ('next' in linkHeader ? linkHeader.next.offset : false) : false);
+						url = (linkHeader? ('next' in linkHeader ? linkHeader.next.url : false) : false);
+
 						callback(null,rsvps);
 					}
 				});
