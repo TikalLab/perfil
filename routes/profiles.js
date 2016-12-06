@@ -29,8 +29,8 @@ router.get('/:platform/:id',function(req,res,next){
 		}else{
 			var json = JSON.parse(body);
 			console.log('json to render: %s',util.inspect(json))
-			render(req,res,'profiles/zwin',json)
-			// render(req,res,'profiles/shiftcv',json)
+			// render(req,res,'profiles/zwin',json)
+			render(req,res,'profiles/shiftcv',json)
 		}
 	})
 
