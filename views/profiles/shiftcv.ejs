@@ -7,6 +7,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
 <link rel="stylesheet" type="text/css" media="all" href="/shiftcv/style/style.css">
 <link rel="stylesheet" type="text/css" media="all" href="/shiftcv/style/responsive.css">
+<link rel="stylesheet" type="text/css" media="all" href="/css/shiftcv-ext.css">
 <!--[if lt IE 9]>
 	<script src="/shiftcv/js/html5.js" type="text/javascript"></script>
 <![endif]-->
@@ -38,7 +39,7 @@
   <div id="main" >
     <div class="content_area" id="primary">
       <div role="main" class="site_content" id="content">
-        <section class="section profile_section first odd" id="profile"> 
+        <section class="section profile_section first odd" id="profile">
           <div class="section_header profile_section_header opened">
             <h2 class="section_title profile_section_title vis"><a href="#"><span class="icon icon-user"></span><span class="section_name">Profile</span></a><span class="section_icon"></span></h2>
             <div id="profile_header">
@@ -66,12 +67,33 @@
 
           <!-- RESUME -->
           <section class="section resume_section even" id="resume">
-            <div id="resume_buttons"> <a target="_blank" id="resume_link" href="print.html"><span class="label">Print</span><span class="icon-print icon"></span></a> <a target="_blank" id="resume_link_download"><span class="label">Download</span><span class="icon-download icon"></span></a> </div>
+            <!-- <div id="resume_buttons"> <a target="_blank" id="resume_link" href="print.html"><span class="label">Print</span><span class="icon-print icon"></span></a> <a target="_blank" id="resume_link_download"><span class="label">Download</span><span class="icon-download icon"></span></a> </div> -->
             <div class="section_header resume_section_header">
               <h2 class="section_title resume_section_title"><a href="#"><span class="icon icon-align-left"></span><span class="section_name">Resume</span></a><span class="section_icon"></span></h2>
             </div>
             <div class="section_body resume_section_body">
               <div class="sidebar resume_sidebar">
+
+                <% if(typeof stackoverflow_questions_tag_cloud != 'undefined'){ %>
+                  <aside class="widget widget_skills">
+                    <h3 class="widget_title">StackOverflow Questions Topics</h3>
+                    <div class="widget_inner style_1">
+                        <p>cloudsum: <%=cloudSum%></p>
+                        <% var i=0; %>
+                        <% _.each(stackoverflow_questions_tag_cloud.cloud,function(count,tag){ %>
+                          <%
+                          i++;
+                          //var size = 2 * ((count - stackoverflow_questions_tag_cloud.min) / (stackoverflow_questions_tag_cloud.max - stackoverflow_questions_tag_cloud.min)) + 1.2
+                          var progress = (count - stackoverflow_questions_tag_cloud.min) / ((stackoverflow_questions_tag_cloud.max - stackoverflow_questions_tag_cloud.min)/100);
+                          %>
+                          <div class="skills_row <%=(i % 2 ? 'even' : 'odd')%> <%=(i==1 ? 'fisrt' : '')%>"><span class="caption"><%=tag%></span><span class="progressbar"><span data-process="<%=progress%>%" class="progress aqua"><span class="value"><%=progress%>%</span></span></span></div>
+                        <% }) %>
+                    </div>
+
+                  </aside>
+                <% } %>
+
+
                 <aside class="widget widget_skills">
                   <h3 class="widget_title">Programming skills</h3>
                   <div class="widget_inner style_1">
@@ -109,67 +131,67 @@
                   </div>
                 </aside>
               </div>
-              <div class="wrapper resume_wrapper">
-                <div class="category resume_category resume_category_1 first even">
-                  <div class="category_header resume_category_header">
-                    <h3 class="category_title"><span class="category_title_icon aqua"></span>Employment</h3>
+
+              <% if(typeof linkedin_summary != 'undefined'){ %>
+                <div class="wrapper resume_wrapper">
+                  <div class="category resume_category resume_category_1 first even">
+                    <div class="category_header resume_category_header">
+                      <h3 class="category_title"><span class="category_title_icon aqua"></span>Current Employment</h3>
+                    </div>
+                    <div class="category_body resume_category_body">
+
+                      <% var i = 0; %>
+                      <% _.each(linkedin_summary.positions.values,function(position){ %>
+                        <% i++; %>
+                        <article class="post resume_post resume_post_1 <%=(i==1 ? 'first' : '')%> <%=(i % 2 ? 'even' : 'odd')%>">
+                          <div class="post_header resume_post_header">
+                            <div class="resume_period"> <span class="period_from"><%=position.startDate.year%></span> - <span class="period_to">Present</span> </div>
+                            <h4 class="post_title"><span class="post_title_icon aqua"></span><a href="post-text.html"><%=position.title%></a></h4>
+                            <h5 class="post_subtitle"><%=position.company.name%></h5>
+                          </div>
+                          <div class="post_body resume_post_body">
+                            <p><%=position.summary%></p>
+                          </div>
+                        </article>
+                      <% }) %>
+
+
+                    </div>
+                    <!-- .category_body -->
                   </div>
-                  <div class="category_body resume_category_body">
-                    <article class="post resume_post resume_post_1 first even">
-                      <div class="post_header resume_post_header">
-                        <div class="resume_period"> <span class="period_from">2003</span> - <span class="period_to">2007</span> </div>
-                        <h4 class="post_title"><span class="post_title_icon aqua"></span><a href="post-text.html">There are many variations of passages</a></h4>
-                        <h5 class="post_subtitle">Director of department</h5>
-                      </div>
-                      <div class="post_body resume_post_body">
-                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                      </div>
-                    </article>
-                    <article class="post resume_post resume_post_2 odd">
-                      <div class="post_header resume_post_header">
-                        <div class="resume_period"> <span class="period_from">2001</span> - <span class="period_to period_present">present</span> </div>
-                        <h4 class="post_title"><span class="post_title_icon aqua"></span><a href="post-text.html">Cooper Union</a></h4>
-                        <h5 class="post_subtitle">Programmer</h5>
-                      </div>
-                      <div class="post_body resume_post_body">
-                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                      </div>
-                    </article>
+                  <!-- .category -->
+                  <div class="category resume_category resume_category_2 odd">
+                    <div class="category_header resume_category_header">
+                      <h3 class="category_title"><span class="category_title_icon green"></span>Education</h3>
+                    </div>
+                    <div class="category_body resume_category_body">
+                      <article class="post resume_post resume_post_1 first even">
+                        <div class="post_header resume_post_header">
+                          <div class="resume_period"> <span class="period_from">1999</span> - <span class="period_to">2001</span> </div>
+                          <h4 class="post_title"><span class="post_title_icon green"></span><a href="post-text.html">Lorem Contrary to popular belief</a></h4>
+                          <h5 class="post_subtitle">Web design</h5>
+                        </div>
+                        <div class="post_body resume_post_body">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+                      </article>
+                      <article class="post resume_post resume_post_2 odd">
+                        <div class="post_header resume_post_header">
+                          <div class="resume_period"> <span class="period_from">1996</span> - <span class="period_to">2000</span> </div>
+                          <h4 class="post_title"><span class="post_title_icon green"></span><a href="post-text.html">Lorem Ipsum is simply dummy text</a></h4>
+                          <h5 class="post_subtitle">Graphic design</h5>
+                        </div>
+                        <div class="post_body resume_post_body">
+                          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                        </div>
+                      </article>
+                    </div>
+                    <!-- /category_body -->
                   </div>
-                  <!-- .category_body -->
+                  <!-- /category -->
                 </div>
-                <!-- .category -->
-                <div class="category resume_category resume_category_2 odd">
-                  <div class="category_header resume_category_header">
-                    <h3 class="category_title"><span class="category_title_icon green"></span>Education</h3>
-                  </div>
-                  <div class="category_body resume_category_body">
-                    <article class="post resume_post resume_post_1 first even">
-                      <div class="post_header resume_post_header">
-                        <div class="resume_period"> <span class="period_from">1999</span> - <span class="period_to">2001</span> </div>
-                        <h4 class="post_title"><span class="post_title_icon green"></span><a href="post-text.html">Lorem Contrary to popular belief</a></h4>
-                        <h5 class="post_subtitle">Web design</h5>
-                      </div>
-                      <div class="post_body resume_post_body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                      </div>
-                    </article>
-                    <article class="post resume_post resume_post_2 odd">
-                      <div class="post_header resume_post_header">
-                        <div class="resume_period"> <span class="period_from">1996</span> - <span class="period_to">2000</span> </div>
-                        <h4 class="post_title"><span class="post_title_icon green"></span><a href="post-text.html">Lorem Ipsum is simply dummy text</a></h4>
-                        <h5 class="post_subtitle">Graphic design</h5>
-                      </div>
-                      <div class="post_body resume_post_body">
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                      </div>
-                    </article>
-                  </div>
-                  <!-- /category_body -->
-                </div>
-                <!-- /category -->
-              </div>
-              <!-- /wrapper -->
+                <!-- /wrapper -->
+              <% } %>
             </div>
             <!-- /section_body -->
           </section>
