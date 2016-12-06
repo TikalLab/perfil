@@ -1,3 +1,12 @@
+body {
+  background-color: #282c35;
+  /*background-color: #21252c;*/
+  color: #9da5b5;
+}
+
+.header{
+  background-color: #21252c;
+}
 .connect-button {
   margin-bottom: 6px;
 }
