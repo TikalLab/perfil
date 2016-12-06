@@ -18,3 +18,9 @@
 h3.main-heading {
   margin-top: 35px;
 }
+
+.value {
+  text-align: right;
+  float: left;
+  width: 125px;
+}

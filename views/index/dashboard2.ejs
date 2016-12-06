@@ -8,7 +8,7 @@
         <span class="fa fa-github"></span> <%=user.github ? 'GitHub Connected ' : 'Connect GitHub'%>
       </a>
       <% if(user.github){ %>
-‘        <div class="toggle-box">
+        <div class="toggle-box">
           <input id="toggle-github-profile-link" name="github-profile-link" type="checkbox" data-toggle="toggle" data-size="small"<%=_.contains(user.widgets,'github-profile-link') ? 'checked' : ''%>> Profile Link
         </div>
         <div class="toggle-box">
@@ -66,7 +66,7 @@
         </div>
       <% } %>
     </form>
-’  </div>
+  </div>
   <div class="col-md-10">
     <iframe id="the-perfil" style="border:none; width:100%" src="http://<%=config.get('app.domain')%>/profiles/github/<%=user.github.username%>">
     </iframe>
