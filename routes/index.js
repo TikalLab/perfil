@@ -35,6 +35,25 @@ router.get('/logout',function(req,res,next){
 	res.redirect('/')
 })
 
+router.get('/timeline',function(req,res,next){
+	// render(req,res,'index/dashboard',{})
+
+	github.getUserCommitsWithLanguageTag(req.session.user.github.access_token,function(err,commits){
+		if(err){
+			console.log('err is %s',err)
+		}else{
+			console.log('commits length: %s',commits.length);
+			console.log('commits sample: %s',util.inspect(commits[0]));
+
+		}
+	})
+
+
+	// render(req,res,'index/timeline',{})
+})
+
+
+
 router.post('/save',function(req,res,next){
 	console.log(util.inspect(req.body))
 

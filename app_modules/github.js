@@ -239,7 +239,103 @@ module.exports = {
 		],function(err,tagCloud){
 			callback(err,tagCloud)
 		})
-	}
+	},
+	getUserCommitsWithLanguageTag: function(accessToken,callback){
+		var thisObject = this;
+		var headers = this.getAPIHeaders(accessToken);
+
+		async.waterfall([
+			function(callback){
+				thisObject.getUser(accessToken,function(err,user){
+console.log('got user: %s',util.inspect(user))
+					callback(err,user)
+				})
+			},
+			function(user,callback){
+				thisObject.getUserRepos(accessToken,function(err,repos){
+console.log('got repos: %s',repos.length)
+					callback(err,user,repos)
+				})
+			},
+			function(user,repos,callback){
+				var commits = [];
+
+				async.each(repos,function(repo,callback){
+
+					async.parallel([
+						function(callback){
+							thisObject.getRepoAuthorCommits(accessToken,repo,user.login,function(err,repoCommits){
+								callback(err,repoCommits)
+							})
+						},
+						function(callback){
+							thisObject.getRepoLanguages(accessToken,repo,function(err,repoLanguages){
+								callback(err,repoLanguages)
+							})
+						},
+					],function(err,results){
+
+						if(err){
+							callback(err)
+						}else{
+console.log('got %s commits for repo %s with languages %s',results[0].length,repo.full_name,util.inspect(results[1]))
+							commits = commits.concat(_.map(results[0],function(commit){
+								// commit['repo_languages'] = results[1];
+								return {
+									id: commit.sha,
+									when: commit.commit.author.date,
+									languages: results[1]
+								};
+							}))
+							callback()
+						}
+					})
+				},function(err){
+					callback(err,commits)
+				})
+			}
+		],function(err,commits){
+			callback(err,commits)
+		})
+	},
+
+	getRepoAuthorCommits: function(accessToken,repo,author,callback){
+		var headers = this.getAPIHeaders(accessToken);
+		var commits = [];
+		var page = 1;
+		var linkHeader;
+		var url = util.format('https://api.github.com/repos/%s/commits',repo.full_name)
+
+		async.whilst(
+			function(){
+				return page;
+			},
+			function(callback){
+				var qs = {
+					author: author,
+					page: page
+				}
+
+				request(url,{headers: headers, qs: qs},function(error,response,body){
+					if(error){
+						callback(error);
+					}else if(response.statusCode > 300){
+						callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+					}else{
+						var data = JSON.parse(body)
+						commits = commits.concat(data);
+						linkHeader = parseLinkHeader(response.headers.link);
+						page = (linkHeader? ('next' in linkHeader ? linkHeader.next.page : false) : false);
+						callback(null,commits);
+					}
+				});
+			},
+			function(err,commits){
+				callback(err,commits)
+			}
+		);
+
+	},
 
 
 
