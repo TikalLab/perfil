@@ -280,12 +280,13 @@ console.log('got repos: %s',repos.length)
 						}else{
 console.log('got %s commits for repo %s with languages %s',results[0].length,repo.full_name,util.inspect(results[1]))
 							commits = commits.concat(_.map(results[0],function(commit){
-								// commit['repo_languages'] = results[1];
-								return {
-									id: commit.sha,
-									when: commit.commit.author.date,
-									languages: results[1]
-								};
+								commit['repo_languages'] = results[1];
+								return commit;
+								// return {
+								// 	id: commit.sha,
+								// 	when: commit.commit.author.date,
+								// 	tags: results[1]
+								// };
 							}))
 							callback()
 						}

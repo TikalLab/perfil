@@ -85,9 +85,87 @@ router.get('/timeline',function(req,res,next){
 				type: 'SO answer'
 			}
 		}))
-		console.log('grand list is %s',util.inspect(events));
 
-		console.log('grand list size is %s',events.length);
+		// sort the events list according to date
+		events = _.sortBy(events,'when');
+
+		// flatten all the dates
+		events = _.map(events,function(event){
+			event.when = moment(event.when).format('YYYY-MM-DD');
+			event.when = moment(event.when).format('YYYY-MM');
+			return event;
+		})
+
+		// create a list of all possible tags
+		var tags = _.map(events,function(event){
+			return event.tags;
+		})
+
+		tags = _.flatten(tags)
+
+		tags = _.map(tags,function(tag){
+			return tag.toLowerCase()
+		})
+
+		tags = _.uniq(tags)
+
+		var traces = [];
+		_.each(tags,function(tag){
+			traces.push({
+				name: tag,
+				mode: 'lines',
+				line : {
+					shape: 'spline'
+				},
+				type: 'scatter',
+				x: [],
+				y: []
+			})
+		})
+
+		_.each(events,function(event){
+			_.each(event.tags,function(tag){
+				tag = tag.toLowerCase()
+
+				traceIndex = _.findIndex(traces,function(trace){
+					return trace.name == tag;
+				})
+
+				var xIndex = _.findIndex(traces[traceIndex].x,function(x){
+					return x == event.when
+				})
+				if(xIndex == -1){
+					traces[traceIndex].x.push(event.when);
+					traces[traceIndex].y.push(getEventScore(event))
+				}else{
+					traces[traceIndex].y[xIndex]+=getEventScore(event)
+				}
+			})
+		})
+
+		console.log('traces are %s',util.inspect(traces))
+
+		render(req,res,'index/timeline',{
+			traces: traces
+		})
+
+		// var traces = [];
+		// _.each(events,function(event){
+		//
+		// 	var date = moment(event.when).format('YYYY-MM-DD')
+		//
+		// 	_.each(event.tags,function(tag){
+		// 		traceIndex = _.findIndex(traces,function(trace){
+		// 			return trace.name = tag;
+		// 		})
+		// 		traces[traceIndex].
+		//
+		// 	})
+		// })
+
+		// console.log('grand list is %s',util.inspect(events));
+		//
+		// console.log('grand list size is %s',events.length);
 
 	})
 
@@ -95,7 +173,21 @@ router.get('/timeline',function(req,res,next){
 	// render(req,res,'index/timeline',{})
 })
 
-
+function getEventScore(event){
+	var ret = 0;
+	switch (event.type){
+		case 'GH commit':
+		ret = 1;
+		break;
+		case 'SO answer':
+		ret = 10;
+		break;
+		case 'SO question':
+		ret = 10;
+		break;
+	}
+	return ret;
+}
 
 router.post('/save',function(req,res,next){
 	console.log(util.inspect(req.body))
