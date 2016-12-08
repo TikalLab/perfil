@@ -38,14 +38,57 @@ router.get('/logout',function(req,res,next){
 router.get('/timeline',function(req,res,next){
 	// render(req,res,'index/dashboard',{})
 
-	github.getUserCommitsWithLanguageTag(req.session.user.github.access_token,function(err,commits){
-		if(err){
-			console.log('err is %s',err)
-		}else{
-			console.log('commits length: %s',commits.length);
-			console.log('commits sample: %s',util.inspect(commits[0]));
+	async.parallel([
+		function(callback){
+			github.getUserCommitsWithLanguageTag(req.session.user.github.access_token,function(err,commits){
+				callback(err,commits)
+			})
+		},
+		function(callback){
+			stackoverflow.getUserQuestions(req.session.user.stackoverflow.access_token,function(err,questions){
+// console.log('sample question: %s',util.inspect(questions[0]))
+				callback(err,questions)
+			})
+		},
+		function(callback){
+			stackoverflow.getUserAnswers(req.session.user.stackoverflow.access_token,function(err,answers){
+// console.log('sample answers: %s',util.inspect(answers[0]))
+				callback(err,answers)
+			})
+		},
+	],function(err,results){
+		var events = [];
+		events = events.concat(_.map(results[0],function(commit){
+			return {
+				id: commit.sha,
+				when: moment(commit.commit.author.date).toDate(),
+				tags: commit.repo_languages,
+				type: 'GH commit'
+			}
+			// commit['type'] = 'commit';
+			// commit['when'] = moment(commit['when']).toDate()
+			// return commit;
+		}))
+		events = events.concat(_.map(results[1],function(question){
+			return {
+				id: question.question_id,
+				when: moment(question.creation_date).toDate(),
+				tags: question.tags,
+				type: 'SO question'
+			}
+		}))
+		events = events.concat(_.map(results[2],function(answer){
+			return {
+				id: answer.answer.answer_id,
+				when: moment(answer.answer.creation_date).toDate(),
+				tags: answer.question.tags,
+				type: 'SO answer'
+			}
+		}))
+		console.log('grand list is %s',util.inspect(events));
 
-		}
+		console.log('grand list size is %s',events.length);
+
 	})
 
 
