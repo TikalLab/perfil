@@ -1,0 +1,7 @@
+<div id="graph"></div>
+
+<script>
+$(function(){
+  Plotly.newPlot('graph',JSON.parse('<%- JSON.stringify(traces)%>'),{barmode: "stack", height: 1000})
+})
+</script>

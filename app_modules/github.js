@@ -49,7 +49,7 @@ module.exports = {
 			function(callback){
 				var qs = {
 					page: page,
-					type: 'owner'
+					// type: 'owner'
 				}
 				request('https://api.github.com/user/repos',{headers: headers, qs: qs},function(error,response,body){
 					if(error){
@@ -140,7 +140,9 @@ module.exports = {
 			if(error){
 				callback(error);
 			}else if(response.statusCode > 300){
-				callback('error in get repo languages ' + response.statusCode + ':' + body);
+				console.log('err in lamnguages for %s',repo.full_name);
+				callback(null,[])
+				// callback('error in get repo languages ' + response.statusCode + ':' + body);
 			}else{
 				callback(null,_.keys(JSON.parse(body)));
 			}
@@ -321,7 +323,10 @@ console.log('got %s commits for repo %s with languages %s',results[0].length,rep
 					if(error){
 						callback(error);
 					}else if(response.statusCode > 300){
-						callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+console.log('err in repo %s: %s: %s',repo.full_name,response.statusCode,body)
+						// callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+						page = false;
+						callback(null,commits)
 					}else{
 						var data = JSON.parse(body)
 						commits = commits.concat(data);
