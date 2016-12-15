@@ -5,6 +5,7 @@ var async = require('async');
 var parseLinkHeader = require('parse-link-header');
 var util = require('util');
 var moment = require('moment')
+var twix = require('twix')
 
 var github = require('../app_modules/github');
 var stackoverflow = require('../app_modules/stackoverflow');
@@ -382,7 +383,42 @@ console.log('inverted is %s',util.inspect(invertedCloud))
 
         console.log('big 5 are: %s',util.inspect(big5Tags))
 
+        // sort the events list according to date
+  			events = _.sortBy(events,'when');
 
+  			// find min and max dates
+  			var earliestEvent = _.min(events,function(event){
+  				return event.when;
+  			})
+
+  			var latestEvent = _.max(events,function(event){
+  				return event.when;
+  			})
+
+  			// generate initial x and y
+  			var x = [];
+  			var itr = moment.twix(new Date(earliestEvent.when),new Date(latestEvent.when)).iterate("months");
+  			while(itr.hasNext()){
+  				currentDate = itr.next().format('YYYY-MM');
+  				x.push(currentDate);
+  			}
+
+  			// flatten all the dates
+  			events = _.map(events,function(event){
+  				event.when = moment(event.when).format('YYYY-MM');
+  				return event;
+  			})
+
+        var traces = [];
+        // create a score graph for each of the big 5 tags
+        _.each(big5Tags,function(big5Tag){
+          var y = [];
+          _.each(events,function(event){
+            if(){
+              
+            }
+          })
+        })
 
   			callback(null,{
           cloud: tagCloud,
