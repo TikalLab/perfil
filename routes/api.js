@@ -93,6 +93,9 @@ function invoke(widget,user,callback){
 		case 'linkedin-summary':
 			widgets.linkedinSummary(user.linkedin.access_token,callback);
 			break;
+		case 'big-tag-cloud':
+			widgets.bigTagCloud(user.github.access_token,user.stackoverflow.access_token,callback);
+			break;
 		default:
 			callback(null,null)
 		  break;

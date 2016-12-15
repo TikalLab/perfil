@@ -188,6 +188,18 @@
                     <div class="skills-section">
                         <!-- Skills -->
 
+                        <% if(typeof big_tag_cloud != 'undefined'){ %>
+                          <h3 class="main-heading"><span class="fa fa-github"></span> Big Tag Cloud</h3>
+                          <ul class="tag-cloud">
+                              <% _.each(big_tag_cloud.cloud,function(count,tag){ %>
+                                <%
+                                var size = 2 * ((count - big_tag_cloud.min) / (big_tag_cloud.max - big_tag_cloud.min)) + 1.2
+                                %>
+                                <li><span style="font-size:<%=size%>em"><%=tag%></span></li>
+                              <% }) %>
+                          </ul>
+                        <% } %>
+
                         <% if(typeof github_repos_tag_cloud != 'undefined'){ %>
                           <h3 class="main-heading"><span class="fa fa-github"></span> GitHub Repositories Lanhuages</h3>
                           <ul class="tag-cloud">

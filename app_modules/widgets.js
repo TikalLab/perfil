@@ -4,11 +4,28 @@ var _ = require('underscore');
 var async = require('async');
 var parseLinkHeader = require('parse-link-header');
 var util = require('util');
+var moment = require('moment')
 
 var github = require('../app_modules/github');
 var stackoverflow = require('../app_modules/stackoverflow');
 var linkedin = require('../app_modules/linkedin');
 var meetup = require('../app_modules/meetup');
+
+function getEventScore(event){
+	var ret = 0;
+	switch (event.type){
+		case 'GH commit':
+		ret = 1;
+		break;
+		case 'SO answer':
+		ret = 10;
+		break;
+		case 'SO question':
+		ret = 10;
+		break;
+	}
+	return ret;
+}
 
 module.exports = {
   githubBasicStats: function(accessToken,callback){
@@ -263,6 +280,118 @@ module.exports = {
       }else{
         callback(err,results[0].link)
       }
+  	})
+  },
+  bigTagCloud: function(githubAccessToken,stackOverflowAccessToken,callback){
+    async.parallel([
+  		function(callback){
+  			github.getUserCommitsWithLanguageTag(githubAccessToken,function(err,commits){
+  				callback(err,commits)
+  			})
+  		},
+  		function(callback){
+  			stackoverflow.getUserQuestions(stackOverflowAccessToken,function(err,questions){
+  // console.log('sample question: %s',util.inspect(questions[0]))
+  				callback(err,questions)
+  			})
+  		},
+  		function(callback){
+  			stackoverflow.getUserAnswers(stackOverflowAccessToken,function(err,answers){
+  // console.log('sample answers: %s',util.inspect(answers[0]))
+  				callback(err,answers)
+  			})
+  		},
+  	],function(err,results){
+  		if(err){
+  			callback(err)
+  		}else{
+  			var events = [];
+  			events = events.concat(_.map(results[0],function(commit){
+  				return {
+  					id: commit.sha,
+  					when: moment(commit.commit.author.date).toDate(),
+  					tags: commit.repo_languages,
+  					type: 'GH commit'
+  				}
+  				// commit['type'] = 'commit';
+  				// commit['when'] = moment(commit['when']).toDate()
+  				// return commit;
+  			}))
+  			events = events.concat(_.map(results[1],function(question){
+  				// console.log('Q is %s',util.inspect(question))
+  				// console.log('Q date %s',question.creation_date)
+  				return {
+  					id: question.question_id,
+  					when: moment(Number(question.creation_date + '000')).toDate(),
+  					tags: question.tags,
+  					type: 'SO question'
+  				}
+  			}))
+  			events = events.concat(_.map(results[2],function(answer){
+  				// console.log('A date %s',answer.answer.creation_date)
+  				return {
+  					id: answer.answer.answer_id,
+  					when: moment(Number(answer.answer.creation_date + '000')).toDate(),
+  					tags: answer.question.tags,
+  					type: 'SO answer'
+  				}
+  			}))
+
+        // create a sortable list of tags
+        var tags = [];
+        _.each(events,function(event){
+          _.each(event.tags,function(tag){
+            tags.push(tag)
+          })
+        })
+
+        tags = _.uniq(tags);
+        tags = _.sortBy(tags,function(tag){
+          return tag.toLowerCase()
+        })
+
+        var tagCloud = _.countBy(tags,function(tag){
+  				return tag;
+  			})
+
+        tagCloud = _.mapObject(tagCloud,function(val,key){
+          return 0;
+        })
+
+  			_.each(events,function(event){
+  				_.each(event.tags,function(tag){
+  					tagCloud[tag] += getEventScore(event)
+  				})
+  			})
+
+  			console.log('tagCloud is %s',util.inspect(tagCloud))
+
+        var values = _.values(tagCloud);
+        var min = _.min(values);
+        var max = _.max(values);
+
+        var invertedCloud = _.invert(tagCloud);
+console.log('inverted is %s',util.inspect(invertedCloud))
+        var keys = _.keys(invertedCloud).sort(function(a,b){return Number(a) - Number(b)}).reverse();
+        console.log('keys is %s',util.inspect(keys))
+        var big5 = _.first(keys,5)
+        var big5Tags = [];
+        _.each(big5,function(val){
+          big5Tags.push(invertedCloud[val])
+        })
+
+        console.log('big 5 are: %s',util.inspect(big5Tags))
+
+
+
+  			callback(null,{
+          cloud: tagCloud,
+          min: min,
+          max: max
+        })
+
+
+  		}
   	})
   },
 }
