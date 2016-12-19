@@ -43,6 +43,7 @@
     "slug": "*",
     "twix": "*",
     "mathjs": "*",
+    "language-detect": "*",
     "git-patch-additions": "*"
   }
 }

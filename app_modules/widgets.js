@@ -306,12 +306,17 @@ module.exports = {
   		if(err){
   			callback(err)
   		}else{
+
+
+console.log('results are: %s',util.inspect(results,{depth:8}))
+
   			var events = [];
   			events = events.concat(_.map(results[0],function(commit){
   				return {
   					id: commit.sha,
   					when: moment(commit.commit.author.date).toDate(),
-  					tags: commit.repo_languages,
+  					// tags: commit.repo_languages,
+            tags: commit.languages,
   					type: 'GH commit'
   				}
   				// commit['type'] = 'commit';
@@ -365,14 +370,13 @@ module.exports = {
   				})
   			})
 
-  			console.log('tagCloud is %s',util.inspect(tagCloud))
+  			// console.log('tagCloud is %s',util.inspect(tagCloud))
 
         var values = _.values(tagCloud);
         var min = _.min(values);
         var max = _.max(values);
 
         var invertedCloud = _.invert(tagCloud);
-console.log('inverted is %s',util.inspect(invertedCloud))
         var keys = _.keys(invertedCloud).sort(function(a,b){return Number(a) - Number(b)}).reverse();
         console.log('keys is %s',util.inspect(keys))
         var big5 = _.first(keys,5)
@@ -410,20 +414,40 @@ console.log('inverted is %s',util.inspect(invertedCloud))
   			})
 
         var traces = [];
+
         // create a score graph for each of the big 5 tags
         _.each(big5Tags,function(big5Tag){
           var y = [];
-          _.each(events,function(event){
-            if(){
-              
-            }
+          _.each(x,function(x1){
+            var value = 0;
+            var relevantEvents = _.filter(events,function(event){
+              return (_.contains(event.tags,big5Tag) && event.when == x1);
+            })
+            value = _.reduce(relevantEvents,function(memo,event){
+              return memo + getEventScore(event)
+            },0)
+            y.push(value);
+          })
+          traces.push({
+            name: big5Tag,
+            // line: {
+            //   shape: 'spline'
+            // },
+            type: 'scatter',
+            x: x,
+            y: y
           })
         })
+
+        console.log('trends is %s',util.inspect(traces,{depth:8}))
+
+
 
   			callback(null,{
           cloud: tagCloud,
           min: min,
-          max: max
+          max: max,
+          trends: traces
         })
 
 

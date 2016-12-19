@@ -11,6 +11,7 @@ var fse = require('fs-extra')
 var url = require('url');
 var slug = require('slug')
 var exec = require('child_process').exec;
+var languageDetect = require('language-detect');
 
 
 module.exports = {
@@ -266,7 +267,9 @@ console.log('got repos: %s',repos.length)
 
 					async.parallel([
 						function(callback){
-							thisObject.getRepoAuthorCommits(accessToken,repo,user.login,function(err,repoCommits){
+
+							// thisObject.getRepoAuthorCommits(accessToken,repo,user.login,function(err,repoCommits){
+							thisObject.getRepoAuthorCommitsWithLanguages(accessToken,repo,user.login,function(err,repoCommits){
 								callback(err,repoCommits)
 							})
 						},
@@ -343,6 +346,87 @@ console.log('err in repo %s: %s: %s',repo.full_name,response.statusCode,body)
 
 	},
 
+	getRepoAuthorCommitsWithLanguages: function(accessToken,repo,author,callback){
+		var headers = this.getAPIHeaders(accessToken);
+		var commits = [];
+		var page = 1;
+		var linkHeader;
+		var url = util.format('https://api.github.com/repos/%s/commits',repo.full_name)
+
+		async.waterfall([
+			// get all commits
+			function(callback){
+				async.whilst(
+					function(){
+						return page;
+					},
+					function(callback){
+						var qs = {
+							author: author,
+							page: page
+						}
+
+						request(url,{headers: headers, qs: qs},function(error,response,body){
+							if(error){
+								callback(error);
+							}else if(response.statusCode > 300){
+		console.log('err in repo %s: %s: %s',repo.full_name,response.statusCode,body)
+								// callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+								page = false;
+								callback(null,commits)
+							}else{
+								var data = JSON.parse(body)
+								commits = commits.concat(data);
+								linkHeader = parseLinkHeader(response.headers.link);
+								page = (linkHeader? ('next' in linkHeader ? linkHeader.next.page : false) : false);
+								callback(null,commits);
+							}
+						});
+					},
+					function(err,commits){
+						callback(err,commits)
+					}
+				);
+			},
+			// per each commit, get languages
+			function(commits,callback){
+				var commitsWithLanguages = [];
+				async.each(commits,function(commit,callback){
+					var url = util.format('https://api.github.com/repos/%s/commits/%s',repo.full_name,commit.sha)
+					request(url,{headers: headers},function(error,response,body){
+						if(error){
+							callback(error);
+						}else if(response.statusCode > 300){
+							callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
+						}else{
+							var data = JSON.parse(body);
+							var languages = [];
+							var language;
+							_.each(data.files,function(file){
+								language = languageDetect.filename(file.filename);
+								if(typeof language != 'undefined'){
+									languages.push(language)
+								}
+							})
+							languages = _.uniq(languages)
+console.log('detected languages for commit %s: %s',commit.sha,util.inspect(languages))
+							commit.languages = languages;
+							commitsWithLanguages.push(commit)
+							callback()
+						}
+					})
+				},function(err){
+					callback(err,commitsWithLanguages)
+				})
+			}
+		],function(err,commits){
+			callback(err,commits)
+		})
+
+
+
+
+	},
 
 
 }

@@ -21,6 +21,11 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+/*
+TBD - remocve this in prod...
+*/
+server.timeout = 0;
+
 /**
  * Listen on provided port, on all network interfaces.
  */
