@@ -1,0 +1,57 @@
+<html>
+<head>
+  <script type="text/javascript" src="/zwin/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+<body>
+  <div id="trends-graph"></div>
+
+  <div style="width:600px;height:500px;">
+  <canvas id="myChart" style="width:400px;height:400px;"></canvas>
+</div>
+
+
+<script>
+$(function(){
+  var myRadarChart = new Chart($('#myChart'), {
+    type: 'radar',
+    data: {
+      labels: ['JavaScript','PHP','CSS','Scala','Python'],
+      datasets: [
+        {
+          label: '2014',
+          backgroundColor: "rgba(179,181,198,0.2)",
+          borderColor: "rgba(179,181,198,1)",
+          pointBackgroundColor: "rgba(179,181,198,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(179,181,198,1)",
+          data: [120,223,20,250,120]
+        },
+        {
+          label: '2015',
+          backgroundColor: "rgba(255,99,132,0.2)",
+          borderColor: "rgba(255,99,132,1)",
+          pointBackgroundColor: "rgba(255,99,132,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(255,99,132,1)",
+          data: [230,12,15,567,200]
+        },
+        {
+          label: '2016',
+          backgroundColor: "rgba(230,163,89,0.2)",
+          borderColor: "rgba(230,163,89,1)",
+          pointBackgroundColor: "rgba(230,163,89,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(230,163,89,1)",
+          data: [400,600,150,20,80]
+        }
+      ]
+    }
+  });
+})
+  </script>
+</body>
+</html>

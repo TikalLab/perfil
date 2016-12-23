@@ -29,6 +29,7 @@
     <script type="text/javascript" src="/js/iframeResizer.contentWindow.min.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -205,8 +206,79 @@
                           </div>
                           <script>
                           $(function(){
-                            Plotly.newPlot('trends-graph',JSON.parse('<%- JSON.stringify(big_tag_cloud.trends)%>'))
-                            Plotly.d3.selectAll(".subplot").filter(".xy").attr('transform', 'rotate(90) translate(0, -400)');
+                            // Plotly.newPlot('trends-graph',JSON.parse('<%- JSON.stringify(big_tag_cloud.trends)%>'))
+                            // Plotly.d3.selectAll(".subplot").filter(".xy").attr('transform', 'rotate(90) translate(0, -400)');
+                            // Plotly.d3.selectAll(".legend").attr('transform', 'translate(100, 50)');
+
+
+                            var traces = JSON.parse('<%- JSON.stringify(big_tag_cloud.trends)%>');
+
+                            var myLineFilledChart = new Chart($('#trends-graph'), {
+                              type: 'line',
+                              data: {
+                                labels: traces[0].x,
+                                datasets: [
+                                  {
+                                    label: traces[0].name,
+                                    fill: true,
+                                    backgroundColor: "rgba(179,181,198,0.2)",
+                                    borderColor: "rgba(179,181,198,1)",
+                                    pointBackgroundColor: "rgba(179,181,198,1)",
+                                    pointBorderColor: "#fff",
+                                    pointHoverBackgroundColor: "#fff",
+                                    pointHoverBorderColor: "rgba(179,181,198,1)",
+                                    data: traces[0].y
+                                  },
+                                  {
+                                    label: traces[0].name,
+                                    fill: true,
+                                    backgroundColor: "rgba(255,99,132,0.2)",
+                                    borderColor: "rgba(255,99,132,1)",
+                                    pointBackgroundColor: "rgba(255,99,132,1)",
+                                    pointBorderColor: "#fff",
+                                    pointHoverBackgroundColor: "#fff",
+                                    pointHoverBorderColor: "rgba(255,99,132,1)",
+                                    data: traces[0].y
+                                  },
+                                  {
+                                    label: traces[0].name,
+                                    fill: true,
+                                    backgroundColor: "rgba(230,163,89,0.2)",
+                                    borderColor: "rgba(230,163,89,1)",
+                                    pointBackgroundColor: "rgba(230,163,89,1)",
+                                    pointBorderColor: "#fff",
+                                    pointHoverBackgroundColor: "#fff",
+                                    pointHoverBorderColor: "rgba(230,163,89,1)",
+                                    data: traces[0].y
+                                  },
+                                  {
+                                    label: traces[0].name,
+                                    fill: true,
+                                    backgroundColor: "rgba(200,87,126,0.2)",
+                                    borderColor: "rgba(200,87,126,1)",
+                                    pointBackgroundColor: "rgba(200,87,126,1)",
+                                    pointBorderColor: "#fff",
+                                    pointHoverBackgroundColor: "#fff",
+                                    pointHoverBorderColor: "rgba(200,87,126,1)",
+                                    data: traces[0].y
+                                  },
+                                  {
+                                    label: traces[0].name,
+                                    fill: true,
+                                    backgroundColor: "rgba(12,250,200,0.2)",
+                                    borderColor: "rgba(12,250,200,1)",
+                                    pointBackgroundColor: "rgba(12,250,200,1)",
+                                    pointBorderColor: "#fff",
+                                    pointHoverBackgroundColor: "#fff",
+                                    pointHoverBorderColor: "rgba(12,250,200,1)",
+                                    data: traces[0].y
+                                  }
+                                ]
+                              }
+                            });
+
+
+
                           })
                           </script>
 

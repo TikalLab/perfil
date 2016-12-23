@@ -25,7 +25,7 @@ var linkedin = require('./routes/linkedin');
 var github = require('./routes/github');
 var stackoverflow = require('./routes/stackoverflow');
 var google = require('./routes/google');
-// var admin = require('./routes/admin');
+var queries = require('./routes/queries');
 // var bitbucket = require('./routes/bitbucket');
 
 ///*
@@ -125,7 +125,7 @@ app.use('/linkedin', linkedin);
 app.use('/stackoverflow', stackoverflow);
 app.use('/meetup', meetup);
 app.use('/google', google);
-// app.use('/admin', admin);
+app.use('/queries', queries);
 // app.use('/bitbucket', bitbucket);
 
 

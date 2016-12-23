@@ -283,7 +283,7 @@ module.exports = {
       }
   	})
   },
-  bigTagCloud: function(githubAccessToken,stackOverflowAccessToken,callback){
+  bigTagCloud: function(githubAccessToken,stackOverflowAccessToken,db,callback){
     async.parallel([
   		function(callback){
   			github.getUserCommitsWithLanguageTag(githubAccessToken,function(err,commits){
@@ -343,112 +343,119 @@ console.log('results are: %s',util.inspect(results,{depth:8}))
   				}
   			}))
 
-        // create a sortable list of tags
-        var tags = [];
+        var col = db.get('events');
         _.each(events,function(event){
-          _.each(event.tags,function(tag){
-            tags.push(tag)
-          })
+          col.insert(event)
         })
 
-        tags = _.uniq(tags);
-        tags = _.sortBy(tags,function(tag){
-          return tag.toLowerCase()
-        })
-
-        var tagCloud = _.countBy(tags,function(tag){
-  				return tag;
-  			})
-
-        tagCloud = _.mapObject(tagCloud,function(val,key){
-          return 0;
-        })
-
-  			_.each(events,function(event){
-  				_.each(event.tags,function(tag){
-  					tagCloud[tag] += getEventScore(event)
-  				})
-  			})
-
-  			// console.log('tagCloud is %s',util.inspect(tagCloud))
-
-        var values = _.values(tagCloud);
-        var min = _.min(values);
-        var max = _.max(values);
-
-        var invertedCloud = _.invert(tagCloud);
-        var keys = _.keys(invertedCloud).sort(function(a,b){return Number(a) - Number(b)}).reverse();
-        console.log('keys is %s',util.inspect(keys))
-        var big5 = _.first(keys,5)
-        var big5Tags = [];
-        _.each(big5,function(val){
-          big5Tags.push(invertedCloud[val])
-        })
-
-        console.log('big 5 are: %s',util.inspect(big5Tags))
-
-        // sort the events list according to date
-  			events = _.sortBy(events,'when');
-
-  			// find min and max dates
-  			var earliestEvent = _.min(events,function(event){
-  				return event.when;
-  			})
-
-  			var latestEvent = _.max(events,function(event){
-  				return event.when;
-  			})
-
-  			// generate initial x and y
-  			var x = [];
-  			var itr = moment.twix(new Date(earliestEvent.when),new Date(latestEvent.when)).iterate("months");
-  			while(itr.hasNext()){
-  				currentDate = itr.next().format('YYYY-MM');
-  				x.push(currentDate);
-  			}
-
-  			// flatten all the dates
-  			events = _.map(events,function(event){
-  				event.when = moment(event.when).format('YYYY-MM');
-  				return event;
-  			})
-
-        var traces = [];
-
-        // create a score graph for each of the big 5 tags
-        _.each(big5Tags,function(big5Tag){
-          var y = [];
-          _.each(x,function(x1){
-            var value = 0;
-            var relevantEvents = _.filter(events,function(event){
-              return (_.contains(event.tags,big5Tag) && event.when == x1);
-            })
-            value = _.reduce(relevantEvents,function(memo,event){
-              return memo + getEventScore(event)
-            },0)
-            y.push(value);
-          })
-          traces.push({
-            name: big5Tag,
-            // line: {
-            //   shape: 'spline'
-            // },
-            type: 'scatter',
-            x: x,
-            y: y
-          })
-        })
-
-        console.log('trends is %s',util.inspect(traces,{depth:8}))
-
-
-
-  			callback(null,{
-          cloud: tagCloud,
-          min: min,
-          max: max,
-          trends: traces
-        })
+        // create a sortable list of tags
+        // var tags = [];
+        // _.each(events,function(event){
+        //   _.each(event.tags,function(tag){
+        //     tags.push(tag)
+        //   })
+        // })
+        //
+        // tags = _.uniq(tags);
+        // tags = _.sortBy(tags,function(tag){
+        //   return tag.toLowerCase()
+        // })
+        //
+        // var tagCloud = _.countBy(tags,function(tag){
+  			// 	return tag;
+  			// })
+        //
+        // tagCloud = _.mapObject(tagCloud,function(val,key){
+        //   return 0;
+        // })
+        //
+  			// _.each(events,function(event){
+  			// 	_.each(event.tags,function(tag){
+  			// 		tagCloud[tag] += getEventScore(event)
+  			// 	})
+  			// })
+        //
+  			// // console.log('tagCloud is %s',util.inspect(tagCloud))
+        //
+        // var values = _.values(tagCloud);
+        // var min = _.min(values);
+        // var max = _.max(values);
+        //
+        // var invertedCloud = _.invert(tagCloud);
+        // var keys = _.keys(invertedCloud).sort(function(a,b){return Number(a) - Number(b)}).reverse();
+        // console.log('keys is %s',util.inspect(keys))
+        // var big5 = _.first(keys,5)
+        // var big5Tags = [];
+        // _.each(big5,function(val){
+        //   big5Tags.push(invertedCloud[val])
+        // })
+        //
+        // console.log('big 5 are: %s',util.inspect(big5Tags))
+        //
+        // // sort the events list according to date
+  			// events = _.sortBy(events,'when');
+        //
+  			// // find min and max dates
+  			// var earliestEvent = _.min(events,function(event){
+  			// 	return event.when;
+  			// })
+        //
+  			// var latestEvent = _.max(events,function(event){
+  			// 	return event.when;
+  			// })
+        //
+  			// // generate initial x and y
+  			// var x = [];
+  			// var itr = moment.twix(new Date(earliestEvent.when),new Date(latestEvent.when)).iterate("months");
+  			// while(itr.hasNext()){
+  			// 	currentDate = itr.next().format('YYYY-MM');
+  			// 	x.push(currentDate);
+  			// }
+        //
+        // x = x.reverse();
+        //
+  			// // flatten all the dates
+  			// events = _.map(events,function(event){
+  			// 	event.when = moment(event.when).format('YYYY-MM');
+  			// 	return event;
+  			// })
+        //
+        // var traces = [];
+        //
+        // // create a score graph for each of the big 5 tags
+        // _.each(big5Tags,function(big5Tag){
+        //   var y = [];
+        //   _.each(x,function(x1){
+        //     var value = 0;
+        //     var relevantEvents = _.filter(events,function(event){
+        //       return (_.contains(event.tags,big5Tag) && event.when == x1);
+        //     })
+        //     value = _.reduce(relevantEvents,function(memo,event){
+        //       return memo + getEventScore(event)
+        //     },0)
+        //     y.push(value);
+        //   })
+        //   traces.push({
+        //     name: big5Tag,
+        //     // line: {
+        //     //   shape: 'spline'
+        //     // },
+        //     type: 'scatter',
+        //     x: x,
+        //     y: y
+        //   })
+        // })
+        //
+        // console.log('trends is %s',util.inspect(traces,{depth:8}))
+        //
+        //
+        //
+  			// callback(null,{
+        //   cloud: tagCloud,
+        //   min: min,
+        //   max: max,
+        //   trends: traces
+        // })
 
 
   		}

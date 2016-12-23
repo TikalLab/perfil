@@ -31,7 +31,7 @@ router.get('/user/:platform/:id',function(req,res,next){
 		function(user,callback){
 			var ret = {};
 			async.each(user.widgets,function(widget,callback){
-				invoke(widget,user,function(err,data){
+				invoke(widget,user,req.db,function(err,data){
 					if(err){
 						callback(err)
 					}else{
@@ -54,7 +54,7 @@ router.get('/user/:platform/:id',function(req,res,next){
 
 })
 
-function invoke(widget,user,callback){
+function invoke(widget,user,db,callback){
 	console.log('invoking %s',widget)
 	switch(widget){
 		case 'github-profile-link':
@@ -94,7 +94,7 @@ function invoke(widget,user,callback){
 			widgets.linkedinSummary(user.linkedin.access_token,callback);
 			break;
 		case 'big-tag-cloud':
-			widgets.bigTagCloud(user.github.access_token,user.stackoverflow.access_token,callback);
+			widgets.bigTagCloud(user.github.access_token,user.stackoverflow.access_token,db,callback);
 			break;
 		default:
 			callback(null,null)

@@ -1,0 +1,214 @@
+<html>
+<head>
+  <script type="text/javascript" src="/zwin/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+<body>
+  <div id="trends-graph"></div>
+
+<div style="width:600px;height:500px;">
+  <canvas id="myChart" style="width:400px;height:400px;"></canvas>
+</div>
+
+<div style="margin-top:100px;width:600px;height:500px;">
+  <canvas id="myLineFilledChart" style="width:400px;height:400px;"></canvas>
+</div>
+
+<div style="margin-top:100px;width:600px;height:500px;">
+  <canvas id="myLineChart" style="width:400px;height:400px;"></canvas>
+</div>
+
+<script>
+$(function(){
+  var myRadarChart = new Chart($('#myChart'), {
+    type: 'radar',
+    data: {
+      labels: ['PHP','Java','JavaScript','Pyhton','SQL'],
+      datasets: [
+        {
+          label: '2012',
+          backgroundColor: "rgba(179,181,198,0.2)",
+          borderColor: "rgba(179,181,198,1)",
+          pointBackgroundColor: "rgba(179,181,198,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(179,181,198,1)",
+          data: [1000,200,20,40,480]
+        },
+        {
+          label: '2013',
+          backgroundColor: "rgba(255,99,132,0.2)",
+          borderColor: "rgba(255,99,132,1)",
+          pointBackgroundColor: "rgba(255,99,132,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(255,99,132,1)",
+          data: [800,220,90,60,400]
+        },
+        {
+          label: '2014',
+          backgroundColor: "rgba(230,163,89,0.2)",
+          borderColor: "rgba(230,163,89,1)",
+          pointBackgroundColor: "rgba(230,163,89,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(230,163,89,1)",
+          data: [400,240,330,30,320]
+        },
+        {
+          label: '2015',
+          backgroundColor: "rgba(200,87,126,0.2)",
+          borderColor: "rgba(200,87,126,1)",
+          pointBackgroundColor: "rgba(200,87,126,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(200,87,126,1)",
+          data: [200,210,670,90,260]
+        },
+        {
+          label: '2016',
+          backgroundColor: "rgba(12,250,200,0.2)",
+          borderColor: "rgba(12,250,200,1)",
+          pointBackgroundColor: "rgba(12,250,200,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(12,250,200,1)",
+          data: [100,180,1210,70,280]
+        }
+      ]
+    }
+  });
+
+  var myLineFilledChart = new Chart($('#myLineFilledChart'), {
+    type: 'line',
+    data: {
+      labels: ['2012','2013','2014','2015','2016'],
+      datasets: [
+        {
+          label: 'PHP',
+          fill: true,
+          backgroundColor: "rgba(179,181,198,0.2)",
+          borderColor: "rgba(179,181,198,1)",
+          pointBackgroundColor: "rgba(179,181,198,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(179,181,198,1)",
+          data: [1000,800,400,200,100]
+        },
+        {
+          label: 'Java',
+          fill: true,
+          backgroundColor: "rgba(255,99,132,0.2)",
+          borderColor: "rgba(255,99,132,1)",
+          pointBackgroundColor: "rgba(255,99,132,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(255,99,132,1)",
+          data: [200,220,240,210,180]
+        },
+        {
+          label: 'JavaScript',
+          fill: true,
+          backgroundColor: "rgba(230,163,89,0.2)",
+          borderColor: "rgba(230,163,89,1)",
+          pointBackgroundColor: "rgba(230,163,89,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(230,163,89,1)",
+          data: [20,90,330,670,1210]
+        },
+        {
+          label: 'Python',
+          fill: true,
+          backgroundColor: "rgba(200,87,126,0.2)",
+          borderColor: "rgba(200,87,126,1)",
+          pointBackgroundColor: "rgba(200,87,126,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(200,87,126,1)",
+          data: [40,60,30,90,70]
+        },
+        {
+          label: 'SQL',
+          fill: true,
+          backgroundColor: "rgba(12,250,200,0.2)",
+          borderColor: "rgba(12,250,200,1)",
+          pointBackgroundColor: "rgba(12,250,200,1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(12,250,200,1)",
+          data: [480,400,320,260,280]
+        }
+      ]
+    }
+  });
+
+    var myLineChart = new Chart($('#myLineChart'), {
+      type: 'line',
+      data: {
+        labels: ['2012','2013','2014','2015','2016'],
+        datasets: [
+          {
+            label: 'PHP',
+            fill: false,
+            backgroundColor: "rgba(179,181,198,0.2)",
+            borderColor: "rgba(179,181,198,1)",
+            pointBackgroundColor: "rgba(179,181,198,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(179,181,198,1)",
+            data: [1000,800,400,200,100]
+          },
+          {
+            label: 'Java',
+            fill: false,
+            backgroundColor: "rgba(255,99,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            pointBackgroundColor: "rgba(255,99,132,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(255,99,132,1)",
+            data: [200,220,240,210,180]
+          },
+          {
+            label: 'JavaScript',
+            fill: false,
+            backgroundColor: "rgba(230,163,89,0.2)",
+            borderColor: "rgba(230,163,89,1)",
+            pointBackgroundColor: "rgba(230,163,89,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(230,163,89,1)",
+            data: [20,90,330,670,1210]
+          },
+          {
+            label: 'Python',
+            fill: false,
+            backgroundColor: "rgba(200,87,126,0.2)",
+            borderColor: "rgba(200,87,126,1)",
+            pointBackgroundColor: "rgba(200,87,126,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(200,87,126,1)",
+            data: [40,60,30,90,70]
+          },
+          {
+            label: 'SQL',
+            fill: false,
+            backgroundColor: "rgba(12,250,200,0.2)",
+            borderColor: "rgba(12,250,200,1)",
+            pointBackgroundColor: "rgba(12,250,200,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(12,250,200,1)",
+            data: [480,400,320,260,280]
+          }
+        ]
+      }
+  });
+
+
+})
+</script>
+</body>
+</html>
