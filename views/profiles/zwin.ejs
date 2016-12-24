@@ -202,7 +202,8 @@
                               <% }) %>
                           </ul>
 
-                          <div id="trends-graph">
+                          <div>
+                            <canvas id="trends-graph" style="width:100%;height:500px;"></canvas>
                           </div>
                           <script>
                           $(function(){
@@ -227,10 +228,11 @@
                                     pointBorderColor: "#fff",
                                     pointHoverBackgroundColor: "#fff",
                                     pointHoverBorderColor: "rgba(179,181,198,1)",
+                                    pointRadius: 0,
                                     data: traces[0].y
                                   },
                                   {
-                                    label: traces[0].name,
+                                    label: traces[1].name,
                                     fill: true,
                                     backgroundColor: "rgba(255,99,132,0.2)",
                                     borderColor: "rgba(255,99,132,1)",
@@ -238,10 +240,11 @@
                                     pointBorderColor: "#fff",
                                     pointHoverBackgroundColor: "#fff",
                                     pointHoverBorderColor: "rgba(255,99,132,1)",
-                                    data: traces[0].y
+                                    pointRadius: 0,
+                                    data: traces[1].y
                                   },
                                   {
-                                    label: traces[0].name,
+                                    label: traces[2].name,
                                     fill: true,
                                     backgroundColor: "rgba(230,163,89,0.2)",
                                     borderColor: "rgba(230,163,89,1)",
@@ -249,10 +252,11 @@
                                     pointBorderColor: "#fff",
                                     pointHoverBackgroundColor: "#fff",
                                     pointHoverBorderColor: "rgba(230,163,89,1)",
-                                    data: traces[0].y
+                                    pointRadius: 0,
+                                    data: traces[2].y
                                   },
                                   {
-                                    label: traces[0].name,
+                                    label: traces[3].name,
                                     fill: true,
                                     backgroundColor: "rgba(200,87,126,0.2)",
                                     borderColor: "rgba(200,87,126,1)",
@@ -260,10 +264,11 @@
                                     pointBorderColor: "#fff",
                                     pointHoverBackgroundColor: "#fff",
                                     pointHoverBorderColor: "rgba(200,87,126,1)",
-                                    data: traces[0].y
+                                    pointRadius: 0,
+                                    data: traces[3].y
                                   },
                                   {
-                                    label: traces[0].name,
+                                    label: traces[4].name,
                                     fill: true,
                                     backgroundColor: "rgba(12,250,200,0.2)",
                                     borderColor: "rgba(12,250,200,1)",
@@ -271,7 +276,8 @@
                                     pointBorderColor: "#fff",
                                     pointHoverBackgroundColor: "#fff",
                                     pointHoverBorderColor: "rgba(12,250,200,1)",
-                                    data: traces[0].y
+                                    pointRadius: 0,
+                                    data: traces[4].y
                                   }
                                 ]
                               }
