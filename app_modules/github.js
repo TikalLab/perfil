@@ -2,6 +2,7 @@ var config = require('config');
 var request = require('request');
 var _ = require('underscore');
 var async = require('async');
+var moment = require('moment');
 var parseLinkHeader = require('parse-link-header');
 var util = require('util');
 var atob = require('atob')
@@ -479,7 +480,7 @@ console.log('detected languages for commit %s: %s',commit.sha,util.inspect(langu
 				})
 			},
 			function(repos,callback){
-console.log('got %s repos',repos.length)				
+console.log('got %s repos',repos.length)
 				var commits = [];
 
 				async.each(repos,function(repo,callback){
