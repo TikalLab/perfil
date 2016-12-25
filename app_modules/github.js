@@ -377,8 +377,12 @@ console.log('err in repo %s: %s: %s',repo.full_name,response.statusCode,body)
 							}else if(response.statusCode > 300){
 		console.log('err in repo %s: %s: %s',repo.full_name,response.statusCode,body)
 								// callback(response.statusCode + ' : ' + arguments.callee.toString() + ' : ' + body);
-								page = false;
-								callback(null,commits)
+								if(response.headers['x-ratelimit-remaining'] == '0'){
+									callback(body)
+								}else{
+									page = false;
+									callback(null,commits)
+								}
 							}else{
 								var data = JSON.parse(body)
 								commits = commits.concat(data);
