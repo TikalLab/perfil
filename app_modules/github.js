@@ -489,7 +489,7 @@ console.log('got %s repos',repos.length)
 
 				async.eachLimit(repos,1,function(repo,callback){
 
-					thisObject.getRepoAuthorCommitsWithLanguages(user.github.access_token,repo,user.login,since,function(err,repoCommits){
+					thisObject.getRepoAuthorCommitsWithLanguages(user.github.access_token,repo,user.github.username,since,function(err,repoCommits){
 						if(err){
 							callback(err)
 						}else{
