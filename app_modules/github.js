@@ -463,7 +463,7 @@ console.log('detected languages for commit %s: %s',commit.sha,util.inspect(langu
 		events.add(db,user._id.toString(),{
 			id: commit.sha,
 			when: moment(commit.commit.author.date).toDate(),
-			tags: languages,
+			tags: commit.languages,
 			type: 'GH commit'
 		},function(err,event){
 			callback(err,event)
