@@ -17,7 +17,9 @@ users.find({},function(err,users){
     async.each(users,function(user,callback){
       github.saveUserCommitEvents(db,user,null,function(err){
         if(err){
-          callback(err)
+          // ignore errs mo haha
+          // callback(err)
+          callback()
         }else{
           callback()
         }
