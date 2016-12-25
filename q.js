@@ -1,0 +1,31 @@
+var config = require('config')
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk(config.get('mongo.uri'));
+var async = require('async')
+
+var util = require('util')
+var github = require('./app_modules/github')
+
+
+var users = db.get('users');
+users.find({},function(err,users){
+  if(err){
+    console.log('err is %s',err)
+  }else{
+    console.log('got the following users: %s',util.inspect(users))
+    async.each(users,function(user,callback){
+      github.saveUserCommitEvents(db,user,null,function(err){
+        if(err){
+          callback(err)
+        }else{
+          callback()
+        }
+      })
+    },function(err){
+      if(err){
+        console.log('err is %s',err)
+      }
+    })
+  }
+})

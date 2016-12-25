@@ -286,7 +286,7 @@ module.exports = {
   bigTagCloudOld: function(githubAccessToken,stackOverflowAccessToken,db,callback){
     async.parallel([
   		function(callback){
-  			github.getUserCommitsWithLanguageTag(githubAccessToken,function(err,commits){
+  			github.getUserCommitsWithLanguageTag(githubAccessToken,null,function(err,commits){
   				callback(err,commits)
   			})
   		},
@@ -531,9 +531,11 @@ console.log('results are: %s',util.inspect(results,{depth:8}))
 
         // generate initial x and y
         var x = [];
-        var itr = moment.twix(new Date(earliestEvent.when),new Date(latestEvent.when)).iterate("months");
+        // var itr = moment.twix(new Date(earliestEvent.when),new Date(latestEvent.when)).iterate("months");
+        var itr = moment.twix(new Date(earliestEvent.when),new Date(latestEvent.when)).iterate("quarters");
         while(itr.hasNext()){
-          currentDate = itr.next().format('YYYY-MM');
+          // currentDate = itr.next().format('YYYY-MM');
+          currentDate = itr.next().format('YYYY-Qo');
           x.push(currentDate);
         }
 
@@ -541,7 +543,8 @@ console.log('results are: %s',util.inspect(results,{depth:8}))
 
         // flatten all the dates
         events = _.map(events,function(event){
-          event.when = moment(event.when).format('YYYY-MM');
+          // event.when = moment(event.when).format('YYYY-MM');
+          event.when = moment(event.when).format('YYYY-Qo');
           return event;
         })
 
