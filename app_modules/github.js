@@ -400,7 +400,7 @@ console.log('err in repo %s: %s: %s',repo.full_name,response.statusCode,body)
 			// per each commit, get languages
 			function(commits,callback){
 				var commitsWithLanguages = [];
-				async.each(commits,function(commit,callback){
+				async.eachLimit(commits,1,function(commit,callback){
 					var url = util.format('https://api.github.com/repos/%s/commits/%s',repo.full_name,commit.sha)
 					request(url,{headers: headers},function(error,response,body){
 						if(error){
@@ -487,7 +487,7 @@ console.log('detected languages for commit %s: %s',commit.sha,util.inspect(langu
 console.log('got %s repos',repos.length)
 				var commits = [];
 
-				async.each(repos,function(repo,callback){
+				async.eachLimit(repos,1,function(repo,callback){
 
 					thisObject.getRepoAuthorCommitsWithLanguages(user.github.access_token,repo,user.login,since,function(err,repoCommits){
 						if(err){
