@@ -11,7 +11,8 @@ var fse = require('fs-extra')
 var url = require('url');
 var slug = require('slug')
 var exec = require('child_process').exec;
-
+var moment = require('moment')
+var events = require('../models/events')
 
 module.exports = {
 	getUser: function(accessToken,callback){
@@ -184,5 +185,61 @@ module.exports = {
 
 		// console.log('headers are %s',util.inspect(headers))
 	},
+
+	saveUserAnswerEvents: function(db,user,since,callback){
+		var thisObject = this;
+		async.waterfall([
+			function(callback){
+				thisObject.getUserAnswers(user.stackoverflow.access_token,function(err,answers){
+					callback(err,answers)
+				})
+			},
+			function(answers,callback){
+				async.each(answers,function(answer,callback){
+					events.add(db,user._id.toString(),{
+						id: answer.answer.answer_id,
+						when: moment(Number(answer.answer.creation_date + '000')).toDate(),
+						tags: answer.question.tags,
+						type: 'SO answer'
+					},function(err,event){
+						callback(err)
+					})
+				},function(err){
+					callback(err)
+				})
+
+			}
+		],function(err){
+			callback(err)
+		})
+	},
+
+	saveUserQuestionEvents: function(db,user,since,callback){
+		var thisObject = this;
+		async.waterfall([
+			function(callback){
+				thisObject.getUserQuestions(user.stackoverflow.access_token,function(err,questions){
+					callback(err,questions)
+				})
+			},
+			function(questions,callback){
+				async.each(questions,function(question,callback){
+					events.add(db,user._id.toString(),{
+						id: question.question_id,
+  					when: moment(Number(question.creation_date + '000')).toDate(),
+  					tags: question.tags,
+  					type: 'SO question'
+					},function(err,event){
+						callback(err)
+					})
+				},function(err){
+					callback(err)
+				})
+
+			}
+		],function(err){
+			callback(err)
+		})
+	}
 
 }
