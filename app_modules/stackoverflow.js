@@ -200,7 +200,9 @@ module.exports = {
 						id: answer.answer.answer_id,
 						when: moment(Number(answer.answer.creation_date + '000')).toDate(),
 						tags: answer.question.tags,
-						type: 'SO answer'
+						type: 'SO answer',
+						score: answer.answer.score,
+						is_accepted: answer.answer.is_accepted
 					},function(err,event){
 						callback(err)
 					})
@@ -228,7 +230,8 @@ module.exports = {
 						id: question.question_id,
   					when: moment(Number(question.creation_date + '000')).toDate(),
   					tags: question.tags,
-  					type: 'SO question'
+  					type: 'SO question',
+						score: question.score
 					},function(err,event){
 						callback(err)
 					})
