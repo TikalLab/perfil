@@ -18,17 +18,6 @@
         </div>
       </div>
   </div>
-  <div class="row">
-      <div class="col-md-4">
-        <canvas id="tag0-dist" style="width:400px;height:400px;"></canvas>
-      </div>
-      <div class="col-md-4">
-        <canvas id="tag1-dist" style="width:400px;height:400px;"></canvas>
-      </div>
-      <div class="col-md-4">
-        <canvas id="tag2-dist" style="width:400px;height:400px;"></canvas>
-      </div>
-  </div>
 </div>
 
 <!-- <div style="width:600px;height:500px;">
@@ -43,7 +32,7 @@
 <script>
 $(function(){
   $.ajax({
-    url: '/queries/trends/<%=user_id%>',
+    url: '/queries/trends/<%=user_id‘’%>',
     dataType: 'json',
     success: function(data){
       var trendsGraph = new Chart($('#trends-graph'), {
@@ -122,158 +111,6 @@ $(function(){
   })
 
 
-  $.ajax({
-    url: '/queries/tag-distribution',
-    data: {
-      tag: 'JavaScript'
-    },
-    dataType: 'json',
-    success: function(data){
-
-      var labels = _.map(data,function(item){
-        return item._id;
-      })
-
-      var values = _.map(data,function(item){
-        return item.count;
-      })
-
-      var tag0dist = new Chart($('#tag0-dist'), {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "JavaScript dist",
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    data: values,
-                }
-            ]
-        }
-      });
-    },
-    error: function(err){
-      alert('something went wrong')
-    }
-  })
-
-  $.ajax({
-    url: '/queries/tag-distribution',
-    data: {
-      tag: 'CSS'
-    },
-    dataType: 'json',
-    success: function(data){
-
-      var labels = _.map(data,function(item){
-        return item._id;
-      })
-
-      var values = _.map(data,function(item){
-        return item.count;
-      })
-
-      var tag0dist = new Chart($('#tag1-dist'), {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "CSS dist",
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    data: values,
-                }
-            ]
-        }
-      });
-    },
-    error: function(err){
-      alert('something went wrong')
-    }
-  })
-
-  $.ajax({
-    url: '/queries/tag-distribution',
-    data: {
-      tag: 'node.js'
-    },
-    dataType: 'json',
-    success: function(data){
-
-      var labels = _.map(data,function(item){
-        return item._id;
-      })
-
-      var values = _.map(data,function(item){
-        return item.count;
-      })
-
-      var tag0dist = new Chart($('#tag2-dist'), {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "node.js dist",
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    data: values,
-                }
-            ]
-        }
-      });
-    },
-    error: function(err){
-      alert('something went wrong')
-    }
-  })
 
 })
 </script>
