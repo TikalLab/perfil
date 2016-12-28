@@ -18,6 +18,11 @@ var widgets = require('../app_modules/widgets');
 
 var users = require('../models/users');
 
+router.get('/trend/:user_id',function(req,res,next){
+	render(req,res,'index/test4',{
+		user_id: req.params.user_id
+	})
+})
 router.get('/trends/:user_id',function(req,res,next){
 	var events = req.db.get('events');
 	events.find({user_id: req.params.user_id},function(err,events){
