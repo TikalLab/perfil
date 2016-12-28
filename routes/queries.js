@@ -18,9 +18,9 @@ var widgets = require('../app_modules/widgets');
 
 var users = require('../models/users');
 
-router.get('/trends',function(req,res,next){
+router.get('/trends/:user_id',function(req,res,next){
 	var events = req.db.get('events');
-	events.find({},function(err,events){
+	events.find({user_id: req.params.user_id},function(err,events){
 		if(err){
 			console.log('err is %s',err)
 			res.sendStatus(500)
