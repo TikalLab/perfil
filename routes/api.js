@@ -30,7 +30,23 @@ router.get('/user/:platform/:id',function(req,res,next){
 		},
 		function(user,callback){
 			var ret = {};
-			async.each(user.widgets,function(widget,callback){
+
+			// ignore saved widgets and force our own default set
+			var widgets = ['big-tag-cloud'];
+			if('github' in user){
+				widgets.push('github-profile-link')
+			}
+			if('linkedin' in user){
+				widgets.push('linkedin-profile-link')
+			}
+			if('stackoverflow' in user){
+				widgets.push('stackoverflow-profile-link')
+			}
+			if('meetup' in user){
+				widgets.push('meetup-profile-link')
+			}
+			async.each(widgets,function(widget,callback){
+			// async.each(user.widgets,function(widget,callback){
 				invoke(widget,user,req.db,function(err,data){
 					if(err){
 						callback(err)
