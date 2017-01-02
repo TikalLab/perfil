@@ -37,6 +37,7 @@ router.get('/user/:platform/:id',function(req,res,next){
 				widgets.push('github-profile-link')
 			}
 			if('linkedin' in user){
+				widgets.push('linkedin-summary')
 				widgets.push('linkedin-profile-link')
 			}
 			if('stackoverflow' in user){
